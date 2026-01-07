@@ -1,6 +1,5 @@
 {
   "name": "@drum-scheduler/contracts",
-   "allowImportingTsExtensions": true,
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,10 +13,13 @@
   },
   "files": ["dist"],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node ./scripts/postbuild.mjs",
     "clean": "rimraf dist"
   },
-    "dependencies": {
+  "dependencies": {
     "@drum-scheduler/api": "workspace:*"
+  },
+  "devDependencies": {
+    "drizzle-orm": "^0.38.4"
   }
 }

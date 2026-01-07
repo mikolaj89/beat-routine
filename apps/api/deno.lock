@@ -772,6 +772,11 @@
       "npm:drizzle-kit@~0.30.2",
       "npm:drizzle-orm@~0.38.4",
       "npm:pg@^8.13.1"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:drizzle-orm@~0.38.4"
+      ]
+    }
   }
 }

@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "deno run dev"
   },
-    "exports": {
+  "exports": {
     "./db/schema": "./db/schema.ts",
     "./db/types": "./db/types.ts"
+  },
+  "devDependencies": {
+    "drizzle-orm": "^0.38.4"
   }
 }
