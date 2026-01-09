@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DashboardLayout } from "@/components/Layout/DashoardLayout";
+import { DashboardLayout } from "../components/layout/DashoardLayout";
 
 export const metadata: Metadata = {
   title: "Drum session scheduler app",
