@@ -14,6 +14,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@drum-scheduler/contracts": "workspace:^"
+    "@drum-scheduler/contracts": "workspace:^",
+    "@drum-scheduler/sdk": "workspace:^"
   }
 }
