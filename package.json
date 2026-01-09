@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev:admin-client": "pnpm --filter admin-client dev",
+    "dev:api": "pnpm --filter api dev",
+    "dev:app-rn": "pnpm --filter drum-scheduler-app start",
+    "dev:app-android": "pnpm --filter drum-scheduler-app android",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
