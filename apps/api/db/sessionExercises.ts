@@ -1,7 +1,7 @@
 import { db } from "./drizzle.ts";
 import { sessionexercisesSchema, exercisesSchema } from "./schema.ts";
 import { Exercise, SessionExerciseInput } from "./types.ts";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 const SESSION_EXERCISES_TABLE = "sessionexercises";
 
@@ -35,7 +35,7 @@ export async function getSessionExercises(sessionId: number) {
       id: exercisesSchema.id,
       name: exercisesSchema.name,
       bpm: exercisesSchema.bpm,
-      durationMinutes: exercisesSchema.durationMinutes,
+      durationMinutes: sql<number | null>`COALESCE(${sessionexercisesSchema.durationMinutes}, ${exercisesSchema.durationMinutes})`,
       description: exercisesSchema.description,
       createdAt: exercisesSchema.createdAt,
       mp3Url: exercisesSchema.mp3Url,

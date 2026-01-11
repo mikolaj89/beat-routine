@@ -1,6 +1,6 @@
 import { db } from "./drizzle.ts";
-import { sessionsSchema } from "./schema.ts";
-import { eq } from "drizzle-orm";
+import { exercisesSchema, sessionexercisesSchema, sessionsSchema } from "./schema.ts";
+import { eq, sql } from "drizzle-orm";
 import { SessionInput } from "./types.ts";
 
 
@@ -12,7 +12,36 @@ export async function getSession(id: number) {
 }
 
 export async function getSessions() {
-  return await db.select().from(sessionsSchema);
+  // Derive totalDuration from the session's exercises.
+  // Prefer per-session override duration (sessionexercises.durationMinutes),
+  // falling back to the base exercise duration (exercises.durationMinutes).
+  return await db
+    .select({
+      id: sessionsSchema.id,
+      name: sessionsSchema.name,
+      sessionDate: sessionsSchema.sessionDate,
+      notes: sessionsSchema.notes,
+      createdAt: sessionsSchema.createdAt,
+      totalDuration:
+        sql<number>`COALESCE(SUM(COALESCE(${sessionexercisesSchema.durationMinutes}, ${exercisesSchema.durationMinutes}, 0)), 0)`
+          .mapWith(Number),
+    })
+    .from(sessionsSchema)
+    .leftJoin(
+      sessionexercisesSchema,
+      eq(sessionexercisesSchema.sessionId, sessionsSchema.id)
+    )
+    .leftJoin(
+      exercisesSchema,
+      eq(sessionexercisesSchema.exerciseId, exercisesSchema.id)
+    )
+    .groupBy(
+      sessionsSchema.id,
+      sessionsSchema.name,
+      sessionsSchema.sessionDate,
+      sessionsSchema.notes,
+      sessionsSchema.createdAt
+    );
 }
 
 export const addSession = async (session: SessionInput) => {
