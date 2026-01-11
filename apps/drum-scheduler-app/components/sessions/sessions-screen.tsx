@@ -56,14 +56,7 @@ export default function SessionsScreen() {
   const [tab, setTab] = useState<Tab>('All');
   const [query, setQuery] = useState('');
 
-  const apiBaseUrl =
-    Platform.select({
-      android: 'http://10.0.2.2:8000',
-      ios: 'http://localhost:8000',
-      default: 'http://localhost:8000',
-    }) ?? 'http://localhost:8000';
-
-  const sessionsResult = useSessionsQuery({ baseUrl: apiBaseUrl });
+  const sessionsResult = useSessionsQuery('http://10.0.2.2:8000');
 
   const renderItem = ({ item }: ListRenderItemInfo<Session>) => (
     <SessionCard session={item} onStart={() => {}} onMenu={() => {}} />
@@ -195,7 +188,7 @@ function SessionCard({
       <View style={styles.divider} />
 
       <Text style={styles.cardMeta}>
-        {session.createdAt} • {session.totalDuration} min •{' '}
+        Total duration: {session.totalDuration}
       </Text>
 
       <View style={styles.cardActions}>
@@ -208,14 +201,6 @@ function SessionCard({
           <Icon name="more-vert" size={22} color={theme.colors.icon} />
         </Pressable>
       </View>
-    </View>
-  );
-}
-
-function Pill({ label }: { label: string }) {
-  return (
-    <View style={styles.pill}>
-      <Text style={styles.pillText}>{label}</Text>
     </View>
   );
 }

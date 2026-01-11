@@ -1,60 +1,31 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
-  CreateSessionBody,
-  CreateSessionBodySchema,
-  CreateSessionResponseSchema,
-  GetSessionsResponseSchema,
+  Session
 } from "@drum-scheduler/contracts";
-import { DrumSchedulerSdkConfig, requestJson } from "./http.js";
+import { ApiClient } from "./api-client.js";
 
 export const sessionsQueryKeys = {
   all: ["sessions"] as const,
 };
 
-export async function getSessions(config: DrumSchedulerSdkConfig) {
-  return requestJson(
-    config,
-    "/sessions",
-    { method: "GET" },
-    GetSessionsResponseSchema
-  );
-}
+export const fetchSessions = async (baseUrl: string) => {
+  const apiClient = new ApiClient(baseUrl);
+  const result = await apiClient.get<Session[]>("/sessions");
 
-export async function createSession(
-  config: DrumSchedulerSdkConfig,
-  body: CreateSessionBody
-) {
-  const validated = CreateSessionBodySchema.parse(body);
-  return requestJson(
-    config,
-    "/sessions",
-    { method: "POST", body: JSON.stringify(validated) },
-    CreateSessionResponseSchema
-  );
-}
+  if ("error" in result) {
+    console.error(result.error);
+    return null;
+  }
+  return result.data;
+};
 
-export function useSessionsQuery(config: DrumSchedulerSdkConfig) {
-  const { data, isLoading, error, isSuccess } = useQuery({
+
+
+export function useSessionsQuery(baseUrl: string) { 
+  const result = useQuery({
     queryKey: sessionsQueryKeys.all,
-    queryFn: () => getSessions(config),
+    queryFn: () => fetchSessions(baseUrl),
   });
 
-  if (data && "data" in data) {
-    return { data: data.data, isSuccess, isLoading, error: null };
-  }
-  if (error) {
-    console.error("Error fetching sessions:", error);
-  }
-  return { data: null, isLoading: isLoading, error: error };
-}
-
-export function useCreateSessionMutation(config: DrumSchedulerSdkConfig) {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (body: CreateSessionBody) => createSession(config, body),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: sessionsQueryKeys.all });
-    },
-  });
+  return result;
 }
