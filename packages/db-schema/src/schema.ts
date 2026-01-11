@@ -1,4 +1,4 @@
-import { pgTable, unique, serial, varchar, timestamp, integer, text, foreignKey } from "drizzle-orm/pg-core"
+import { pgTable, unique, serial, varchar, timestamp, foreignKey, integer, text } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
 
@@ -12,15 +12,6 @@ export const users = pgTable("users", {
 	unique("users_username_key").on(table.username),
 	unique("users_email_key").on(table.email),
 ]);
-
-export const sessions = pgTable("sessions", {
-	id: serial().primaryKey().notNull(),
-	name: varchar({ length: 100 }).notNull(),
-	sessionDate: timestamp("session_date", { mode: 'string' }).defaultNow(),
-	totalDuration: integer("total_duration"),
-	notes: text(),
-	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow(),
-});
 
 export const sessionexercises = pgTable("sessionexercises", {
 	id: serial().primaryKey().notNull(),
@@ -43,6 +34,16 @@ export const sessionexercises = pgTable("sessionexercises", {
 		}).onDelete("cascade"),
 	unique("sessionexercises_session_id_exercise_id_key").on(table.sessionId, table.exerciseId),
 ]);
+
+export const sessions = pgTable("sessions", {
+	id: serial().primaryKey().notNull(),
+	name: varchar({ length: 100 }).notNull(),
+	sessionDate: timestamp("session_date", { mode: 'string' }).defaultNow(),
+	totalDuration: integer("total_duration"),
+	notes: text(),
+	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow(),
+	lastFinishDate: timestamp("last_finish_date", { mode: 'string' }),
+});
 
 export const categories = pgTable("categories", {
 	id: serial().primaryKey().notNull(),
