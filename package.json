@@ -16,7 +16,9 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "kill:all": "node ./scripts/kill-all.mjs",
+    "kill:all:dry": "node ./scripts/kill-all.mjs --dry-run"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
