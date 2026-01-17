@@ -9,20 +9,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { API_BASE_URL } from './config/api';
-import type { Exercise } from '@drum-scheduler/contracts';
+import { RootStackParamList } from './types/navigation';
 
 const queryClient = new QueryClient();
-
-type RootStackParamList = {
-  Sessions: undefined;
-  Session: { sessionId: number };
-  Exercise: {
-    exercise: Exercise;
-    sessionName: string;
-    exerciseIndex: number;
-    totalExercises: number;
-  };
-};
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
