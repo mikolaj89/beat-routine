@@ -55,7 +55,12 @@ export default function SessionScreen({
   baseUrl: string;
   sessionId: number;
   onBack: () => void;
-  onStart?: (exercise: Exercise, sessionName: string) => void;
+  onStart?: (
+    exercise: Exercise,
+    sessionName: string,
+    exerciseIndex: number,
+    totalExercises: number
+  ) => void;
 }) {
   const sessionResult = useSessionQuery(baseUrl, sessionId);
 
@@ -116,8 +121,10 @@ export default function SessionScreen({
             onPress={() => {
               const firstExercise = sessionResult.data?.exercises?.[0];
               const sessionName = sessionResult.data?.name;
+              const totalExercises =
+                sessionResult.data?.exercises?.length ?? 0;
               if (firstExercise && sessionName && onStart) {
-                onStart(firstExercise, sessionName);
+                onStart(firstExercise, sessionName, 1, totalExercises);
               }
             }}
             disabled={!sessionResult.data?.exercises?.[0]}

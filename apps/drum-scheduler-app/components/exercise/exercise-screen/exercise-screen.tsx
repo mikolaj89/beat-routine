@@ -44,10 +44,14 @@ const theme = {
 export default function ExerciseScreen({
   exercise,
   sessionName,
+  exerciseIndex,
+  totalExercises,
   onBack,
 }: {
   exercise: Exercise;
   sessionName: string;
+  exerciseIndex: number;
+  totalExercises: number;
   onBack: () => void;
 }) {
   const duration = exercise.durationMinutes ?? 0;
@@ -61,7 +65,12 @@ export default function ExerciseScreen({
 
         <View style={styles.header}>
           <Text style={styles.sessionName}>{sessionName}</Text>
-          <Text style={styles.exerciseTitle}>{exercise.name}</Text>
+          <View style={styles.titleRow}>
+            <Text style={styles.exerciseTitle}>{exercise.name}</Text>
+            <Text style={styles.exerciseProgress}>
+              Exercise {exerciseIndex} / {totalExercises}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.card}>
@@ -168,9 +177,21 @@ const styles = StyleSheet.create({
     paddingBottom: theme.spacing.md,
   },
   exerciseTitle: {
+    flex: 1,
     fontSize: theme.typography.cardTitle,
     fontWeight: '800',
     color: theme.colors.text,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: theme.spacing.sm,
+  },
+  exerciseProgress: {
+    fontSize: theme.typography.body,
+    fontWeight: '600',
+    color: theme.colors.textMuted,
   },
   sessionName: {
     fontSize: theme.typography.small,

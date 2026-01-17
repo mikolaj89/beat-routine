@@ -16,7 +16,12 @@ const queryClient = new QueryClient();
 type RootStackParamList = {
   Sessions: undefined;
   Session: { sessionId: number };
-  Exercise: { exercise: Exercise; sessionName: string };
+  Exercise: {
+    exercise: Exercise;
+    sessionName: string;
+    exerciseIndex: number;
+    totalExercises: number;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -57,8 +62,13 @@ function AppContent() {
                 baseUrl={baseUrl}
                 sessionId={route.params.sessionId}
                 onBack={() => navigation.goBack()}
-                onStart={(exercise, sessionName) =>
-                  navigation.navigate('Exercise', { exercise, sessionName })
+                onStart={(exercise, sessionName, exerciseIndex, totalExercises) =>
+                  navigation.navigate('Exercise', {
+                    exercise,
+                    sessionName,
+                    exerciseIndex,
+                    totalExercises,
+                  })
                 }
               />
             )}
@@ -69,6 +79,8 @@ function AppContent() {
               <ExerciseScreen
                 exercise={route.params.exercise}
                 sessionName={route.params.sessionName}
+                exerciseIndex={route.params.exerciseIndex}
+                totalExercises={route.params.totalExercises}
                 onBack={() => navigation.goBack()}
               />
             )}
