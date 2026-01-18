@@ -1,5 +1,4 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const theme = {
   colors: {
@@ -22,25 +21,7 @@ const theme = {
   },
 };
 
-export default function ActiveExerciseView({
-  name,
-  bpm,
-  timeFormatted,
-}: {
-  name: string;
-  bpm: number;
-  timeFormatted: string;
-}) {
-  return (
-    <View style={styles.activeWrap}>
-      <Text style={styles.activeTitle}>{name}</Text>
-      <Text style={styles.activeMeta}>BPM {bpm}</Text>
-      <Text style={styles.activeTimer}>{timeFormatted}</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   activeWrap: {
     flex: 1,
     alignItems: 'center',
