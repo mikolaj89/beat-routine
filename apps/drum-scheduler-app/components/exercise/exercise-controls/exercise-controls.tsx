@@ -34,11 +34,18 @@ export default function ExerciseControls({
           accessibilityLabel="Previous"
           disabled={isPrevNextDisabled}
         >
-          <Icon name="skip-previous" size={26} color={theme.colors.primaryText} />
+          <Icon
+            name="skip-previous"
+            size={26}
+            color={theme.colors.primaryText}
+          />
         </Pressable>
 
         <Pressable
-          style={[styles.controlBtn, isPlayDisabled && styles.controlBtnDisabled]}
+          style={[
+            styles.controlBtn,
+            isPlayDisabled && styles.controlBtnDisabled,
+          ]}
           onPress={onPlay}
           accessibilityLabel="Play"
           disabled={isPlayDisabled}

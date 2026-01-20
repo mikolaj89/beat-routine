@@ -24,12 +24,16 @@ export default function ExerciseScreen({
   const duration = exercise.durationMinutes ?? 0;
   const bpm = exercise.bpm ?? 0;
   const notes = exercise.description?.trim() || '—';
-  const { startExercise, pauseExercise, finishExercise, mode, timeFormatted } =
-    useExercise(duration);
-
-  const isPauseDisabled = mode !== 'active';
-  const isPlayDisabled = mode === 'active';
-  const isPrevNextDisabled = mode !== 'preview';
+  const {
+    startExercise,
+    pauseExercise,
+    finishExercise,
+    mode,
+    timeFormatted,
+    isPauseDisabled,
+    isPlayDisabled,
+    isPrevNextDisabled,
+  } = useExercise(duration);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -77,9 +81,15 @@ export default function ExerciseScreen({
           isPlayDisabled={isPlayDisabled}
           isPauseDisabled={isPauseDisabled}
           onPrev={() => {}}
-          onPlay={() => startExercise()}
-          onPause={() => pauseExercise()}
-          onFinish={() => finishExercise()}
+          onPlay={() => {
+            startExercise();
+          }}
+          onPause={() => {
+            pauseExercise();
+          }}
+          onFinish={() => {
+            finishExercise();
+          }}
           onNext={() => {}}
         />
       </View>
@@ -100,4 +110,3 @@ function TopBar({ title, onBack }: { title: string; onBack: () => void }) {
     </View>
   );
 }
-
