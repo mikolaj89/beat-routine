@@ -1,10 +1,34 @@
 import { renderHook, act } from '@testing-library/react-native';
 import { useExercise } from './use-exercise';
 import { useTimer } from './use-time-countdown';
+import { Exercise } from '@drum-scheduler/contracts';
 
 jest.mock('./use-time-countdown', () => ({
   useTimer: jest.fn(),
 }));
+
+const exercisesFixture: Exercise[] = [
+  {
+    id: 1,
+    name: 'Test Exercise',
+    categoryId: null,
+    description: 'Test Description',
+    durationMinutes: 5,
+    bpm: 100,
+    mp3Url: null,
+    createdAt: '2024-01-01T00:00:00.000Z',
+  },
+  {
+    id: 2,
+    name: 'Second Exercise',
+    categoryId: null,
+    description: 'Second Description',
+    durationMinutes: 3,
+    bpm: 120,
+    mp3Url: null,
+    createdAt: '2024-01-02T00:00:00.000Z',
+  },
+];
 
 const mockUseTimer = useTimer as jest.MockedFunction<typeof useTimer>;
 
@@ -19,14 +43,18 @@ describe('useExercise', () => {
   });
 
   it('starts in preview mode and formats time', () => {
-    const { result } = renderHook(() => useExercise({ duration: 5 }));
+    const { result } = renderHook(() =>
+      useExercise({ exercises: exercisesFixture, exerciseIndex: 1 }),
+    );
 
     expect(result.current.mode).toBe('preview');
     expect(result.current.timeFormatted).toBe('05:00');
   });
 
   it('switches to active on start', () => {
-    const { result } = renderHook(() => useExercise({ duration: 5 }));
+    const { result } = renderHook(() =>
+      useExercise({ exercises: exercisesFixture, exerciseIndex: 1 }),
+    );
 
     act(() => {
       result.current.startExercise();
@@ -36,17 +64,24 @@ describe('useExercise', () => {
   });
 
   it('switches to paused on pause', () => {
-    const { result } = renderHook(() => useExercise({ duration: 5 }));
+    const { result } = renderHook(() =>
+      useExercise({ exercises: exercisesFixture, exerciseIndex: 1 }),
+    );
+
+    act(() => {
+      result.current.startExercise();
+    });
 
     act(() => {
       result.current.pauseExercise();
     });
-
     expect(result.current.mode).toBe('paused');
   });
 
   it('returns to preview on finish', () => {
-    const { result } = renderHook(() => useExercise({ duration: 5 }));
+    const { result } = renderHook(() =>
+      useExercise({ exercises: exercisesFixture, exerciseIndex: 1 }),
+    );
 
     act(() => {
       result.current.startExercise();

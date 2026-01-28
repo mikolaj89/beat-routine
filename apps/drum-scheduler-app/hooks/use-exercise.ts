@@ -5,6 +5,7 @@ import { getFormattedTime } from '../utils/date-time';
 import { useMetronome } from './use-metronome';
 import { metronomeOptions } from './use-metronome.constants';
 import { Exercise } from '@drum-scheduler/contracts';
+import { getFormattedExercise } from '../components/exercise/exercise.utils';
 
 type UseExercise = {
   exercises: Exercise[];
@@ -12,16 +13,24 @@ type UseExercise = {
 };
 
 export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
-  const duration = exercises[exerciseIndex - 1]?.durationMinutes ?? 0;
+  const [currentIndex, setCurrentIndex] = useState(exerciseIndex);
 
+  const currentExercise = getFormattedExercise(exercises[currentIndex - 1]);
+  const duration = currentExercise?.duration ?? 0;
+  const totalExercises = exercises.length;
 
   const [mode, setMode] = useState<ExerciseState>('preview');
   const metronome = useMetronome(metronomeOptions);
   const { secondsLeft, startCountdown, stopCountdown, resetCountdown } =
     useTimer(duration * 60);
+
+
   const isPauseDisabled = mode !== 'active';
   const isPlayDisabled = mode === 'active';
   const isPrevNextDisabled = mode !== 'preview';
+
+  const isPrevDisabled = currentIndex === 1 || isPrevNextDisabled;
+  const isNextDisabled = currentIndex === totalExercises || isPrevNextDisabled;
 
   const timeFormatted = getFormattedTime(secondsLeft);
 
@@ -49,7 +58,21 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
     metronome.stop();
   }, [duration]);
 
- 
+  const handlePrev = () => {
+    if (isPrevNextDisabled) return;
+    setCurrentIndex(prev => Math.max(1, prev - 1));
+  };
+
+  const handleNext = () => {
+    if (isPrevNextDisabled) return;
+    setCurrentIndex(prev => Math.min(totalExercises, prev + 1));
+  };
+
+   useEffect(() => {
+    if (totalExercises === 0) return;
+    if (currentIndex < 1) setCurrentIndex(1);
+    if (currentIndex > totalExercises) setCurrentIndex(totalExercises);
+  }, [currentIndex, totalExercises]);
 
   return {
     startExercise,
@@ -61,5 +84,11 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
     isPauseDisabled,
     isPlayDisabled,
     isPrevNextDisabled,
+    handlePrev,
+    handleNext,
+    currentExercise,
+    currentIndex,
+    isPrevDisabled,
+    isNextDisabled,
   };
 };

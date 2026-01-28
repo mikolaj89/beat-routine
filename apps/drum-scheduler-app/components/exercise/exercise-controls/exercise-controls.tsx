@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { styles, theme } from './exercise-controls.style';
 
 export default function ExerciseControls({
-  isPrevNextDisabled,
+  isPrevDisabled,
+  isNextDisabled,
   isPlayDisabled,
   isPauseDisabled,
   onPrev,
@@ -13,7 +14,8 @@ export default function ExerciseControls({
   onFinish,
   onNext,
 }: {
-  isPrevNextDisabled: boolean;
+  isPrevDisabled: boolean;
+  isNextDisabled: boolean;
   isPlayDisabled: boolean;
   isPauseDisabled: boolean;
   onPrev: () => void;
@@ -28,11 +30,11 @@ export default function ExerciseControls({
         <Pressable
           style={[
             styles.controlBtnSecondary,
-            isPrevNextDisabled && styles.controlBtnDisabled,
+            isPrevDisabled && styles.controlBtnDisabled,
           ]}
           onPress={onPrev}
           accessibilityLabel="Previous"
-          disabled={isPrevNextDisabled}
+          disabled={isPrevDisabled}
         >
           <Icon name="chevron-left" size={22} color={theme.colors.secondaryText} style={styles.controlBtnSecondaryIconLeft} />
           <Text style={styles.controlBtnSecondaryText}>PREV</Text>
@@ -73,11 +75,11 @@ export default function ExerciseControls({
         <Pressable
           style={[
             styles.controlBtnSecondary,
-            isPrevNextDisabled && styles.controlBtnDisabled,
+            isNextDisabled && styles.controlBtnDisabled,
           ]}
           onPress={onNext}
           accessibilityLabel="Next"
-          disabled={isPrevNextDisabled}
+          disabled={isNextDisabled}
         >
           <Text style={styles.controlBtnSecondaryText}>NEXT</Text>
           <Icon name="chevron-right" size={22} color={theme.colors.secondaryText} style={styles.controlBtnSecondaryIconRight} />
