@@ -13,29 +13,37 @@ export const theme = {
   },
 };
 
-export const styles = StyleSheet.create({
+type  ControlStylesParams = {
+  isPending: boolean;
+} 
+
+export const getStyles = ({ isPending }: ControlStylesParams ) => StyleSheet.create({
   controlsWrap: {
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 18,
+    bottom: 0,
     alignItems: 'center',
+    flexDirection: 'row',
+    
   },
   controlsBar: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: isPending ? 'center' : 'space-between',
     gap: 14,
     backgroundColor: theme.colors.surface,
     borderWidth: 1,
     borderColor: theme.colors.border,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    borderRadius: 999,
     shadowColor: theme.colors.shadow,
     shadowOpacity: 1,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 10 },
     elevation: 3,
+    flex: 1,
+
   },
   controlBtn: {
     width: 44,

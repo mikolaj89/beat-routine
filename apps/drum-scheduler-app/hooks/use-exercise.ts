@@ -41,9 +41,9 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 
-  const isPauseDisabled = mode !== 'active';
   const isPlayDisabled = mode === 'active';
   const isPrevNextDisabled = mode !== 'preview';
+  const isPendingExercise = mode !== 'preview';
 
   const isPrevDisabled = currentIndex === 1 || isPrevNextDisabled;
   const isNextDisabled = isPrevNextDisabled;
@@ -103,7 +103,6 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
     mode,
     setMode,
     timeFormatted,
-    isPauseDisabled,
     isPlayDisabled,
     isPrevNextDisabled,
     handlePrev,
@@ -112,5 +111,6 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
     currentIndex,
     isPrevDisabled,
     isNextDisabled,
+    isPendingExercise
   };
 };

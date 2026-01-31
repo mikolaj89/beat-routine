@@ -10,11 +10,11 @@ describe('ExerciseControls', () => {
     const onFinish = jest.fn();
     const onNext = jest.fn();
 
-    const { getByLabelText } = render(
+    const { getByLabelText, rerender, queryByLabelText } = render(
       <ExerciseControls
-        isPrevNextDisabled={false}
-        isPlayDisabled={false}
-        isPauseDisabled={false}
+        isPrevDisabled={false}
+        isNextDisabled={false}
+        mode="preview"
         onPrev={onPrev}
         onPlay={onPlay}
         onPause={onPause}
@@ -25,9 +25,25 @@ describe('ExerciseControls', () => {
 
     fireEvent.press(getByLabelText('Previous'));
     fireEvent.press(getByLabelText('Play'));
-    fireEvent.press(getByLabelText('Pause'));
     fireEvent.press(getByLabelText('Finish'));
     fireEvent.press(getByLabelText('Next'));
+
+    expect(queryByLabelText('Pause')).toBeNull();
+
+    rerender(
+      <ExerciseControls
+        isPrevDisabled={false}
+        isNextDisabled={false}
+        mode="active"
+        onPrev={onPrev}
+        onPlay={onPlay}
+        onPause={onPause}
+        onFinish={onFinish}
+        onNext={onNext}
+      />
+    );
+
+    fireEvent.press(getByLabelText('Pause'));
 
     expect(onPrev).toHaveBeenCalledTimes(1);
     expect(onPlay).toHaveBeenCalledTimes(1);

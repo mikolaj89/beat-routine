@@ -29,7 +29,6 @@ export default function ExerciseScreen({
     finishExercise,
     mode,
     timeFormatted,
-    isPauseDisabled,
     isPlayDisabled,
     isPrevDisabled,
     isNextDisabled,
@@ -37,6 +36,7 @@ export default function ExerciseScreen({
     handleNext,
     currentExercise,
     currentIndex,
+    isPendingExercise
   } = useExercise({ exercises: exercises, exerciseIndex });
 
 
@@ -86,15 +86,16 @@ export default function ExerciseScreen({
         )}
 
         <ExerciseControls
+          
           isPrevDisabled={isPrevDisabled}
           isNextDisabled={isNextDisabled}
-          isPlayDisabled={isPlayDisabled}
-          isPauseDisabled={isPauseDisabled}
+          
           onPrev={handlePrev}
           onNext={handleNext}
           onPlay={startExercise}
           onPause={pauseExercise}
           onFinish={finishExercise}
+          mode={mode}
           
         />
       </View>
