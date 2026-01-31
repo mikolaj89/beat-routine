@@ -36,26 +36,6 @@ export const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.bg },
   screen: { flex: 1, backgroundColor: theme.colors.bg },
 
-  topBar: {
-    height: 56,
-    paddingHorizontal: theme.spacing.lg,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topBarTitle: {
-    fontSize: theme.typography.title,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-  iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
   header: {
     paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.sm,

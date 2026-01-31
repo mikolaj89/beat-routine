@@ -8,9 +8,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useSessionQuery } from '@drum-scheduler/sdk';
+import { TopBar } from '../../top-bar/top-bar';
 
 const theme = {
   colors: {
@@ -135,43 +135,9 @@ export default function SessionScreen({
   );
 }
 
-function TopBar({ title, onBack }: { title: string; onBack: () => void }) {
-  return (
-    <View style={styles.topBar}>
-      <Pressable style={styles.iconBtn} onPress={onBack}>
-        <Icon name="arrow-back" size={24} color={theme.colors.icon} />
-      </Pressable>
-
-      <Text style={styles.topBarTitle}>{title}</Text>
-
-      <View style={styles.iconBtn} />
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.bg },
   screen: { flex: 1, backgroundColor: theme.colors.bg },
-
-  topBar: {
-    height: 56,
-    paddingHorizontal: theme.spacing.lg,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topBarTitle: {
-    fontSize: theme.typography.title,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-  iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
   header: {
     paddingHorizontal: theme.spacing.lg,

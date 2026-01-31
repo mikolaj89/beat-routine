@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
 import { Session } from '@drum-scheduler/contracts';
 import { SessionCard } from '../session-card/session-card';
+import { TopBar } from '../../top-bar/top-bar';
 import { API_BASE_URL } from '../../../config/api';
 import { theme } from '../../../utils/theme';
 
@@ -41,7 +42,9 @@ export default function SessionsScreen({
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.screen}>
-        <TopBar onMenu={() => {}} query={query} setQuery={setQuery} />
+        <TopBar onMenu={() => {}}>
+          <SearchBar value={query} onChange={setQuery} />
+        </TopBar>
 
         {sessionsResult?.isLoading ? (
           <Text style={styles.sectionTitle}>Loading sessions…</Text>
@@ -73,25 +76,6 @@ export default function SessionsScreen({
   );
 }
 
-function TopBar({
-  onMenu,
-  query,
-  setQuery,
-}: {
-  onMenu: () => void;
-  query: string;
-  setQuery: (v: string) => void;
-}) {
-  return (
-    <View style={styles.topBar}>
-      <Pressable style={styles.iconBtn} onPress={onMenu}>
-        <Icon name="menu" size={24} color={theme.colors.icon} />
-      </Pressable>
-      <SearchBar value={query} onChange={setQuery} />
-    </View>
-  );
-}
-
 function SearchBar({
   value,
   onChange,
@@ -116,26 +100,6 @@ function SearchBar({
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: theme.colors.bg },
   screen: { flex: 1, backgroundColor: theme.colors.bg },
-
-  topBar: {
-    marginTop: theme.spacing.lg,
-    height: 56,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  topBarTitle: {
-    fontSize: theme.typography.title,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-  iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
   searchWrap: {
     paddingHorizontal: theme.spacing.md,

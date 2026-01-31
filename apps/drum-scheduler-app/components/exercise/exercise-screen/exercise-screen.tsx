@@ -1,13 +1,13 @@
 import React from 'react';
-import { Alert, Pressable, Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useExercise } from '../../../hooks/use-exercise';
 import ActiveExerciseView from '../active-exercise-view/active-exercise-view';
 import ExerciseControls from '../exercise-controls/exercise-controls';
+import { TopBar } from '../../top-bar/top-bar';
 import { styles, theme } from './exercise-screen.style';
 import { RootStackParamList } from '../../../types/navigation';
 export default function ExerciseScreen({
@@ -99,19 +99,5 @@ export default function ExerciseScreen({
         />
       </View>
     </SafeAreaView>
-  );
-}
-
-function TopBar({ title, onBack }: { title: string; onBack: () => void }) {
-  return (
-    <View style={styles.topBar}>
-      <Pressable style={styles.iconBtn} onPress={onBack}>
-        <Icon name="arrow-back" size={24} color={theme.colors.icon} />
-      </Pressable>
-
-      <Text style={styles.topBarTitle}>{title}</Text>
-
-      <View style={styles.iconBtn} />
-    </View>
   );
 }
