@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, FlatList, ListRenderItemInfo } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
 import { Session } from '@drum-scheduler/contracts';
 import { API_BASE_URL } from '../../../config/api';
+import { ScreenContainer } from '../../layout/screen-container/screen-container';
 import { SessionsHeader } from './sessions-header';
 import { SessionLoadingPlaceholder } from '../session-list/session-loading-placeholder/session-loading-placeholder';
 import { SessionListItem } from '../session-list/session-list-item/session-list-item';
@@ -23,22 +23,20 @@ export default function SessionsScreen({
   );
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.screen}>
-        <SessionsHeader query={query} onChangeQuery={setQuery} />
+    <ScreenContainer>
+      <SessionsHeader query={query} onChangeQuery={setQuery} />
 
-        <SessionLoadingPlaceholder
-          isLoading={Boolean(sessionsResult?.isLoading)}
-        />
+      <SessionLoadingPlaceholder
+        isLoading={Boolean(sessionsResult?.isLoading)}
+      />
 
-        <FlatList
-          data={sessionsResult?.data ?? []}
-          keyExtractor={item => item.id.toString()}
-          renderItem={renderItem}
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-    </SafeAreaView>
+      <FlatList
+        data={sessionsResult?.data ?? []}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+      />
+    </ScreenContainer>
   );
 }

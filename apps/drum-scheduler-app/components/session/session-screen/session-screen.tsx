@@ -3,7 +3,6 @@ import {
   FlatList,
   ListRenderItemInfo,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -11,6 +10,7 @@ import {
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useSessionQuery } from '@drum-scheduler/sdk';
 import { TopBar } from '../../top-bar/top-bar';
+import { ScreenContainer } from '../../layout/screen-container/screen-container';
 
 const theme = {
   colors: {
@@ -74,7 +74,7 @@ export default function SessionScreen({
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <ScreenContainer>
       <View style={styles.screen}>
         <TopBar title="Session" onBack={onBack} />
 
@@ -131,13 +131,12 @@ export default function SessionScreen({
           </Pressable>
         </View>
       </View>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: theme.colors.bg },
-  screen: { flex: 1, backgroundColor: theme.colors.bg },
+  screen: { flex: 1 },
 
   header: {
     paddingHorizontal: theme.spacing.lg,

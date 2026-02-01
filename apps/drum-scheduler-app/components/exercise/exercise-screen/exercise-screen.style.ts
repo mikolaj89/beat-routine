@@ -33,8 +33,7 @@ export const theme = {
 };
 
 export const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: theme.colors.bg },
-  screen: { flex: 1, backgroundColor: theme.colors.bg },
+  screen: { flex: 1 },
 
   header: {
     paddingHorizontal: theme.spacing.lg,
