@@ -11,6 +11,7 @@ import type { Exercise } from '@drum-scheduler/contracts';
 import { useSessionQuery } from '@drum-scheduler/sdk';
 import { TopBar } from '../../top-bar/top-bar';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
+import { Card } from 'react-native-paper';
 
 const theme = {
   colors: {
@@ -66,10 +67,14 @@ export default function SessionScreen({
   const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
     const duration = item.durationMinutes ?? 0;
     return (
-      <View style={styles.exerciseCard}>
-        <Text style={styles.exerciseName}>{item.name}</Text>
-        <Text style={styles.exerciseMeta}>{duration} min</Text>
-      </View>
+      
+        <Card style={[styles.exerciseCard]}>
+          <Card.Content>
+            <Text style={styles.exerciseName}>{item.name}</Text>
+            <Text style={styles.exerciseMeta}>{duration} min</Text>
+          </Card.Content>
+        </Card>
+     
     );
   };
 
@@ -156,7 +161,7 @@ const styles = StyleSheet.create({
   },
 
   sectionTitle: {
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,
     fontSize: theme.typography.body,
     fontWeight: '600',
@@ -164,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   listTitle: {
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.md,
     paddingTop: theme.spacing.sm,
     paddingBottom: theme.spacing.sm,
     fontSize: theme.typography.body,
@@ -173,20 +178,16 @@ const styles = StyleSheet.create({
   },
 
   listContent: {
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.md,
     paddingBottom: 110,
+    
   },
 
   exerciseCard: {
     backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.md,
     marginBottom: theme.spacing.md,
-    gap: theme.spacing.xs,
   },
+
   exerciseName: {
     fontSize: theme.typography.body,
     fontWeight: '800',
