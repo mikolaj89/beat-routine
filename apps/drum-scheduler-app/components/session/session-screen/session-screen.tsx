@@ -3,7 +3,6 @@ import {
   FlatList,
   ListRenderItemInfo,
   Pressable,
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
@@ -11,41 +10,8 @@ import type { Exercise } from '@drum-scheduler/contracts';
 import { useSessionQuery } from '@drum-scheduler/sdk';
 import { TopBar } from '../../top-bar/top-bar';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
-import { Card } from 'react-native-paper';
-
-const theme = {
-  colors: {
-    bg: '#F2F3F5',
-    surface: '#FFFFFF',
-    border: '#D6D9DE',
-    text: '#1F2430',
-    textMuted: '#6B7280',
-    icon: '#4B5563',
-    pillBg: '#E7E9ED',
-    pillText: '#374151',
-    primary: '#3B82F6',
-    primaryText: '#FFFFFF',
-    shadow: 'rgba(0,0,0,0.12)',
-  },
-  radius: {
-    xl: 18,
-    lg: 14,
-    md: 12,
-  },
-  spacing: {
-    xs: 6,
-    sm: 10,
-    md: 14,
-    lg: 18,
-    xl: 24,
-  },
-  typography: {
-    title: 22,
-    cardTitle: 18,
-    body: 14,
-    small: 12,
-  },
-};
+import { ExerciseCard } from './exercise-card/exercise-card';
+import { styles } from './session-screen.style';
 
 export default function SessionScreen({
   baseUrl,
@@ -65,17 +31,7 @@ export default function SessionScreen({
   const sessionResult = useSessionQuery(baseUrl, sessionId);
 
   const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
-    const duration = item.durationMinutes ?? 0;
-    return (
-      
-        <Card style={[styles.exerciseCard]}>
-          <Card.Content>
-            <Text style={styles.exerciseName}>{item.name}</Text>
-            <Text style={styles.exerciseMeta}>{duration} min</Text>
-          </Card.Content>
-        </Card>
-     
-    );
+    return <ExerciseCard exercise={item} />;
   };
 
   return (
@@ -139,96 +95,3 @@ export default function SessionScreen({
     </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: { flex: 1 },
-
-  header: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.sm,
-    paddingBottom: theme.spacing.md,
-    gap: theme.spacing.xs,
-  },
-  sessionTitle: {
-    fontSize: theme.typography.cardTitle,
-    fontWeight: '800',
-    color: theme.colors.text,
-  },
-  sessionMeta: {
-    fontSize: theme.typography.body,
-    color: theme.colors.textMuted,
-    fontWeight: '500',
-  },
-
-  sectionTitle: {
-    paddingHorizontal: theme.spacing.md,
-    paddingTop: theme.spacing.sm,
-    fontSize: theme.typography.body,
-    fontWeight: '600',
-    color: theme.colors.textMuted,
-  },
-
-  listTitle: {
-    paddingHorizontal: theme.spacing.md,
-    paddingTop: theme.spacing.sm,
-    paddingBottom: theme.spacing.sm,
-    fontSize: theme.typography.body,
-    fontWeight: '700',
-    color: theme.colors.text,
-  },
-
-  listContent: {
-    paddingHorizontal: theme.spacing.md,
-    paddingBottom: 110,
-    
-  },
-
-  exerciseCard: {
-    backgroundColor: theme.colors.surface,
-    marginBottom: theme.spacing.md,
-  },
-
-  exerciseName: {
-    fontSize: theme.typography.body,
-    fontWeight: '800',
-    color: theme.colors.text,
-  },
-  exerciseMeta: {
-    fontSize: theme.typography.small,
-    fontWeight: '600',
-    color: theme.colors.textMuted,
-  },
-
-  emptyText: {
-    paddingTop: theme.spacing.md,
-    fontSize: theme.typography.body,
-    color: theme.colors.textMuted,
-  },
-
-  ctaWrap: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 18,
-    alignItems: 'center',
-  },
-  ctaBtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
-    paddingHorizontal: 22,
-    height: 48,
-    borderRadius: 999,
-    minWidth: 220,
-    shadowColor: theme.colors.shadow,
-    shadowOpacity: 1,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 3,
-  },
-  ctaText: {
-    color: theme.colors.primaryText,
-    fontSize: theme.typography.cardTitle,
-    fontWeight: '800',
-  },
-});
