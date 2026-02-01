@@ -1,11 +1,17 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Avatar, IconButton, Surface, Text, TouchableRipple } from 'react-native-paper';
+import {
+  Avatar,
+  IconButton,
+  Surface,
+  Text,
+  TouchableRipple,
+} from 'react-native-paper';
 import type { Session } from '@drum-scheduler/contracts';
 import {
   getFormattedMinutes,
   getLastFinishedDateFormatted,
-} from '../session-utils';
+} from '../../session-utils';
 import { styles } from './session-list-item.style';
 
 export function SessionListItem({

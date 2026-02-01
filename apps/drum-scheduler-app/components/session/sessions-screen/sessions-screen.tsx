@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -10,8 +10,8 @@ import { useSessionsQuery } from '@drum-scheduler/sdk';
 import { Session } from '@drum-scheduler/contracts';
 import { API_BASE_URL } from '../../../config/api';
 import { SessionsHeader } from './sessions-header';
-import { SessionsStatus } from './sessions-status';
-import { SessionListItem } from './session-list-item';
+import { SessionLoadingPlaceholder } from '../session-list/session-loading-placeholder/session-loading-placeholder';
+import { SessionListItem } from '../session-list/session-list-item/session-list-item';
 import { styles } from './sessions-screen.style';
 
 export default function SessionsScreen({
@@ -23,14 +23,6 @@ export default function SessionsScreen({
 
   const sessionsResult = useSessionsQuery(API_BASE_URL);
 
-  const statusMessage = useMemo(() => {
-    if (sessionsResult?.isLoading) return 'Loading sessions…';
-    if (sessionsResult?.error)
-      return sessionsResult.error.message || 'Failed to load sessions';
-    if (sessionsResult?.data?.length === 0) return 'No sessions yet.';
-    return null;
-  }, [sessionsResult?.isLoading, sessionsResult?.error, sessionsResult?.data]);
-
   const renderItem = ({ item }: ListRenderItemInfo<Session>) => (
     <SessionListItem session={item} onPress={() => onOpenSession?.(item.id)} />
   );
@@ -40,10 +32,7 @@ export default function SessionsScreen({
       <View style={styles.screen}>
         <SessionsHeader query={query} onChangeQuery={setQuery} />
 
-        <SessionsStatus
-          message={statusMessage}
-          isLoading={Boolean(sessionsResult?.isLoading)}
-        />
+        <SessionLoadingPlaceholder isLoading={Boolean(sessionsResult?.isLoading)} />
 
         <FlatList
           data={sessionsResult?.data ?? []}
