@@ -7,6 +7,21 @@ import { MD3LightTheme as PaperTheme, PaperProvider, useTheme } from 'react-nati
 const paperTheme = {
   ...PaperTheme,
   roundness: 3,
+  fonts: {
+    ...PaperTheme.fonts,
+    labelSmall: {
+      ...PaperTheme.fonts.labelSmall,
+      fontWeight: '700',
+    },
+    labelMedium: {
+      ...PaperTheme.fonts.labelMedium,
+      fontWeight: '700',
+    },
+    labelLarge: {
+      ...PaperTheme.fonts.labelLarge,
+      fontWeight: '700',
+    },
+  },
   //setup if needed
   // colors: {
   //   ...PaperTheme.colors,

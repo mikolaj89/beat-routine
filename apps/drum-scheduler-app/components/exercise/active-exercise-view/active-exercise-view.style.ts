@@ -1,32 +1,12 @@
 import { StyleSheet } from 'react-native';
-
-const theme = {
-  colors: {
-    bg: '#F2F3F5',
-    surface: '#FFFFFF',
-    border: '#D6D9DE',
-    text: '#1F2430',
-    textMuted: '#6B7280',
-    icon: '#4B5563',
-    primary: '#3B82F6',
-    primaryText: '#FFFFFF',
-    shadow: 'rgba(0,0,0,0.12)',
-  },
-  spacing: {
-    lg: 18,
-  },
-  typography: {
-    cardTitle: 18,
-    body: 14,
-  },
-};
+import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
   activeWrap: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: 120,
     gap: 8,
   },

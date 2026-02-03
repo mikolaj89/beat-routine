@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Card, Text } from 'react-native-paper';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useExercise } from '../../../hooks/use-exercise';
 import ActiveExerciseView from '../active-exercise-view/active-exercise-view';
@@ -50,34 +51,46 @@ export default function ExerciseScreen({
         ) : (
           <>
             <View style={styles.header}>
-              <Text style={styles.sessionName}>{sessionName}</Text>
+              <Text variant="labelSmall" style={styles.sessionName}>
+                {sessionName}
+              </Text>
               <View style={styles.titleRow}>
-                <Text style={styles.exerciseTitle}>{currentExercise.name}</Text>
-                <Text style={styles.exerciseProgress}>
+                <Text variant="titleMedium" style={styles.exerciseTitle}>
+                  {currentExercise.name}
+                </Text>
+                <Text variant="bodyMedium">
                   Exercise {currentIndex} / {totalExercises}
                 </Text>
               </View>
             </View>
 
-            <View style={styles.card}>
-              <Text style={styles.cardLabel}>Notes</Text>
-              <Text style={styles.cardValue}>
-                {currentExercise.description}
-              </Text>
+            <Card style={styles.card}>
+              <Card.Content style={styles.cardContent}>
+                <Text variant="labelSmall" style={styles.cardLabel}>
+                  Notes
+                </Text>
+                <Text variant="bodyMedium">
+                  {currentExercise.description}
+                </Text>
 
-              <View style={styles.row}>
-                <View style={styles.kv}>
-                  <Text style={styles.kLabel}>Duration</Text>
-                  <Text style={styles.kValue}>
-                    {currentExercise.durationMinutes} min
-                  </Text>
+                <View style={styles.row}>
+                  <View style={styles.kv}>
+                    <Text variant="labelSmall" style={styles.cardMetaLabel}>
+                      Duration
+                    </Text>
+                    <Text variant="bodyMedium">
+                      {currentExercise.durationMinutes} min
+                    </Text>
+                  </View>
+                  <View style={styles.kv}>
+                    <Text variant="labelSmall" style={styles.cardMetaLabel}>
+                      BPM
+                    </Text>
+                    <Text variant="bodyMedium">{currentExercise.bpm}</Text>
+                  </View>
                 </View>
-                <View style={styles.kv}>
-                  <Text style={styles.kLabel}>BPM</Text>
-                  <Text style={styles.kValue}>{currentExercise.bpm}</Text>
-                </View>
-              </View>
-            </View>
+              </Card.Content>
+            </Card>
           </>
         )}
 

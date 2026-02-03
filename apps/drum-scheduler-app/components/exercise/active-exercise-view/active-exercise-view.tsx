@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { styles } from './active-exercise-view.style';
 
 export default function ActiveExerciseView({
