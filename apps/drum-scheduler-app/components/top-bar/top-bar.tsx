@@ -17,7 +17,7 @@ export function TopBar({
   const showTitle = Boolean(title) && !children;
   const showMenu = !onBack && Boolean(onMenu);
   return (
-    <Appbar.Header mode="small" elevated statusBarHeight={0} style={styles.appbar}>
+    <Appbar.Header  mode="small" elevated statusBarHeight={0} style={styles.appbar}>
       {onBack ? (
         <Appbar.Action icon="arrow-left" onPress={onBack} />
       ) : showMenu ? (

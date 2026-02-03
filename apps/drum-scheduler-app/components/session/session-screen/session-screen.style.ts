@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
   screen: { flex: 1 },
 
   header: {
-    paddingHorizontal: 8,
-    paddingTop: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.horizontalMargin,
+    paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.md,
     gap: theme.spacing.xs,
   },
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
 
   sectionTitle: {
-    paddingHorizontal: 8,
+    paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: theme.spacing.sm,
     fontSize: theme.typography.body,
     fontWeight: '600',
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   },
 
   listTitle: {
-    paddingHorizontal: 8,
+    paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: theme.spacing.sm,
     paddingBottom: theme.spacing.sm,
     fontSize: theme.typography.body,
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
 
   listContent: {
     marginTop: 2,
-    paddingHorizontal: 8,
+    paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: 110,
   },
 

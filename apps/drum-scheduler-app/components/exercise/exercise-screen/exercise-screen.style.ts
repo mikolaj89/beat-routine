@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { theme as appTheme } from '../../../utils/theme';
 
 export const theme = {
   colors: {
@@ -36,7 +37,7 @@ export const styles = StyleSheet.create({
   screen: { flex: 1 },
 
   header: {
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: appTheme.spacing.horizontalMargin,
     paddingTop: theme.spacing.sm,
     paddingBottom: theme.spacing.md,
   },
@@ -67,7 +68,7 @@ export const styles = StyleSheet.create({
   },
 
   card: {
-    marginHorizontal: theme.spacing.lg,
+    marginHorizontal: appTheme.spacing.horizontalMargin,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radius.lg,
     borderWidth: 1,

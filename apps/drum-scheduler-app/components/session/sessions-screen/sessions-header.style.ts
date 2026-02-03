@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
   appbar: {
@@ -8,7 +9,7 @@ export const styles = StyleSheet.create({
   },
 
   searchWrap: {
-    paddingHorizontal: 8,
+    paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: 8,
     paddingBottom: 8,
   },

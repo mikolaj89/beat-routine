@@ -2,16 +2,17 @@ import React from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
-  Text,
+  
   View,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Divider } from 'react-native-paper';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useSessionQuery } from '@drum-scheduler/sdk';
 import { TopBar } from '../../top-bar/top-bar';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
 import { ExerciseCard } from './exercise-card/exercise-card';
 import { styles } from './session-screen.style';
+import { Text } from 'react-native-paper';
 
 export default function SessionScreen({
   baseUrl,
@@ -37,7 +38,7 @@ export default function SessionScreen({
   return (
     <ScreenContainer>
       <View style={styles.screen}>
-        <TopBar title="Session" onBack={onBack} />
+        <TopBar title={sessionResult.data?.name} onBack={onBack} />
 
         {sessionResult.isLoading ? (
           <Text style={styles.sectionTitle}>Loading session…</Text>
@@ -51,13 +52,12 @@ export default function SessionScreen({
 
         {sessionResult.data ? (
           <View style={styles.header}>
-            <Text style={styles.sessionTitle}>{sessionResult.data.name}</Text>
             <Text style={styles.sessionMeta}>
               Total duration: {sessionResult.data.totalDuration ?? 0} min
             </Text>
           </View>
         ) : null}
-
+        <Divider horizontalInset={true}  />
         <Text style={styles.listTitle}>Practice session plan</Text>
 
         <FlatList

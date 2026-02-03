@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
   listContent: {
-    paddingHorizontal: 8,
+    paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: 120,
   },
 });

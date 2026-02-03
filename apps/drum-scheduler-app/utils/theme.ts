@@ -23,6 +23,7 @@ export const theme = {
     md: 14,
     lg: 18,
     xl: 24,
+    horizontalMargin: 14, // Consistent horizontal margin for screen elements (uses md value)
   },
   typography: {
     title: 22,
