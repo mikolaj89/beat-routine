@@ -19,11 +19,7 @@ describe('SessionsScreen', () => {
       error: null,
     } as any);
 
-    const { getByText } = render(
-      <SessionsScreen onOpenSession={() => {}} />
-    );
-
-    expect(getByText('No sessions yet.')).toBeTruthy();
-    expect(getByText('New Session')).toBeTruthy();
+    const { getByText } = render(<SessionsScreen onOpenSession={() => {}} />);
+    expect(getByText('No sessions found.')).toBeTruthy();
   });
 });

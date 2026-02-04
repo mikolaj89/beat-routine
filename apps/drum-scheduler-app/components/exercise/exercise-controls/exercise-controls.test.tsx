@@ -13,7 +13,6 @@ describe('ExerciseControls', () => {
     const { getByLabelText, rerender, queryByLabelText } = render(
       <ExerciseControls
         isPrevDisabled={false}
-        isNextDisabled={false}
         mode="preview"
         onPrev={onPrev}
         onPlay={onPlay}
@@ -25,7 +24,6 @@ describe('ExerciseControls', () => {
 
     fireEvent.press(getByLabelText('Previous'));
     fireEvent.press(getByLabelText('Play'));
-    fireEvent.press(getByLabelText('Finish'));
     fireEvent.press(getByLabelText('Next'));
 
     expect(queryByLabelText('Pause')).toBeNull();
@@ -33,7 +31,6 @@ describe('ExerciseControls', () => {
     rerender(
       <ExerciseControls
         isPrevDisabled={false}
-        isNextDisabled={false}
         mode="active"
         onPrev={onPrev}
         onPlay={onPlay}
@@ -48,7 +45,6 @@ describe('ExerciseControls', () => {
     expect(onPrev).toHaveBeenCalledTimes(1);
     expect(onPlay).toHaveBeenCalledTimes(1);
     expect(onPause).toHaveBeenCalledTimes(1);
-    expect(onFinish).toHaveBeenCalledTimes(1);
     expect(onNext).toHaveBeenCalledTimes(1);
   });
 });

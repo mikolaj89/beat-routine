@@ -54,6 +54,7 @@ export const styles = StyleSheet.create({
 
   ctaWrap: {
     position: 'absolute',
+    padding: theme.spacing.horizontalMargin,
     left: 0,
     right: 0,
     bottom: 18,

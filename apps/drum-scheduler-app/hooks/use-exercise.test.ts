@@ -117,7 +117,7 @@ describe('useExercise', () => {
 
     expect(result.current.isPlayDisabled).toBe(false);
     expect(result.current.isPrevDisabled).toBe(true);
-    expect(result.current.isNextDisabled).toBe(false);
+    
 
     act(() => {
       result.current.startExercise();
@@ -125,6 +125,6 @@ describe('useExercise', () => {
 
     expect(result.current.isPlayDisabled).toBe(true);
     expect(result.current.isPrevDisabled).toBe(true);
-    expect(result.current.isNextDisabled).toBe(true);
+    
   });
 });

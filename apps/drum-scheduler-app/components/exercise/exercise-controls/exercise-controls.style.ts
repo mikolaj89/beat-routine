@@ -32,7 +32,7 @@ export const getStyles = ({ isPending }: ControlStylesParams ) => StyleSheet.cre
     justifyContent: 'center',
   },
   controlBtnSecondary: {
-    borderRadius: 999,
+    
     minWidth: 80,
   },
   controlBtnSecondaryContent: {

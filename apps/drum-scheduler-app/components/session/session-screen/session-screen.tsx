@@ -77,6 +77,7 @@ export default function SessionScreen({
 
         <View style={styles.ctaWrap}>
           <Button
+            style={{ width: '100%' }}
             mode="contained"
             
             onPress={() => {

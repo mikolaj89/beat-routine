@@ -6,4 +6,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: 120,
   },
+  emptyText: {
+    paddingTop: theme.spacing.md,
+    color: theme.colors.textMuted,
+  },
 });

@@ -21,7 +21,7 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
   console.log('Current Index:', currentIndex);
 
   const currentExercise = getFormattedExercise(exercises[currentIndex - 1]);
-  const durationSeconds = (currentExercise?.durationMinutes ?? 0) * 3; // in seconds
+  const durationSeconds = (currentExercise?.durationMinutes ?? 0) * 60; // in seconds
   const totalExercises = exercises.length;
   console.log('Total Exercises:', totalExercises);
 
