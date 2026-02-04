@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
 import { Session } from '@drum-scheduler/contracts';

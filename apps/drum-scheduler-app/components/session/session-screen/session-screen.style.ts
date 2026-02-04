@@ -12,11 +12,6 @@ export const styles = StyleSheet.create({
     paddingBottom: theme.spacing.md,
     gap: theme.spacing.xs,
   },
-  sessionTitle: {
-    fontSize: theme.typography.cardTitle,
-    fontWeight: '800',
-    color: theme.colors.text,
-  },
   sessionMeta: {
     fontSize: theme.typography.body,
     color: theme.colors.textMuted,

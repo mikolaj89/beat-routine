@@ -60,10 +60,10 @@ export default function ExerciseControls({
 
         {isPreviewMode || isPaused ? (
           <IconButton
-            mode="contained-tonal"
+            mode="contained"
             onPress={onPlay}
             accessibilityLabel="Play"
-            // style={styles.controlBtn}
+            
             size={26}
             icon={({ size, color }) => (
               <Icon name="play-arrow" size={size} color={color} />
@@ -74,7 +74,6 @@ export default function ExerciseControls({
             mode="contained"
             onPress={onPause}
             accessibilityLabel="Pause"
-            style={styles.controlBtn}
             size={26}
             icon={({ size, color }) => (
               <Icon name="pause" size={size} color={color} />
@@ -86,7 +85,7 @@ export default function ExerciseControls({
             mode="contained"
             onPress={onFinish}
             accessibilityLabel="Finish"
-            style={styles.controlBtn}
+            
             size={26}
             icon={({ size, color }) => (
               <Icon name="close" size={size} color={color} />

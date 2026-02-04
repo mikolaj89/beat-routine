@@ -24,13 +24,6 @@ export const getStyles = ({ isPending }: ControlStylesParams ) => StyleSheet.cre
     flex: 1,
 
   },
-  controlBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   controlBtnSecondary: {
     
     minWidth: 80,
