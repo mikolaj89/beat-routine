@@ -2,9 +2,9 @@ import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './screen-container.style';
-import { MD3LightTheme as PaperTheme, PaperProvider, useTheme } from 'react-native-paper';
+import { MD3LightTheme as PaperTheme, PaperProvider, useTheme, MD3Theme, } from 'react-native-paper';
 
-const paperTheme = {
+const paperTheme : MD3Theme = {
   ...PaperTheme,
   roundness: 3,
   fonts: {
@@ -21,7 +21,11 @@ const paperTheme = {
       ...PaperTheme.fonts.labelLarge,
       fontWeight: '700',
     },
+
+   
   },
+  
+  
   //setup if needed
   // colors: {
   //   ...PaperTheme.colors,

@@ -29,7 +29,6 @@ export default function ExerciseScreen({
     mode,
     timeFormatted,
     isPrevDisabled,
-    isNextDisabled,
     handlePrev,
     handleNext,
     currentExercise,
@@ -97,7 +96,6 @@ export default function ExerciseScreen({
         <ExerciseControls
           
           isPrevDisabled={isPrevDisabled}
-          isNextDisabled={isNextDisabled}
           
           onPrev={handlePrev}
           onNext={handleNext}

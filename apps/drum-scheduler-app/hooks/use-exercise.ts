@@ -21,32 +21,30 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
   console.log('Current Index:', currentIndex);
 
   const currentExercise = getFormattedExercise(exercises[currentIndex - 1]);
-  const durationSeconds = (currentExercise?.durationMinutes ?? 0) * 60; // in seconds
+  const durationSeconds = (currentExercise?.durationMinutes ?? 0) * 3; // in seconds
   const totalExercises = exercises.length;
   console.log('Total Exercises:', totalExercises);
 
   const [mode, setMode] = useState<ExerciseState>('preview');
-  const metronome = useMetronome({...metronomeOptions,
-    bpm: currentExercise.bpm
+  const metronome = useMetronome({
+    ...metronomeOptions,
+    bpm: currentExercise.bpm,
   });
 
   const onTimerFinish = () => {
-   finishExercise();
+    finishExercise();
     handleNext();
-
-  }
+  };
   const { secondsLeft, startCountdown, stopCountdown, resetCountdown } =
     useTimer(durationSeconds, onTimerFinish);
 
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const isPlayDisabled = mode === 'active';
-  const isPrevNextDisabled = mode !== 'preview';
   const isPendingExercise = mode !== 'preview';
 
-  const isPrevDisabled = currentIndex === 1 || isPrevNextDisabled;
-  const isNextDisabled = isPrevNextDisabled;
+  const isPrevDisabled = currentIndex === 1;
 
   const timeFormatted = getFormattedTime(secondsLeft);
 
@@ -75,22 +73,27 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
   }, [durationSeconds]);
 
   const handlePrev = () => {
-    if (isPrevNextDisabled) return;
     setCurrentIndex(prev => Math.max(1, prev - 1));
   };
 
   const handleNext = () => {
-    if (isPrevNextDisabled) return;
-    if(currentIndex === totalExercises) {
-      Alert.alert('You finished all exercises!', 'Go back to sessions screen?', [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Go to sessions', onPress: () => navigation.navigate('Sessions') },
-          ]);
+    if (currentIndex === totalExercises) {
+      Alert.alert(
+        'You finished all exercises!',
+        'Go back to sessions screen?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Go to sessions',
+            onPress: () => navigation.navigate('Sessions'),
+          },
+        ],
+      );
     }
     setCurrentIndex(prev => Math.min(totalExercises, prev + 1));
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (totalExercises === 0) return;
     if (currentIndex < 1) setCurrentIndex(1);
     if (currentIndex > totalExercises) setCurrentIndex(totalExercises);
@@ -104,13 +107,11 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
     setMode,
     timeFormatted,
     isPlayDisabled,
-    isPrevNextDisabled,
     handlePrev,
     handleNext,
     currentExercise,
     currentIndex,
     isPrevDisabled,
-    isNextDisabled,
-    isPendingExercise
+    isPendingExercise,
   };
 };

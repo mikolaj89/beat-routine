@@ -1,13 +1,12 @@
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { getStyles, theme } from './exercise-controls.style';
+import { Button, IconButton } from 'react-native-paper';
+import { getStyles } from './exercise-controls.style';
 import { ExerciseState } from '../exercise-screen/exercise-screen.types';
 
 export default function ExerciseControls({
   isPrevDisabled,
-  isNextDisabled,
-
 
   mode,
   onPrev,
@@ -17,9 +16,7 @@ export default function ExerciseControls({
   onNext,
 }: {
   isPrevDisabled: boolean;
-  isNextDisabled: boolean;
 
- 
   mode: ExerciseState;
   onPrev: () => void;
   onPlay: () => void;
@@ -37,80 +34,87 @@ export default function ExerciseControls({
     <View style={styles.controlsWrap}>
       <View style={styles.controlsBar}>
         {isPreviewMode && (
-          <Pressable
+          <Button
+            mode="outlined"
+            onPress={onPrev}
+            accessibilityLabel="Previous"
+            disabled={isPrevDisabled}
             style={[
               styles.controlBtnSecondary,
               isPrevDisabled && styles.controlBtnDisabled,
             ]}
-            onPress={onPrev}
-            accessibilityLabel="Previous"
-            disabled={isPrevDisabled}
+            contentStyle={styles.controlBtnSecondaryContent}
+            labelStyle={styles.controlBtnSecondaryLabel}
+            icon={({ size, color }) => (
+              <Icon
+                name="chevron-left"
+                size={size}
+                color={color}
+                style={styles.controlBtnSecondaryIconLeft}
+              />
+            )}
           >
-            <Icon
-              name="chevron-left"
-              size={22}
-              color={theme.colors.secondaryText}
-              style={styles.controlBtnSecondaryIconLeft}
-            />
-            <Text style={styles.controlBtnSecondaryText}>PREV</Text>
-          </Pressable>
+            Prev
+          </Button>
         )}
 
         {isPreviewMode || isPaused ? (
-          <Pressable
-            style={[
-              styles.controlBtn,
-              
-            ]}
+          <IconButton
+            mode="contained-tonal"
             onPress={onPlay}
             accessibilityLabel="Play"
-        
-          >
-            <Icon
-              name="play-arrow"
-              size={26}
-              color={theme.colors.primaryText}
-            />
-          </Pressable>
+            // style={styles.controlBtn}
+            size={26}
+            icon={({ size, color }) => (
+              <Icon name="play-arrow" size={size} color={color} />
+            )}
+          />
         ) : (
-          <Pressable
-            style={[
-              styles.controlBtn
-              
-            ]}
+          <IconButton
+            mode="contained"
             onPress={onPause}
             accessibilityLabel="Pause"
-          >
-            <Icon name="pause" size={26} color={theme.colors.primaryText} />
-          </Pressable>
+            style={styles.controlBtn}
+            size={26}
+            icon={({ size, color }) => (
+              <Icon name="pause" size={size} color={color} />
+            )}
+          />
         )}
         {isPendingMode && (
-          <Pressable
-            style={styles.controlBtn}
+          <IconButton
+            mode="contained"
             onPress={onFinish}
             accessibilityLabel="Finish"
-          >
-            <Icon name="close" size={26} color={theme.colors.primaryText} />
-          </Pressable>
+            style={styles.controlBtn}
+            size={26}
+            icon={({ size, color }) => (
+              <Icon name="close" size={size} color={color} />
+            )}
+          />
         )}
         {isPreviewMode && (
-          <Pressable
-            style={[
-              styles.controlBtnSecondary,
-              isNextDisabled && styles.controlBtnDisabled,
-            ]}
+          <Button
+            mode="outlined"
             onPress={onNext}
             accessibilityLabel="Next"
-            disabled={isNextDisabled}
+            style={[styles.controlBtnSecondary]}
+            contentStyle={[
+              styles.controlBtnSecondaryContent,
+              styles.controlBtnSecondaryContentReverse,
+            ]}
+            labelStyle={styles.controlBtnSecondaryLabel}
+            icon={({ size, color }) => (
+              <Icon
+                name="chevron-right"
+                size={size}
+                color={color}
+                style={styles.controlBtnSecondaryIconRight}
+              />
+            )}
           >
-            <Text style={styles.controlBtnSecondaryText}>NEXT</Text>
-            <Icon
-              name="chevron-right"
-              size={22}
-              color={theme.colors.secondaryText}
-              style={styles.controlBtnSecondaryIconRight}
-            />
-          </Pressable>
+            Next
+          </Button>
         )}
       </View>
     </View>

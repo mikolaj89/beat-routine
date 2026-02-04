@@ -1,18 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-export const theme = {
-  colors: {
-    surface: '#FFFFFF',
-    border: '#D6D9DE',
-    primary: '#3B82F6',
-    primaryText: '#FFFFFF',
-    secondarySurface: '#EEF2F7',
-    secondaryBorder: '#E3E8F0',
-    secondaryText: '#3B82F6',
-    shadow: 'rgba(0,0,0,0.12)',
-  },
-};
-
 type  ControlStylesParams = {
   isPending: boolean;
 } 
@@ -32,16 +19,8 @@ export const getStyles = ({ isPending }: ControlStylesParams ) => StyleSheet.cre
     alignItems: 'center',
     justifyContent: isPending ? 'center' : 'space-between',
     gap: 14,
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
     paddingHorizontal: 14,
     paddingVertical: 10,
-    shadowColor: theme.colors.shadow,
-    shadowOpacity: 1,
-    shadowRadius: 14,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 3,
     flex: 1,
 
   },
@@ -51,25 +30,28 @@ export const getStyles = ({ isPending }: ControlStylesParams ) => StyleSheet.cre
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.colors.primary,
   },
   controlBtnSecondary: {
-    height: 35,
-    paddingHorizontal: 10,
     borderRadius: 999,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    gap: 2,
-    backgroundColor: theme.colors.secondarySurface,
-    borderWidth: 1,
-    borderColor: theme.colors.secondaryBorder,
+    minWidth: 80,
   },
-  controlBtnSecondaryText: {
-    color: theme.colors.secondaryText,
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 0.4,
+  controlBtnSecondaryContent: {
+    height: 36,
+    paddingHorizontal: 2,
+    paddingVertical: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 1,
+  },
+  controlBtnSecondaryLabel: {
+    marginVertical: 0,
+    paddingVertical: 0,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+  },
+  controlBtnSecondaryContentReverse: {
+    flexDirection: 'row-reverse',
   },
   controlBtnSecondaryIconLeft: {
     marginLeft: -8,
