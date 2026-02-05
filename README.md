@@ -1,7 +1,21 @@
-Drum scheduler - app for assisting in my drum practice sessions. So far it contains:
-- API (Deno)
-- admin-client (Next.js)
+Drum Scheduler is a personal practice assistant for drummers. It helps plan, manage, and follow structured drum practice sessions with clear steps and goals. The long-term aim is to provide a consistent workflow across web and mobile so a drummer can prepare sessions in one place and execute them with focus.
 
-Next step is a mobile app (technology yet needs to be choosen, but it's probably going to be React Native). 
-It will read practice sessions and allow to play exercises included in session (as metronome in given BPM). This way user/drummer can follow all major steps for a given drum practice session one by one, with focus and clear goals.
+## Monorepo overview
+This repository is a pnpm + Turborepo monorepo. It contains multiple apps and shared packages that make up the Drum Scheduler platform.
+
+### Apps
+- **API** (Deno): The backend service that provides data and business logic.
+- **Admin client** (Next.js): The web admin interface for creating and managing practice sessions.
+- **Mobile app** (React Native): The practice companion for reading sessions and running exercises with a metronome in the specified BPM.
+
+### Packages
+- **contracts**: Shared types and contracts between apps and the API.
+- **db-schema**: Database schema definitions.
+- **sdk**: Shared client utilities for consuming the API.
+
+## Purpose
+The project exists to streamline drum practice by:
+- organizing sessions into actionable steps,
+- keeping goals clear and measurable,
+- enabling a smooth handoff from planning (admin client) to execution (mobile app).
 
