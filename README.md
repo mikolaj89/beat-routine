@@ -19,3 +19,11 @@ The project exists to streamline drum practice by:
 - keeping goals clear and measurable,
 - enabling a smooth handoff from planning (admin client) to execution (mobile app).
 
+## Running the project (basic)
+1. Install dependencies from the repo root: pnpm install
+2. You can also run apps individually:
+- API: pnpm dev:api
+- Admin client: pnpm dev:admin-client
+- Mobile app (Metro): pnpm dev:app-rn
+- Mobile app (Android): pnpm dev:app-android
+
