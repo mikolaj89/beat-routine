@@ -16,4 +16,4 @@ db/*.sqlite-journal
 deno.cache/
 
 .turbo
-
+designs/
