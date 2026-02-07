@@ -37,7 +37,7 @@ export type Exercise = ExerciseRow;
 export type Session = SessionRow;
 export type SessionExercise = SessionExerciseRow;
 
-export const CategorySchema: z.ZodType<Category> = CategoryRowSchema;
-export const ExerciseSchema: z.ZodType<Exercise> = ExerciseRowSchema;
-export const SessionSchema: z.ZodType<Session> = SessionRowSchema;
-export const SessionExerciseSchema: z.ZodType<SessionExercise> = SessionExerciseRowSchema;
+export const CategorySchema = CategoryRowSchema;
+export const ExerciseSchema = ExerciseRowSchema;
+export const SessionSchema = SessionRowSchema;
+export const SessionExerciseSchema = SessionExerciseRowSchema;
