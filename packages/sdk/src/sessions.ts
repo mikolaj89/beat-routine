@@ -3,7 +3,7 @@ import {
   Exercise,
   Session
 } from "@drum-scheduler/contracts";
-import { ApiClient } from "./api-client.js";
+import { ApiClient } from "./api-client";
 
 export const sessionsQueryKeys = {
   all: ["sessions"] as const,
