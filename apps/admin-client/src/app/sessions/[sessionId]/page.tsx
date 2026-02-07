@@ -1,3 +1,4 @@
+import { fetchSession } from "@/utils/sessions-api";
 import { SessionDetails } from "@/components/Session/SessionDetails";
 import { Box, Typography } from "@mui/material";
 import { fetchSessionById, SessionWithExercises } from "@drum-scheduler/sdk";
@@ -12,7 +13,7 @@ export default async function Page({ params }: PageProps) {
   const { sessionId } = await params;
   let data: SessionWithExercises | null = null;
   try {
-    data = await fetchSessionById("http://localhost:8000", 0);
+    data = await fetchSessionById("http://localhost:8000", parseInt(sessionId));
   } catch (error) {
     return (
       <Box>
