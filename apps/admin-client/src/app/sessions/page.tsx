@@ -1,17 +1,23 @@
-
 import { SessionsList } from "@/components/Session/SessionsList";
 import { Typography } from "@mui/material";
 import { CreateSession } from "@/components/Session/CreateSession";
 import { fetchSessions } from "@drum-scheduler/sdk";
+import { Suspense } from "react";
+import Loading from "./loading";
 
-export default async function Page() {
+async function SessionsData() {
   const data = await fetchSessions("http://localhost:8000");
+  return <SessionsList sessionsData={data} />;
+}
 
+export default function Page() {
   return (
     <>
       <Typography variant="h1">Sessions</Typography>
       <CreateSession />
-      <SessionsList sessionsData={data} />
+      <Suspense fallback={<Loading />}>
+        <SessionsData />
+      </Suspense>
     </>
   );
 }

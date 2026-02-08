@@ -2,17 +2,30 @@
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
 import { useQueryClient } from "@tanstack/react-query";
 import { getExercisesColumns } from "./ExercisesTableHelper";
-import { Button, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { EditExerciseModal } from "../EditExerciseModal";
 import { ConfirmationDialog } from "@/components/Common/ConfirmationDialog";
-import { useSearchParams } from "next/navigation";
-import { useExercisesQuery, useDeleteExercise, useExerciseQuery } from "@drum-scheduler/sdk";
+import { useDeleteExercise, useExercisesQuery } from "@drum-scheduler/sdk";
+import type { Exercise } from "@drum-scheduler/contracts";
 
-export const ExercisesTable = () => {
+type ExercisesTableProps = {
+  initialData: Exercise[];
+  filters: {
+    name: string;
+    categoryId: string;
+  };
+};
+
+export const ExercisesTable = ({ initialData, filters }: ExercisesTableProps) => {
   const API_BASE_URL = "http://localhost:8000";
   const queryClient = useQueryClient();
   const [isMounted, setIsMounted] = useState(false);
+  
+  // Use React Query with SSR data as initialData for hydration
+  const { data: exercises = [] } = useExercisesQuery(API_BASE_URL, filters, {
+    initialData,
+  });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [editingExerciseId, setEditingExerciseId] = useState<number | null>(
@@ -20,16 +33,6 @@ export const ExercisesTable = () => {
   );
   const [deletedExerciseId, setDeletedExerciseId] = useState<number | null>(
     null
-  );
-
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name") || "";
-  const categoryId = searchParams.get("categoryId") || "";
-
-  const { data, isFetching } = useExercisesQuery(
-    API_BASE_URL,
-    { name, categoryId },
-    { refetchOnMount: false }
   );
 
   const deleteMutation = useDeleteExercise(API_BASE_URL);
@@ -45,6 +48,7 @@ export const ExercisesTable = () => {
         onSuccess: () => {
           setDeletedExerciseId(null);
           setIsConfirmModalOpen(false);
+          // React Query will automatically refetch via invalidation
         },
       });
     }
@@ -101,8 +105,7 @@ export const ExercisesTable = () => {
               noRowsVariant: "skeleton",
             },
           }}
-          loading={isFetching}
-          rows={data ?? []}
+          rows={exercises ?? []}
           columns={columns}
           disableRowSelectionOnClick
         />

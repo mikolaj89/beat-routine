@@ -1,71 +1,67 @@
 import { ExercisesTable } from "@/components/Exercise/ExercisesTable/ExercisesTable";
-import { ResponseData } from "@/utils/request";
 import { Typography } from "@mui/material";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
 import { CreateExercise } from "@/components/Exercise/CreateExercise";
-import type { Category, Exercise } from "@drum-scheduler/contracts";
 import { ExerciseFilters } from "@/components/Exercise/ExercisesTable/ExerciseFilters";
-import {
-  TableButtonsWrapper,
-} from "@/components/Common/Container";
+import { TableButtonsWrapper } from "@/components/Common/Container";
 import { fetchCategories, fetchExercises } from "@drum-scheduler/sdk";
+import { Suspense } from "react";
+import Loading from "./loading";
+
+async function CategoriesAndFilters({
+  name,
+  categoryId,
+}: {
+  name: string;
+  categoryId: string;
+}) {
+  const categories = await fetchCategories("http://localhost:8000");
+  return (
+    <ExerciseFilters
+      initialValues={{ name, categoryId }}
+      categories={categories ?? []}
+    />
+  );
+}
+
+async function ExercisesData({
+  name,
+  categoryId,
+}: {
+  name: string;
+  categoryId: string;
+}) {
+  const exercises = await fetchExercises("http://localhost:8000", {
+    name,
+    categoryId,
+  });
+  return <ExercisesTable initialData={exercises ?? []} filters={{ name, categoryId }} />;
+}
 
 type PageProps = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export default async function ExercisesPage({ searchParams }: PageProps) {
-  const API_BASE_URL = "http://localhost:8000";
-  // Step 1: Create a new query client
-  const queryClient = new QueryClient();
-  let categories: Category[] = [];
-
   let { name, categoryId } = (await searchParams) || {};
   name = Array.isArray(name) ? name[0] : name ?? "";
   categoryId = Array.isArray(categoryId) ? categoryId[0] : categoryId ?? "";
-  // if(searchParams) {
-  //   name = (await searchParams)["name"]?.toString() || "";
-  //   categoryId =  ( await searchParams)["categoryId"]?.toString() || "";
-  // }
-  // const name = searchParams ? searchParams["name"] : "";
-  // const categoryId = searchParams ? searchParams["categoryId"] : "";
-    
 
-  await queryClient.prefetchQuery({
-    queryKey: ["exercises", name, categoryId],
-    queryFn: () => fetchExercises(API_BASE_URL, { name, categoryId }),
-  });
-  try {
-    categories = (await fetchCategories(API_BASE_URL)) ?? []; // probably no need to prefetch or store in react-query cache
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-  }
-
-  const { data } =
-    queryClient.getQueryData<ResponseData<Exercise[]>>(["exercises"]) ?? {};
-  if (data === null) {
-    return <div>{"Error: couldn't fetch exercises data"}</div>;
-  }
   return (
     <>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <TableButtonsWrapper>
-          <Typography margin={0} variant="h1">
-            Exercises
-          </Typography>
+      <TableButtonsWrapper>
+        <Typography margin={0} variant="h1">
+          Exercises
+        </Typography>
+        <CreateExercise />
+      </TableButtonsWrapper>
 
-          <CreateExercise />
-        </TableButtonsWrapper>
- 
-        <ExerciseFilters initialValues={{name, categoryId}} categories={categories} />
-        
-  
-        <ExercisesTable />
-      </HydrationBoundary>
+      <Suspense fallback={<Loading />}>
+        <CategoriesAndFilters name={name} categoryId={categoryId} />
+      </Suspense>
+
+      <Suspense fallback={<Loading />}>
+        <ExercisesData name={name} categoryId={categoryId} />
+      </Suspense>
     </>
   );
 }

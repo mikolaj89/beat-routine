@@ -114,12 +114,14 @@ export const fetchExercises = async (
 export function useExercisesQuery(
   baseUrl: string,
   filters: { name: string | null; categoryId: string | null },
-  options?: { refetchOnMount?: boolean }
+  options?: { refetchOnMount?: boolean; initialData?: Exercise[] | null }
 ) {
   return useQuery({
     queryKey: exercisesQueryKeys.filtered(filters),
     queryFn: () => fetchExercises(baseUrl, filters),
-    refetchOnMount: options?.refetchOnMount ?? true,
+    refetchOnMount: options?.initialData ? false : (options?.refetchOnMount ?? true),
+    initialData: options?.initialData ?? undefined,
+    // staleTime: options?.initialData ? 5000 : 0, // Keep SSR data fresh for 5s
   });
 }
 
