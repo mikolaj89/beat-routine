@@ -1,16 +1,7 @@
 "use client";
 
-import { Modal, Box, Typography, Button } from "@mui/material";
-import { useEffect, useState } from "react";
-import { ExerciseForm } from "./ExerciseForm/ExerciseForm";
-import {
-  EDITED_EXERCISE_ID_KEY,
-  getExerciseFormDataFormat,
-  useExerciseQuery,
-} from "./ExerciseForm/exercise-form-helper";
-import { useQueryClient } from "@tanstack/react-query";
+import { Modal, Box, Typography } from "@mui/material";
 import { EditExerciseForm } from "./ExerciseForm/EditExerciseForm";
-import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -47,7 +38,6 @@ export const EditExerciseModal = ({
           <Typography id="edit-modal-title" variant="h1" component="h3">
             Edit drum exercise
           </Typography>
-          {/* <EditExerciseForm exerciseId={exerciseId} handleClose={onClose} /> */}
           {exerciseId && (
             <EditExerciseForm exerciseId={exerciseId} handleClose={onClose} />
           )}

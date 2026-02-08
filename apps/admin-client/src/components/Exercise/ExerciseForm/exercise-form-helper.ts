@@ -1,7 +1,6 @@
 import { SelectOption } from "@/components/Common/Field/Select";
-import type { Category, Exercise } from "@drum-scheduler/contracts";
+import type { Category, Exercise, ExerciseInsert } from "@drum-scheduler/contracts";
 import { z } from "zod";
-import { useExerciseQuery as useExerciseQuerySDK } from "@drum-scheduler/sdk";
 
 // react-query keys
 export const EDITED_EXERCISE_ID_KEY = "editedExerciseId";
@@ -47,10 +46,6 @@ export const exerciseSchema = z.object({
 });
 
 export type ExerciseFormData = z.infer<typeof exerciseSchema>;
-export type ExerciseSubmitData = Pick<
-  Exercise,
-  "name" | "description" | "mp3Url" | "categoryId" | "bpm" | "durationMinutes"
->;
 
 export const getCategoryOpts = (categories: Category[]): SelectOption[] => {
   return categories.map((category) => ({
@@ -68,7 +63,7 @@ export const getExercisesOpts = (exercises: Exercise[]): SelectOption[] => {
 
 export const getExerciseSubmitFormat = (
   data: ExerciseFormData
-): ExerciseSubmitData => {
+): ExerciseInsert => {
   const { name, description, mp3Url, categoryId, bpm, durationMinutes } = data;
 
   return {
@@ -95,11 +90,3 @@ export const getExerciseFormDataFormat = (exercise: Exercise): ExerciseFormData 
   };
 };
 
-export const useExerciseQuery = (editedId: number | null) => {
-  const API_BASE_URL = "http://localhost:8000";
-  return useExerciseQuerySDK(
-    API_BASE_URL,
-    editedId ?? 0,
-    { enabled: !!editedId }
-  );
-};

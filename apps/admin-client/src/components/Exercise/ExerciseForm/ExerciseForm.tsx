@@ -27,7 +27,7 @@ export const ExerciseForm = () => {
   });
   const queryClient = useQueryClient();
 
-  const mutation = useCreateExercise<ExerciseFormData>(API_BASE_URL);
+  const mutation = useCreateExercise(API_BASE_URL);
 
   const categoriesData = useCategoriesQuery(API_BASE_URL).data;
 

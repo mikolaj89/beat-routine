@@ -53,7 +53,7 @@ export const EditExerciseForm = ({ handleClose, exerciseId }: ExerciseFormProps)
     }
   }, [initialValues, reset]);
 
-  const editMutation = useUpdateExercise<ExerciseFormData>(
+  const editMutation = useUpdateExercise(
     API_BASE_URL,
     exerciseId
   );

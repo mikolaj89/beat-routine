@@ -6,7 +6,8 @@ import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { EditExerciseModal } from "../EditExerciseModal";
 import { ConfirmationDialog } from "@/components/Common/ConfirmationDialog";
-import { useDeleteExercise, useExercisesQuery } from "@drum-scheduler/sdk";
+import { useDeleteExercise } from "@drum-scheduler/sdk";
+import { useExercisesQuery } from "@/hooks/useExercisesQuery";
 import type { Exercise } from "@drum-scheduler/contracts";
 
 type ExercisesTableProps = {
@@ -22,7 +23,6 @@ export const ExercisesTable = ({ initialData, filters }: ExercisesTableProps) =>
   const queryClient = useQueryClient();
   const [isMounted, setIsMounted] = useState(false);
   
-  // Use React Query with SSR data as initialData for hydration
   const { data: exercises = [] } = useExercisesQuery(API_BASE_URL, filters, {
     initialData,
   });
@@ -35,7 +35,7 @@ export const ExercisesTable = ({ initialData, filters }: ExercisesTableProps) =>
     null
   );
 
-  const deleteMutation = useDeleteExercise(API_BASE_URL);
+  const {mutate: deleteExercise} = useDeleteExercise(API_BASE_URL);
 
   const onDeleteBtnClick = (id: number) => {
     setDeletedExerciseId(id);
@@ -44,7 +44,7 @@ export const ExercisesTable = ({ initialData, filters }: ExercisesTableProps) =>
 
   const onDeleteConfirm = () => {
     if (deletedExerciseId) {
-      deleteMutation.mutate(deletedExerciseId, {
+      deleteExercise(deletedExerciseId, {
         onSuccess: () => {
           setDeletedExerciseId(null);
           setIsConfirmModalOpen(false);

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Category, Exercise } from "@drum-scheduler/contracts";
+import { Category, Exercise, ExerciseInsert } from "@drum-scheduler/contracts";
 import { ApiClient } from "./api-client";
 
 export const exercisesQueryKeys = {
@@ -99,10 +99,10 @@ export const fetchExercises = async (
   if (filters.categoryId) {
     params.set("categoryId", filters.categoryId);
   }
-  const paramsString = params.toString() ? `?${params.toString()}` : "";
+  const queryString = params.toString() ? `?${params.toString()}` : "";
   
   const apiClient = new ApiClient(baseUrl);
-  const result = await apiClient.get<Exercise[]>(`/exercises${paramsString}`);
+  const result = await apiClient.get<Exercise[]>(`/exercises${queryString}`);
   
   if ("error" in result) {
     throw new Error(result.error.message);
@@ -121,13 +121,12 @@ export function useExercisesQuery(
     queryFn: () => fetchExercises(baseUrl, filters),
     refetchOnMount: options?.initialData ? false : (options?.refetchOnMount ?? true),
     initialData: options?.initialData ?? undefined,
-    // staleTime: options?.initialData ? 5000 : 0, // Keep SSR data fresh for 5s
   });
 }
 
-export const createExercise = async <T extends Record<string, any>>(
+export const createExercise = async (
   baseUrl: string,
-  data: T
+  data: ExerciseInsert
 ) => {
   const apiClient = new ApiClient(baseUrl);
   const result = await apiClient.post<Exercise>("/exercises", data);
@@ -139,11 +138,11 @@ export const createExercise = async <T extends Record<string, any>>(
   return result;
 };
 
-export function useCreateExercise<T extends Record<string, any>>(baseUrl: string) {
+export function useCreateExercise(baseUrl: string) {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: (data: T) => createExercise(baseUrl, data),
+    mutationFn: (data: ExerciseInsert) => createExercise(baseUrl, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: exercisesQueryKeys.all,
@@ -167,14 +166,14 @@ export const updateExercise = async <T extends Record<string, any>>(
   return result;
 };
 
-export function useUpdateExercise<T extends Record<string, any>>(
+export function useUpdateExercise(
   baseUrl: string,
   exerciseId: number
 ) {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: (data: T) => updateExercise(baseUrl, exerciseId, data),
+    mutationFn: (data: ExerciseInsert) => updateExercise(baseUrl, exerciseId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: exercisesQueryKeys.byId(exerciseId),
