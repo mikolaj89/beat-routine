@@ -1,26 +1,27 @@
 import { fetchCategoryExercises } from "@/utils/exercises-api";
-import { addExercisesToSession } from "@/utils/sessions-api";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { useAddExerciseToSession as useAddExerciseToSessionSDK } from "@drum-scheduler/sdk";
 
 export const useAddExerciseToSession = (
   sessionId: number,
   exerciseId: string,
   onSuccess: (id: number) => void
-) =>
-  useMutation({
-    mutationFn: async () => {
-      if (!sessionId || !exerciseId)
+) => {
+  const API_BASE_URL = "http://localhost:8000";
+  const mutation = useAddExerciseToSessionSDK(API_BASE_URL, sessionId);
+  
+  return {
+    ...mutation,
+    mutate: () => {
+      if (!sessionId || !exerciseId) {
         throw new Error("Both sessionId and exerciseId are required.");
-
-      const response = await addExercisesToSession(sessionId, exerciseId);
-      if ("error" in response) {
-        throw new Error(response.error.message);
       }
-
-      return sessionId;
+      mutation.mutate(exerciseId, {
+        onSuccess: () => onSuccess(sessionId),
+      });
     },
-    onSuccess
-  });
+  };
+};
 
 export const useCategoryExercisesQuery = (categoryId: string) =>
   useQuery({

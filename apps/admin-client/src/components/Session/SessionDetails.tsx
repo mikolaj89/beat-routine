@@ -1,10 +1,6 @@
 "use client";
-import {
-  removeExerciseFromSession,
-} from "@/utils/sessions-api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Paper } from "@mui/material";
-import type { SessionWithExercises } from "@/utils/sessions-api";
 import ExercisesTable from "../Exercise/ExercisesTable/SessionExercisesTable";
 import { useCallback, useEffect, useState } from "react";
 import { getSessionExercisesColumns } from "../Exercise/ExercisesTable/ExercisesTableHelper";
@@ -13,7 +9,7 @@ import Divider from "@mui/material/Divider";
 import { SelectExerciseModal } from "./AddExerciseToSessionModal/AddExerciseToSessionModal";
 import type { Exercise } from "@drum-scheduler/contracts";
 import { ButtonsWrapper, TableButtonsWrapper } from "../Common/Container";
-import { useSessionQuery, useReorderSessionExercises } from "@drum-scheduler/sdk";
+import { useSessionQuery, useReorderSessionExercises, useRemoveExerciseFromSession, SessionWithExercises } from "@drum-scheduler/sdk";
 
 export const SessionDetails = ({
   sessionData,
@@ -35,21 +31,10 @@ export const SessionDetails = ({
     sessionData.id
   );
 
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["deleteSession", sessionData.id],
-    mutationFn: async ({
-      sessionId,
-      exerciseId,
-    }: {
-      sessionId: number;
-      exerciseId: number;
-    }) => {
-      const result = await removeExerciseFromSession(sessionId, exerciseId);
-      if ("error" in result) {
-        throw new Error(result.error.message);
-      }
-    },
-  });
+  const { mutate, isPending } = useRemoveExerciseFromSession(
+    "http://localhost:8000",
+    sessionData.id
+  );
 
   const [rows, setRows] = useState<Exercise[]>(data?.exercises ?? []);
   const handleChangeRows = useCallback(
@@ -75,10 +60,7 @@ export const SessionDetails = ({
   };
 
   const onDelete = (exerciseId: number) => {
-    mutate({
-      sessionId: sessionData.id,
-      exerciseId: exerciseId,
-    });
+    mutate(exerciseId);
     setRows((prev) => prev.filter((exercise) => exercise.id !== exerciseId));
   };
 

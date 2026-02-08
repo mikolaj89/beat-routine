@@ -1,6 +1,4 @@
 "use client";
-import { deleteSession } from "@/utils/sessions-api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import {
@@ -14,38 +12,21 @@ import {
 import { TableLink } from "../Common/Link";
 import { ConfirmationDialog } from "../Common/ConfirmationDialog";
 import { useState } from "react";
-import { fetchSessions } from "@drum-scheduler/sdk";
+import { useSessionsQuery, useDeleteSession } from "@drum-scheduler/sdk";
 import { Session } from "@drum-scheduler/contracts";
 
 export const SessionsList = ({ sessionsData }: { sessionsData: Session[] }) => {
   const API_BASE_URL = "http://localhost:8000";
-  const queryClient = useQueryClient();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [sessionIdToDelete, setSessionIdToDelete] = useState<number | null>(
     null
   );
-  const result = useQuery({
-    queryKey: ["sessions"],
-    queryFn: async () => (await fetchSessions(API_BASE_URL)) ?? [],
+  const result = useSessionsQuery(API_BASE_URL, {
     initialData: sessionsData,
     refetchOnMount: false,
   });
 
-  const deleteMutation = useMutation({
-    mutationKey: ["deleteSession"],
-    mutationFn: async (sessionId: number) => {
-      const result = await deleteSession(sessionId);
-      if ("error" in result) {
-        throw new Error(result.error.message);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["sessions"],
-      });
-      setIsDeleteDialogOpen(false);
-    },
-  });
+  const deleteMutation = useDeleteSession(API_BASE_URL);
 
   const onDeleteBtnClick = (sessionId: number) => {
     setSessionIdToDelete(sessionId);
@@ -58,7 +39,11 @@ export const SessionsList = ({ sessionsData }: { sessionsData: Session[] }) => {
         title="Delete session"
         message="Are you sure you want to delete this session? This action cannot be undone."
         onConfirm={() =>
-           deleteMutation.mutate(sessionIdToDelete!)
+           deleteMutation.mutate(sessionIdToDelete!, {
+            onSuccess: () => {
+              setIsDeleteDialogOpen(false);
+            },
+          })
         }
         isOpen={isDeleteDialogOpen}
         onClose={() => setIsDeleteDialogOpen(false)}

@@ -1,15 +1,15 @@
 "use client";
 
-import { createSession } from "@/utils/sessions-api";
 import { Button, CircularProgress, TextField } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SessionFormData, sessionSchema } from "./session-form-helper";
 import { useRouter } from "next/navigation";
 import { FormError } from "@/components/Common/Typography";
+import { useCreateSession } from "@drum-scheduler/sdk";
 
 export const SessionForm = () => {
+  const API_BASE_URL = "http://localhost:8000";
   const { push } = useRouter();
   const {
     register,
@@ -19,29 +19,20 @@ export const SessionForm = () => {
   } = useForm({
     resolver: zodResolver(sessionSchema),
   });
-  const mutation = useMutation({
-    mutationFn: async (data: SessionFormData) => {
-      return await createSession(data);
-      // if ("error" in result) {
-      //   if(result.error.fieldErrors){
-      //     setFieldErrors(result.error.fieldErrors);
-      //   }
-      //   throw new Error(result.error.message);
-      // }
-    },
-    onSuccess: (result) => {
-      if ("data" in result) {
-        push(`/sessions/${result.data?.id}`);
-      }
-    },
-    onError: (error, data) => {
-      console.error("Error creating session:", error);
-    },
-  });
+  const mutation = useCreateSession<SessionFormData>(API_BASE_URL);
   const { data } = mutation;
 
   const onSubmit = (data: SessionFormData) => {
-    mutation.mutate(data);
+    mutation.mutate(data, {
+      onSuccess: (result) => {
+        if ("data" in result) {
+          push(`/sessions/${result.data?.id}`);
+        }
+      },
+      onError: (error) => {
+        console.error("Error creating session:", error);
+      },
+    });
   };
 
   return (

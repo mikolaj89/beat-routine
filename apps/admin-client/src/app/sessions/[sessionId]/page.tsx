@@ -1,4 +1,3 @@
-import { fetchSession } from "@/utils/sessions-api";
 import { SessionDetails } from "@/components/Session/SessionDetails";
 import { Box, Typography } from "@mui/material";
 import { fetchSessionById, SessionWithExercises } from "@drum-scheduler/sdk";
