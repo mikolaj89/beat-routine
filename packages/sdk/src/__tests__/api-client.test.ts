@@ -62,6 +62,7 @@ describe("ApiClient", () => {
   });
 
   it("returns parse error when response body is not JSON", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     const fetchMock = vi.fn(async () => ({
       ok: false,
       json: async () => {
@@ -81,5 +82,6 @@ describe("ApiClient", () => {
         errorCode: "PARSE_ERROR",
       },
     });
+    warnSpy.mockRestore();
   });
 });
