@@ -1,5 +1,3 @@
-
-
 // Success response (for 2xx status codes)
 export interface ApiSuccessResponse<T> {
   data: T;
@@ -17,9 +15,6 @@ export interface ApiErrorResponse {
 // These would never appear together in one response
 export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
 
-
-
-
 export class ApiClient {
   private baseUrl: string;
   private headers: Record<string, string>;
@@ -36,11 +31,20 @@ export class ApiClient {
     this.headers[key] = value;
   }
 
+  private async parseJsonSafe<T>(response: Response): Promise<T | null> {
+    try {
+      return (await response.json()) as T;
+    } catch (error) {
+      console.warn("Unable to parse JSON response:", error);
+      return null;
+    }
+  }
+
   async request<T>(
     endpoint: string,
     method: string,
     body?: unknown,
-    customHeaders: Record<string, string> = {}
+    customHeaders: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     try {
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -49,29 +53,25 @@ export class ApiClient {
         body: body ? JSON.stringify(body) : undefined,
       });
 
-      let responseData: ApiResponse<T> | null  = null;
+      const responseData = await this.parseJsonSafe<ApiResponse<T>>(response);
 
-      try {
-        responseData = await response.json();
-      } catch (error) {
-        console.warn("Unable to parse JSON response:", error);
-        if (!response.ok) {
-          return {
-            error: {
-              message: "Request failed, but response is not JSON. Check server logs or network tab.",
-              errorCode: "PARSE_ERROR",
-            },
-          };
-        }
-        // If the response is empty but the request was successful, return null data
-        // This is a common case for DELETE requests or endpoints that return no content.
+      if (!responseData && !response.ok) {
         return {
-          data: null,
+          error: {
+            message:
+              "Request failed, AND response is not JSON. Check server logs or network tab.",
+            errorCode: "PARSE_ERROR",
+          },
         };
       }
 
-      return responseData!;
-    
+      if (!responseData) {
+        // If the response is empty but the request was successful, return null data
+        // This is a common case for DELETE requests or endpoints that return no content.
+        return { data: null };
+      }
+
+      return responseData;
     } catch (error) {
       return {
         error: {
@@ -84,7 +84,7 @@ export class ApiClient {
 
   get<T>(
     endpoint: string,
-    headers: Record<string, string> = {}
+    headers: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     return this.request<T>(endpoint, "GET", undefined, headers);
   }
@@ -92,7 +92,7 @@ export class ApiClient {
   post<T>(
     endpoint: string,
     body?: unknown,
-    headers: Record<string, string> = {}
+    headers: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     return this.request<T>(endpoint, "POST", body, headers);
   }
@@ -100,7 +100,7 @@ export class ApiClient {
   put<T>(
     endpoint: string,
     body: any,
-    headers: Record<string, string> = {}
+    headers: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     return this.request<T>(endpoint, "PUT", body, headers);
   }
@@ -108,14 +108,14 @@ export class ApiClient {
   patch<T>(
     endpoint: string,
     body: any,
-    headers: Record<string, string> = {}
+    headers: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     return this.request<T>(endpoint, "PATCH", body, headers);
   }
 
   delete<T>(
     endpoint: string,
-    headers: Record<string, string> = {}
+    headers: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     return this.request<T>(endpoint, "DELETE", undefined, headers);
   }
