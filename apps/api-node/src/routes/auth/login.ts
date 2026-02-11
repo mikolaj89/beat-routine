@@ -6,7 +6,7 @@ import { getUserByEmail } from "../../db/users";
 import { getAuthCookieOptions } from "../../utils/auth-cookies";
 import { signAccessToken, type Role } from "../../utils/auth-tokens";
 import { randomToken, sha256Base64Url } from "../../utils/crypto";
-import { getValidAuthRole } from "../../utils/auth-validation";
+import { hasAuthCredentials, parseRole } from "../../utils/auth-validation";
 import { getFormattedErrorBody } from "../../utils/response";
 
 export const authRoutes: FastifyPluginAsync = async (app) => {
@@ -25,18 +25,30 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const users = await getUserByEmail(email);
     const user = users[0];
     if (!user || !user.isActive) {
+      console.warn("auth.login: invalid user or inactive", {
+        email,
+        hasUser: Boolean(user),
+        isActive: user?.isActive ?? null,
+      });
       // avoid leaking whether user exists
       return reply.code(401).send(getFormattedErrorBody("Invalid credentials", "UNAUTHORIZED"));
     }
 
-    const roleValue = getValidAuthRole(user);
-    if (!roleValue) {
+    const roleValue = parseRole(user.role);
+    if (!roleValue || !hasAuthCredentials(user)) {
+      console.warn("auth.login: missing auth credentials or invalid role", {
+        userId: user.id,
+        hasAccountId: Boolean(user.accountId),
+        hasPasswordHash: Boolean(user.passwordHash),
+        role: user.role,
+      });
       return reply.code(401).send(getFormattedErrorBody("Invalid credentials", "UNAUTHORIZED"));
     }
 
     // 3) Verify password (bcrypt)
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) {
+      console.warn("auth.login: password mismatch", { userId: user.id });
       return reply.code(401).send(getFormattedErrorBody("Invalid credentials", "UNAUTHORIZED"));
     }
 
@@ -73,7 +85,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     // 7) Return access token
     return reply.code(200).send({
       accessToken,
-      user: { id: user.id, accountId: user.accountId, role: user.role as Role },
+      user: { id: user.id, accountId: user.accountId, role: roleValue },
     });
   });
 };

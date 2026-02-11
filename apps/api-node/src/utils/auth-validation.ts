@@ -6,12 +6,16 @@ export type AuthUserLike = {
   passwordHash: string | null;
 };
 
-export function getValidAuthRole(user: AuthUserLike): Role | null {
-  if (!user.accountId || !user.passwordHash) return null;
+export function isValidRole(role: string | null): role is Role {
+  return role === "OWNER" || role === "ADMIN" || role === "USER";
+}
 
-  if (user.role === "OWNER" || user.role === "ADMIN" || user.role === "USER") {
-    return user.role;
-  }
+export function hasAuthCredentials(
+  user: AuthUserLike
+): user is AuthUserLike & { accountId: string; passwordHash: string } {
+  return Boolean(user.accountId && user.passwordHash);
+}
 
-  return null;
+export function parseRole(role: string | null): Role | null {
+  return isValidRole(role) ? role : null;
 }
