@@ -16,3 +16,4 @@ export * from "./remove-exercise-from-session";
 export * from "./delete-session";
 export * from "./create-session";
 export * from "./add-exercise-to-session";
+export * from "./login";

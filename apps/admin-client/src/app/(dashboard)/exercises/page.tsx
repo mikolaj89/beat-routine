@@ -36,7 +36,9 @@ async function ExercisesData({
     categoryId: categoryId || null,
   });
   const exercises = await fetchExercises("http://localhost:8000", queryString);
-  return <ExercisesTable initialData={exercises ?? []} filters={{ name, categoryId }} />;
+  return (
+    <ExercisesTable initialData={exercises ?? []} filters={{ name, categoryId }} />
+  );
 }
 
 type PageProps = {

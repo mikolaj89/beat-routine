@@ -3,7 +3,7 @@ import {
   exercises,
   sessionexercises,
   sessions,
-  users
+  users,
 } from "@drum-scheduler/db-schema";
 
 export type CategoryRow = typeof categories.$inferSelect;
@@ -17,10 +17,11 @@ export type SessionExerciseInsert = typeof sessionexercises.$inferInsert;
 export type UserRow = typeof users.$inferSelect;
 export type UserInsert = typeof users.$inferInsert;
 
-// Common “narrowed” DTOs: keep shape stable for clients.
+// Common adjusted DTOs: keep shape stable for clients.
 // You can evolve these independently from DB concerns (e.g. omit createdAt, hide internal fields).
 export type Category = CategoryRow;
 export type Exercise = ExerciseRow;
 export type Session = SessionRow;
 export type SessionExercise = SessionExerciseRow;
 export type User = UserRow;
+export type UserInput = Pick<UserInsert, "email"> & { password: string };

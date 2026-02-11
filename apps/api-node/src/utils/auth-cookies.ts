@@ -4,6 +4,6 @@ export function getAuthCookieOptions() {
     httpOnly: true,
     secure: isProd, // true on HTTPS prod
     sameSite: "lax" as const,
-    path: "/auth",
+    path: "/",
   };
 }

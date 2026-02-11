@@ -44,7 +44,7 @@ export const accounts = pgTable("accounts", {
 export const users = pgTable("users", {
 	id: uuid().primaryKey().notNull(),
 	accountId: uuid("account_id"),
-	email: text(),
+	email: text().notNull(),
 	passwordHash: text("password_hash"),
 	role: text(),
 	isActive: boolean("is_active"),
