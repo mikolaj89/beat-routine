@@ -26,5 +26,5 @@ export async function createAuthSession(params: {
     replacedBySessionId: null,
     userAgent,
     ip,
-  });
+  }).returning();
 }
