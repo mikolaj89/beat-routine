@@ -8,6 +8,7 @@ import exercisesRoutes from "./routes/exercises";
 import sessionsRoutes from "./routes/sessions";
 import sessionExercisesRoutes from "./routes/sessionExercises";
 import categoriesRoutes from "./routes/categories";
+import authRoutes from "./routes/auth";
 
 dotenv.config();
 dotenv.config({ path: "local.env" });
@@ -39,6 +40,7 @@ await fastify.register(exercisesRoutes);
 await fastify.register(sessionsRoutes);
 await fastify.register(sessionExercisesRoutes);
 await fastify.register(categoriesRoutes);
+await fastify.register(authRoutes);
 
 const PORT = Number(process.env.PORT ?? 8000);
 

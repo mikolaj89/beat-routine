@@ -2,7 +2,7 @@ import Fastify from "fastify";
 import cookie from "@fastify/cookie";
 import bcrypt from "bcryptjs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { authRoutes } from "./login";
+import authRoutes from "../auth";
 import { createAuthSession } from "../../db/auth-sessions";
 import { getUserByEmail } from "../../db/users";
 import { signAccessToken } from "../../utils/auth-tokens";
