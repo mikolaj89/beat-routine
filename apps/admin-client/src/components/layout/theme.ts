@@ -2,6 +2,15 @@ import { createTheme } from "@mui/material/styles";
 
 //color: theme.palette.primary.main,
 const theme = createTheme({
+
+  components : {
+    MuiPaper: {
+        defaultProps: {
+            elevation: 3,
+        },
+    },
+  },
+  
   typography: {
     h1: {
       fontSize: "30px",

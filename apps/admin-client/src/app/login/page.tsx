@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
-  Alert,
   Box,
   Button,
   CircularProgress,
@@ -12,15 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useLogin } from "../../../../../packages/sdk/src/sessions";
-
-type LoginResponse = {
-  accessToken: string;
-  user: { id: string; accountId: string; role: string };
-};
-
-type ErrorResponse = {
-  error?: { message?: string; errorCode?: string };
-};
+import { LOGIN_BOX_WIDTH, styles } from "./page.styles";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -34,21 +25,13 @@ export default function LoginPage() {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "calc(100vh - 64px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        px: 2,
-      }}
-    >
-      <Paper elevation={3} sx={{ p: 4, maxWidth: 420, width: "100%" }}>
-        <Stack spacing={2}>
+    <Box sx={styles.page}>
+      <Paper sx={{ p: 4, maxWidth: LOGIN_BOX_WIDTH, width: "100%" }}>
+        <Stack width={"100%"} spacing={2}>
           <Box>
-            <Typography variant="h1">Admin login</Typography>
+            <Typography variant="h1">Sign In</Typography>
             <Typography variant="body1" color="text.secondary">
-              Use your admin credentials to sign in.
+              Enter your credentials to sign in.
             </Typography>
           </Box>
 

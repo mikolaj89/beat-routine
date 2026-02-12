@@ -6,7 +6,8 @@ import {
   Box,
   CssBaseline,
   Drawer,
-  IconButton, ThemeProvider,
+  IconButton,
+  ThemeProvider,
   Toolbar,
   Typography
 } from "@mui/material";
@@ -14,6 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import theme from "./theme";
 import { NavBar } from "./NavBar";
+import { LEGAL_NAME, PRODUCT_NAME } from "@/config/branding";
 
 const EXPANDED_WIDTH = 240;
 const COLLAPSED_WIDTH = 0; // Width when collapsed
@@ -70,12 +72,19 @@ export const DashboardLayout = ({ children }: PropsWithChildren) => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" noWrap>
-                Drum session scheduler
+                {PRODUCT_NAME}
               </Typography>
             </Toolbar>
           </AppBar>
 
-          <Box sx={{marginTop: 7}}>{children}</Box>
+          <Box sx={{ marginTop: 7 }}>
+            {children}
+            <Box component="footer" sx={{ mt: 6, pb: 3, textAlign: "center" }}>
+              <Typography variant="body2" color="text.secondary">
+                {LEGAL_NAME}
+              </Typography>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </ReactQueryProvider>
