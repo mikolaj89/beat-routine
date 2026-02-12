@@ -29,7 +29,7 @@ export const validSession = () => ({
 export const validUser = (overrides?: Partial<{
   id: string;
   accountId: string | null;
-  email: string | null;
+  email: string;
   role: string | null;
   isActive: boolean;
   passwordHash: string | null;

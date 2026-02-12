@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
 import { TextField, Button, CircularProgress } from "@mui/material";
 import { SelectField } from "../../Common/Field/Select";
 import {
@@ -22,10 +21,9 @@ export const ExerciseForm = () => {
     control,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<ExerciseFormData>({
     resolver: zodResolver(exerciseSchema),
   });
-  const queryClient = useQueryClient();
 
   const mutation = useCreateExercise(API_BASE_URL);
 
