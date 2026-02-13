@@ -7,7 +7,7 @@ flowchart TD
   Root["drum-scheduler<br/>(pnpm workspace)"]
 
   %% Apps
-  Admin["admin-client<br/>(Next.js)"]
+  Admin["web-app<br/>(Next.js)"]
   Mobile["drum-scheduler-app<br/>(React Native)"]
   Api["api<br/>(Deno)"]
 

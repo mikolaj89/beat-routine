@@ -4,7 +4,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev:admin-client": "pnpm --filter admin-client dev",
+    "dev:web-app": "pnpm --filter web-app dev",
     "dev:api": "pnpm --filter @drum-scheduler/api dev",
     "dev:app-rn": "pnpm --filter drum-scheduler-app start",
     "dev:app-android": "pnpm --filter drum-scheduler-app android",
@@ -13,7 +13,7 @@
     "build:db-schema": "pnpm -C ./packages/db-schema build",
     "build:contracts": "pnpm -C ./packages/contracts build",
     "build:sdk": "pnpm -C ./packages/sdk build",
-    "build:admin-client": "pnpm --filter admin-client build",
+    "build:web-app": "pnpm --filter web-app build",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",

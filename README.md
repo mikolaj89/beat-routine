@@ -5,7 +5,7 @@ This repository is a pnpm + Turborepo monorepo. It contains multiple apps and sh
 
 ### Apps
 - **API** (Deno): The backend service that provides data and business logic.
-- **Admin client** (Next.js): The web admin interface for creating and managing practice sessions.
+- **Web app** (Next.js): The web interface for creating and managing practice sessions.
 - **Mobile app** (React Native): The practice companion for reading sessions and running exercises with a metronome in the specified BPM.
 
 ### Packages
@@ -17,13 +17,13 @@ This repository is a pnpm + Turborepo monorepo. It contains multiple apps and sh
 The project exists to streamline drum practice by:
 - organizing sessions into actionable steps,
 - keeping goals clear and measurable,
-- enabling a smooth handoff from planning (admin client) to execution (mobile app).
+- enabling a smooth handoff from planning (web app) to execution (mobile app).
 
 ## Running the project (basic)
 1. Install dependencies from the repo root: pnpm install
 2. You can also run apps individually:
 - API: pnpm dev:api
-- Admin client: pnpm dev:admin-client
+- Web app: pnpm dev:web-app
 - Mobile app (Metro): pnpm dev:app-rn
 - Mobile app (Android): pnpm dev:app-android
 
