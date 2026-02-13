@@ -6,9 +6,9 @@
   "scripts": {
     "dev:web-app": "pnpm --filter web-app dev",
     "dev:api": "pnpm --filter @drum-scheduler/api dev",
-    "dev:app-rn": "pnpm --filter drum-scheduler-app start",
-    "dev:app-android": "pnpm --filter drum-scheduler-app android",
-    "dev:app-rn+sdk": "concurrently -k -n sdk,metro \"pnpm -C ./packages/sdk dev\" \"pnpm --filter drum-scheduler-app start\"",
+    "dev:app-rn": "pnpm --filter mobile-app start",
+    "dev:app-android": "pnpm --filter mobile-app android",
+    "dev:app-rn+sdk": "concurrently -k -n sdk,metro \"pnpm -C ./packages/sdk dev\" \"pnpm --filter mobile-app start\"",
     "build:packages": "pnpm -r --filter ./packages/** run build",
     "build:db-schema": "pnpm -C ./packages/db-schema build",
     "build:contracts": "pnpm -C ./packages/contracts build",

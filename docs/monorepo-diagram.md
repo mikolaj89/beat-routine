@@ -8,7 +8,7 @@ flowchart TD
 
   %% Apps
   Admin["web-app<br/>(Next.js)"]
-  Mobile["drum-scheduler-app<br/>(React Native)"]
+  Mobile["mobile-app<br/>(React Native)"]
   Api["api<br/>(Deno)"]
 
   %% Packages
