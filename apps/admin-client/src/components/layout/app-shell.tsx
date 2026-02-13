@@ -2,7 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 import { usePathname } from "next/navigation";
-import { DashboardLayout } from "./DashoardLayout";
+import { DashboardLayout } from "./dashoard-layout";
 
 export function AppShell({ children }: PropsWithChildren) {
   const pathname = usePathname();

@@ -19,8 +19,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import DraggableGridRow from "./DraggableRow";
-import { getSessionExercisesColumns } from "./ExercisesTableHelper";
+import DraggableGridRow from "./draggable-row";
+import { getSessionExercisesColumns } from "./exercises-table-helper";
 import type { Exercise } from "@drum-scheduler/contracts";
 
 type ExercisesTableProps = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Modal, Box, Typography } from "@mui/material";
-import { EditExerciseForm } from "./ExerciseForm/EditExerciseForm";
+import { EditExerciseForm } from "./exercise-form/edit-exercise-form";
 
 const style = {
   position: "absolute",

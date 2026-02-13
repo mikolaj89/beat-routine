@@ -1,6 +1,6 @@
-import { SessionsList } from "@/components/Session/SessionsList";
+import { SessionsList } from "@/components/session/sessions-list";
 import { Typography } from "@mui/material";
-import { CreateSession } from "@/components/Session/CreateSession";
+import { CreateSession } from "@/components/session/create-session";
 import { fetchSessions } from "@drum-scheduler/sdk";
 import { Suspense } from "react";
 import Loading from "./loading";

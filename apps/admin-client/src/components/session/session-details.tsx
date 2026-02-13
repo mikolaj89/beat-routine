@@ -1,14 +1,14 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Paper } from "@mui/material";
-import ExercisesTable from "../Exercise/ExercisesTable/SessionExercisesTable";
+import ExercisesTable from "../exercise/exercises-table/session-exercises-table";
 import { useCallback, useEffect, useState } from "react";
-import { getSessionExercisesColumns } from "../Exercise/ExercisesTable/ExercisesTableHelper";
+import { getSessionExercisesColumns } from "../exercise/exercises-table/exercises-table-helper";
 import AddIcon from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
-import { SelectExerciseModal } from "./AddExerciseToSessionModal/AddExerciseToSessionModal";
+import { SelectExerciseModal } from "./add-exercise-to-session-modal/add-exercise-to-session-modal";
 import type { Exercise } from "@drum-scheduler/contracts";
-import { ButtonsWrapper, TableButtonsWrapper } from "../Common/Container";
+import { ButtonsWrapper, TableButtonsWrapper } from "../common/container";
 import { useSessionQuery, useReorderSessionExercises, useRemoveExerciseFromSession, SessionWithExercises } from "@drum-scheduler/sdk";
 
 export const SessionDetails = ({

@@ -1,8 +1,8 @@
-import { ExercisesTable } from "@/components/Exercise/ExercisesTable/ExercisesTable";
+import { ExercisesTable } from "@/components/exercise/exercises-table/exercises-table";
 import { Typography } from "@mui/material";
-import { CreateExercise } from "@/components/Exercise/CreateExercise";
-import { ExerciseFilters } from "@/components/Exercise/ExercisesTable/ExerciseFilters";
-import { TableButtonsWrapper } from "@/components/Common/Container";
+import { CreateExercise } from "@/components/exercise/create-exercise";
+import { ExerciseFilters } from "@/components/exercise/exercises-table/exercise-filters";
+import { TableButtonsWrapper } from "@/components/common/container";
 import { fetchCategories, fetchExercises } from "@drum-scheduler/sdk";
 import { buildExercisesQueryParams } from "@/utils/query-params";
 import { Suspense } from "react";

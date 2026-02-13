@@ -2,8 +2,8 @@
 
 import { Modal, Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
-import { ExerciseForm } from "./ExerciseForm/ExerciseForm";
-import { ButtonsWrapper, TableButtonsWrapper } from "../Common/Container";
+import { ExerciseForm } from "./exercise-form/exercise-form";
+import { ButtonsWrapper, TableButtonsWrapper } from "../common/container";
 
 const style = {
   position: "absolute",

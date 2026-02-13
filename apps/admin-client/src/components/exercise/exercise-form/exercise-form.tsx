@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField, Button, CircularProgress } from "@mui/material";
-import { SelectField } from "../../Common/Field/Select";
+import { SelectField } from "../../common/field/select";
 import {
   exerciseSchema,
   ExerciseFormData,

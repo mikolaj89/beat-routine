@@ -2,8 +2,8 @@
 
 import { Modal, Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
-import { SessionForm } from "./SessionForm/SessionForm";
-// import { ExerciseForm } from "./ExerciseForm/ExerciseForm";
+import { SessionForm } from "./session-form/session-form";
+// import { ExerciseForm } from "./exercise-form/ExerciseForm";
 
 const style = {
   position: "absolute",

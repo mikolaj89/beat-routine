@@ -1,4 +1,4 @@
-import { SelectOption } from "@/components/Common/Field/Select";
+import { SelectOption } from "@/components/common/field/select";
 import type { Category, Exercise, ExerciseInsert } from "@drum-scheduler/contracts";
 import { z } from "zod";
 

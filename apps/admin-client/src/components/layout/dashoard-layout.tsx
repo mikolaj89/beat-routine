@@ -12,9 +12,9 @@ import {
   Typography
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { ReactQueryProvider } from "@/providers/react-query-provider";
 import theme from "./theme";
-import { NavBar } from "./NavBar";
+import { NavBar } from "./nav-bar";
 import { BRANDING } from "@drum-scheduler/config";
 
 const EXPANDED_WIDTH = 240;

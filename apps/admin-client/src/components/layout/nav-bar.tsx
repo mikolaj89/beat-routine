@@ -2,7 +2,7 @@ import { List, ListItem, ListItemText } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
 import { headers } from "next/headers";
-import {Link} from "../Common/Link";
+import {Link} from "../common/link";
 
 export const NavBar = () => {
   

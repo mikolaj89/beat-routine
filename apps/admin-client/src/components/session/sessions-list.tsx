@@ -9,8 +9,8 @@ import {
   TableBody,
   Button,
 } from "@mui/material";
-import { TableLink } from "../Common/Link";
-import { ConfirmationDialog } from "../Common/ConfirmationDialog";
+import { TableLink } from "../common/link";
+import { ConfirmationDialog } from "../common/confirmation-dialog";
 import { useState } from "react";
 import { useSessionsQuery, useDeleteSession } from "@drum-scheduler/sdk";
 import { Session } from "@drum-scheduler/contracts";

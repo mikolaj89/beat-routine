@@ -1,4 +1,4 @@
-import { SessionDetails } from "@/components/Session/SessionDetails";
+import { SessionDetails } from "@/components/session/session-details";
 import { Box, Typography } from "@mui/material";
 import { fetchSessionById, SessionWithExercises } from "@drum-scheduler/sdk";
 

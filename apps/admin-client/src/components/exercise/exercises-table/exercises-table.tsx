@@ -1,13 +1,13 @@
 "use client";
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
 import { useQueryClient } from "@tanstack/react-query";
-import { getExercisesColumns } from "./ExercisesTableHelper";
+import { getExercisesColumns } from "./exercises-table-helper";
 import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
-import { EditExerciseModal } from "../EditExerciseModal";
-import { ConfirmationDialog } from "@/components/Common/ConfirmationDialog";
+import { EditExerciseModal } from "../edit-exercise-modal";
+import { ConfirmationDialog } from "@/components/common/confirmation-dialog";
 import { useDeleteExercise } from "@drum-scheduler/sdk";
-import { useExercisesQuery } from "@/hooks/useExercisesQuery";
+import { useExercisesQuery } from "@/hooks/use-exercises-query";
 import type { Exercise } from "@drum-scheduler/contracts";
 
 type ExercisesTableProps = {

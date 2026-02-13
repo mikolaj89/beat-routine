@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { TextField, Button, CircularProgress, Box, Skeleton } from "@mui/material";
-import { SelectField } from "../../Common/Field/Select";
+import { SelectField } from "../../common/field/select";
 import {
   exerciseSchema,
   ExerciseFormData,
@@ -12,7 +12,7 @@ import {
   getExerciseSubmitFormat,
   getExerciseFormDataFormat,
 } from "./exercise-form-helper";
-import { FormError } from "@/components/Common/Typography";
+import { FormError } from "@/components/common/typography";
 import { useEffect, useMemo } from "react";
 import { useCategoriesQuery, useExerciseQuery, useUpdateExercise } from "@drum-scheduler/sdk";
 

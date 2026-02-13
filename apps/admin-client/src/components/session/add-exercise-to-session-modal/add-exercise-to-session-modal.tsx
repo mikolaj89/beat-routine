@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { FormError } from "../../Common/Typography";
-import { SelectField } from "../../Common/Field/Select";
+import { FormError } from "../../common/typography";
+import { SelectField } from "../../common/field/select";
 import {
   getCategoryOpts,
   getExercisesOpts,
-} from "../../Exercise/ExerciseForm/exercise-form-helper";
+} from "../../exercise/exercise-form/exercise-form-helper";
 import {
   useAddExerciseToSession,
   useCategoryExercisesQuery,

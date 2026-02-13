@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SessionFormData, sessionSchema } from "./session-form-helper";
 import { useRouter } from "next/navigation";
-import { FormError } from "@/components/Common/Typography";
+import { FormError } from "@/components/common/typography";
 import { useCreateSession } from "@drum-scheduler/sdk";
 
 export const SessionForm = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { ReactQueryProvider } from "../../providers/ReactQueryProvider";
+import { ReactQueryProvider } from "../../providers/react-query-provider";
 import theme from "@/components/layout/theme";
 import { BRANDING } from "@drum-scheduler/config";
 import {
