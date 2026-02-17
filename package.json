@@ -12,18 +12,19 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "test": "turbo run test -- --silent",
+    "test": "node ./scripts/prepare-test-reports.mjs && turbo run test -- --silent && node ./scripts/merge-junit.mjs",
     "kill:all": "node ./scripts/kill-all.mjs",
     "kill:all:dry": "node ./scripts/kill-all.mjs --dry-run"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "fast-xml-parser": "^5.3.6",
     "turbo": "^1.13.4",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@drum-scheduler/config": "workspace:^",
     "@drum-scheduler/contracts": "workspace:^",
-    "@drum-scheduler/sdk": "workspace:^",
-    "@drum-scheduler/config": "workspace:^"
+    "@drum-scheduler/sdk": "workspace:^"
   }
 }

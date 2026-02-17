@@ -2,6 +2,7 @@
 apps/api/local.env
 node_modules/
 dist/
+reports/
 
 drizzle/**/migrations/
 
