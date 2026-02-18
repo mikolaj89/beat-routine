@@ -21,10 +21,7 @@ export class ApiClient {
 
   constructor(baseUrl: string, defaultHeaders: Record<string, string> = {}) {
     this.baseUrl = baseUrl;
-    this.headers = {
-      "Content-Type": "application/json",
-      ...defaultHeaders,
-    };
+    this.headers = defaultHeaders;
   }
 
   setHeader(key: string, value: string) {
@@ -47,10 +44,31 @@ export class ApiClient {
     customHeaders: Record<string, string> = {},
   ): Promise<ApiResponse<T | null>> {
     try {
+      const mergedHeaders: Record<string, string> = {
+        ...this.headers,
+        ...customHeaders,
+      };
+      const hasBody = body !== undefined;
+      const hasExplicitContentType = Object.keys(mergedHeaders).some(
+        (key) => key.toLowerCase() === "content-type",
+      );
+
+      if (hasBody && !hasExplicitContentType) {
+        mergedHeaders["Content-Type"] = "application/json";
+      }
+
+      if (!hasBody) {
+        for (const key of Object.keys(mergedHeaders)) {
+          if (key.toLowerCase() === "content-type") {
+            delete mergedHeaders[key];
+          }
+        }
+      }
+
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         method,
-        headers: { ...this.headers, ...customHeaders },
-        body: body ? JSON.stringify(body) : undefined,
+        headers: mergedHeaders,
+        body: hasBody ? JSON.stringify(body) : undefined,
         credentials: "include",
       });
 

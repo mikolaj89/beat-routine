@@ -6,6 +6,7 @@ import { getFormattedErrorBody } from "../../utils/response";
 import { getUserById } from "../../db/users";
 import { signAccessToken } from "../../utils/auth-tokens";
 import { hasAuthCredentials, parseRole } from "../../utils/auth-validation";
+import { getAuthCookieOptions } from "../../utils/auth-cookies";
 
 
 export const refresh = async (
@@ -100,10 +101,7 @@ export const refresh = async (
     });
     // 7) Set new refresh cookie
     reply.setCookie("refresh", newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/auth",
+      ...getAuthCookieOptions(),
       expires: newExpiresAt,
     });
 

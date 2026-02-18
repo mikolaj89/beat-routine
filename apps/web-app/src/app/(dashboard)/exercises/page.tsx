@@ -7,6 +7,7 @@ import { fetchCategories, fetchExercises } from "@drum-scheduler/sdk";
 import { buildExercisesQueryParams } from "@/utils/query-params";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { API_BASE_URL } from "@/config/globals";
 
 async function CategoriesAndFilters({
   name,
@@ -15,7 +16,7 @@ async function CategoriesAndFilters({
   name: string;
   categoryId: string;
 }) {
-  const categories = await fetchCategories("http://localhost:8000");
+  const categories = await fetchCategories(API_BASE_URL);
   return (
     <ExerciseFilters
       initialValues={{ name, categoryId }}
@@ -35,7 +36,7 @@ async function ExercisesData({
     name: name || null,
     categoryId: categoryId || null,
   });
-  const exercises = await fetchExercises("http://localhost:8000", queryString);
+  const exercises = await fetchExercises(API_BASE_URL, queryString);
   return (
     <ExercisesTable initialData={exercises ?? []} filters={{ name, categoryId }} />
   );

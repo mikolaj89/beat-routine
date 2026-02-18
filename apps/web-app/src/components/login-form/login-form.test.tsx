@@ -4,17 +4,20 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { LoginForm } from "./login-form";
 
 const mutateMock = vi.fn();
+const useLoginMock = vi.fn();
 
-vi.mock("../../../../../packages/sdk/src/sessions", () => ({
-  useLogin: () => ({
-    mutate: mutateMock,
-    isPending: false,
-  }),
+vi.mock("@/hooks/use-login", () => ({
+  useLogin: () => useLoginMock(),
 }));
 
 describe("LoginForm", () => {
   beforeEach(() => {
     mutateMock.mockReset();
+    useLoginMock.mockReturnValue({
+      mutate: mutateMock,
+      isPending: false,
+      error: null,
+    });
   });
 
   it("shows validation errors for invalid input", async () => {

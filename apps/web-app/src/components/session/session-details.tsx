@@ -10,6 +10,7 @@ import { SelectExerciseModal } from "./add-exercise-to-session-modal/add-exercis
 import type { Exercise } from "@drum-scheduler/contracts";
 import { ButtonsWrapper, TableButtonsWrapper } from "../common/container";
 import { useSessionQuery, useReorderSessionExercises, useRemoveExerciseFromSession, SessionWithExercises } from "@drum-scheduler/sdk";
+import { API_BASE_URL } from "@/config/globals";
 
 export const SessionDetails = ({
   sessionData,
@@ -21,18 +22,18 @@ export const SessionDetails = ({
   const queryClient = useQueryClient();
 
   const { data, isFetching } = useSessionQuery(
-    "http://localhost:8000",
+    API_BASE_URL,
     sessionData.id,
     { initialData: sessionData, refetchOnMount: false }
   );
 
   const reorderMutation = useReorderSessionExercises(
-    "http://localhost:8000",
+    API_BASE_URL,
     sessionData.id
   );
 
   const { mutate, isPending } = useRemoveExerciseFromSession(
-    "http://localhost:8000",
+    API_BASE_URL,
     sessionData.id
   );
 

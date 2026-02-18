@@ -12,7 +12,6 @@ import {
   Typography
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { ReactQueryProvider } from "@/providers/react-query-provider";
 import theme from "./theme";
 import { NavBar } from "./nav-bar";
 import { BRANDING } from "@drum-scheduler/config";
@@ -34,7 +33,7 @@ export const DashboardLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <ThemeProvider theme={theme}>
-    <ReactQueryProvider>
+    
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <Drawer
@@ -87,7 +86,7 @@ export const DashboardLayout = ({ children }: PropsWithChildren) => {
           </Box>
         </Box>
       </Box>
-    </ReactQueryProvider>
+    
     </ThemeProvider>
   );
 };

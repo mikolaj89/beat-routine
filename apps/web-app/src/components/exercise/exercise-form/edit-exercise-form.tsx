@@ -15,6 +15,7 @@ import {
 import { FormError } from "@/components/common/typography";
 import { useEffect, useMemo } from "react";
 import { useCategoriesQuery, useExerciseQuery, useUpdateExercise } from "@drum-scheduler/sdk";
+import { API_BASE_URL } from "@/config/globals";
 
 type ExerciseFormProps = {
   handleClose: () => void;
@@ -22,7 +23,6 @@ type ExerciseFormProps = {
 };
 
 export const EditExerciseForm = ({ handleClose, exerciseId }: ExerciseFormProps) => {
-  const API_BASE_URL = "http://localhost:8000";
   const queryClient = useQueryClient();
 
   // Use the directly passed ID to get the exercise data

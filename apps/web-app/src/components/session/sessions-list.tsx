@@ -14,9 +14,9 @@ import { ConfirmationDialog } from "../common/confirmation-dialog";
 import { useState } from "react";
 import { useSessionsQuery, useDeleteSession } from "@drum-scheduler/sdk";
 import { Session } from "@drum-scheduler/contracts";
+import { API_BASE_URL } from "@/config/globals";
 
 export const SessionsList = ({ sessionsData }: { sessionsData: Session[] }) => {
-  const API_BASE_URL = "http://localhost:8000";
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [sessionIdToDelete, setSessionIdToDelete] = useState<number | null>(
     null

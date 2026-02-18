@@ -1,11 +1,11 @@
 import { useAddExerciseToSession as useAddExerciseToSessionSDK, useCategoryExercisesQuery as useCategoryExercisesQuerySDK } from "@drum-scheduler/sdk";
+import { API_BASE_URL } from "@/config/globals";
 
 export const useAddExerciseToSession = (
   sessionId: number,
   exerciseId: string,
   onSuccess: (id: number) => void
 ) => {
-  const API_BASE_URL = "http://localhost:8000";
   const mutation = useAddExerciseToSessionSDK(API_BASE_URL, sessionId);
   
   return {
@@ -22,7 +22,6 @@ export const useAddExerciseToSession = (
 };
 
 export const useCategoryExercisesQuery = (categoryId: string) => {
-  const API_BASE_URL = "http://localhost:8000";
   return useCategoryExercisesQuerySDK(
     API_BASE_URL,
     categoryId,

@@ -9,10 +9,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useLogin } from "../../../../../packages/sdk/src/sessions";
+import { useLogin } from "@/hooks/use-login";
 import { styles } from "./login-form.styles";
 import { LoginFormData, LoginFormSchema } from "./login-form.utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { API_BASE_URL } from "@/config/globals";
 
 export const LoginForm = () => {
   const {
@@ -27,7 +28,7 @@ export const LoginForm = () => {
     resolver: zodResolver(LoginFormSchema),
   });
 
-  const { mutate: login, isPending } = useLogin("http://localhost:8000");
+  const { mutate: login, isPending, error } = useLogin(API_BASE_URL);
 
   const onSubmit = (data: LoginFormData) => {
     login(data);
@@ -43,6 +44,12 @@ export const LoginForm = () => {
           Enter your credentials to sign in.
         </Typography>
       </Box>
+
+      {error ? (
+        <Typography color="error" variant="body2">
+          {error}
+        </Typography>
+      ) : null}
 
       <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <Stack spacing={2}>

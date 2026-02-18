@@ -12,9 +12,9 @@ import {
   getExerciseSubmitFormat,
 } from "./exercise-form-helper";
 import { useCategoriesQuery, useCreateExercise } from "@drum-scheduler/sdk";
+import { API_BASE_URL } from "@/config/globals";
 
 export const ExerciseForm = () => {
-  const API_BASE_URL = "http://localhost:8000";
   const {
     register,
     handleSubmit,

@@ -20,6 +20,7 @@ import {
   useCategoryExercisesQuery,
 } from "./add-exercise-to-session-modal-helper";
 import { useCategoriesQuery } from "@drum-scheduler/sdk";
+import { API_BASE_URL } from "@/config/globals";
 
 const style = {
   position: "absolute",
@@ -68,7 +69,6 @@ export const SelectExerciseModal = ({
   };
 
   // queries and mutations
-  const API_BASE_URL = "http://localhost:8000";
   const categoriesQuery = useCategoriesQuery(API_BASE_URL);
   const categoryExercisesQuery = useCategoryExercisesQuery(categoryId);
   const addExerciseMutation = useAddExerciseToSession(

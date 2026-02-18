@@ -9,6 +9,7 @@ import { ConfirmationDialog } from "@/components/common/confirmation-dialog";
 import { useDeleteExercise } from "@drum-scheduler/sdk";
 import { useExercisesQuery } from "@/hooks/use-exercises-query";
 import type { Exercise } from "@drum-scheduler/contracts";
+import { API_BASE_URL } from "@/config/globals";
 
 type ExercisesTableProps = {
   initialData: Exercise[];
@@ -19,7 +20,6 @@ type ExercisesTableProps = {
 };
 
 export const ExercisesTable = ({ initialData, filters }: ExercisesTableProps) => {
-  const API_BASE_URL = "http://localhost:8000";
   const queryClient = useQueryClient();
   const [isMounted, setIsMounted] = useState(false);
   

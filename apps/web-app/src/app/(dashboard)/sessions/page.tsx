@@ -4,9 +4,10 @@ import { CreateSession } from "@/components/session/create-session";
 import { fetchSessions } from "@drum-scheduler/sdk";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { API_BASE_URL } from "@/config/globals";
 
 async function SessionsData() {
-  const data = await fetchSessions("http://localhost:8000");
+  const data = await fetchSessions(API_BASE_URL);
   return <SessionsList sessionsData={data} />;
 }
 

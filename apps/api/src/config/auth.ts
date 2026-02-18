@@ -18,7 +18,7 @@ export function authConfig(env: Env) {
       secure: cookieSecure,
       sameSite: env.COOKIE_SAMESITE,
       domain: env.COOKIE_DOMAIN, // usually undefined
-      path: "/auth",
+      path: "/",
     },
   };
 }

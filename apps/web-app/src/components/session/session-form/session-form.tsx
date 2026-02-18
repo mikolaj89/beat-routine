@@ -7,9 +7,9 @@ import { SessionFormData, sessionSchema } from "./session-form-helper";
 import { useRouter } from "next/navigation";
 import { FormError } from "@/components/common/typography";
 import { useCreateSession } from "@drum-scheduler/sdk";
+import { API_BASE_URL } from "@/config/globals";
 
 export const SessionForm = () => {
-  const API_BASE_URL = "http://localhost:8000";
   const { push } = useRouter();
   const {
     register,

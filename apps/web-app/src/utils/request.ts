@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "@/config/globals";
+
 export interface ResponseData<T> {
   data: T | null;
   success?: boolean;
@@ -75,7 +77,7 @@ export const fetchData = async <T>(
   url: string
 ): Promise<ApiResponse<T | null>> => {
   try {
-    const apiClient = new ApiClient("http://localhost:8000"); // switch to some env variable passed from config
+    const apiClient = new ApiClient(API_BASE_URL);
     const response = await apiClient.get(url);
 
     if (!response.ok) {
@@ -106,7 +108,7 @@ export const postData = async <T>(
   body: any
 ): Promise<ApiResponse<T | null>> => {
   try {
-    const apiClient = new ApiClient("http://localhost:8000"); // switch to some env variable passed from config
+    const apiClient = new ApiClient(API_BASE_URL);
     const response = await apiClient.post(url, body, {
       headers: {
         "Content-Type": "application/json",
