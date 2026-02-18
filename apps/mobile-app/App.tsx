@@ -27,50 +27,63 @@ function App() {
   );
 }
 
+
+import LoginScreen from './components/login/login-screen';
+import { useState } from 'react';
+
 function AppContent() {
   const baseUrl = API_BASE_URL;
+  const [user, setUser] = useState<any>(null);
 
   return (
     <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Sessions">
-            {({ navigation }) => (
-              <SessionsScreen
-                onOpenSession={sessionId =>
-                  navigation.navigate('Session', { sessionId })
-                }
-              />
-            )}
-          </Stack.Screen>
+          {!user ? (
+            <Stack.Screen name="Login">
+              {() => <LoginScreen onLoginSuccess={setUser} />}
+            </Stack.Screen>
+          ) : (
+            <>
+              <Stack.Screen name="Sessions">
+                {({ navigation }) => (
+                  <SessionsScreen
+                    onOpenSession={sessionId =>
+                      navigation.navigate('Session', { sessionId })
+                    }
+                  />
+                )}
+              </Stack.Screen>
 
-          <Stack.Screen name="Session">
-            {({ navigation, route }) => (
-              <SessionScreen
-                baseUrl={baseUrl}
-                sessionId={route.params.sessionId}
-                onBack={() => navigation.goBack()}
-                onStart={(exercises, sessionName, exerciseIndex) =>
-                  navigation.navigate('Exercise', {
-                    exercises,
-                    sessionName,
-                    exerciseIndex,
-                  })
-                }
-              />
-            )}
-          </Stack.Screen>
+              <Stack.Screen name="Session">
+                {({ navigation, route }) => (
+                  <SessionScreen
+                    baseUrl={baseUrl}
+                    sessionId={route.params.sessionId}
+                    onBack={() => navigation.goBack()}
+                    onStart={(exercises, sessionName, exerciseIndex) =>
+                      navigation.navigate('Exercise', {
+                        exercises,
+                        sessionName,
+                        exerciseIndex,
+                      })
+                    }
+                  />
+                )}
+              </Stack.Screen>
 
-          <Stack.Screen name="Exercise">
-            {({ navigation, route }) => (
-              <ExerciseScreen
-                exercises={route.params.exercises}
-                sessionName={route.params.sessionName}
-                exerciseIndex={route.params.exerciseIndex}
-                onBack={() => navigation.goBack()}
-              />
-            )}
-          </Stack.Screen>
+              <Stack.Screen name="Exercise">
+                {({ navigation, route }) => (
+                  <ExerciseScreen
+                    exercises={route.params.exercises}
+                    sessionName={route.params.sessionName}
+                    exerciseIndex={route.params.exerciseIndex}
+                    onBack={() => navigation.goBack()}
+                  />
+                )}
+              </Stack.Screen>
+            </>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     </View>
