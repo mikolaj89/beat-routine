@@ -61,7 +61,6 @@ export const SelectExerciseModal = ({
   const queryClient = useQueryClient();
 
   const onSuccess = (sessionId: number) => {
-    console.log('on success running')
     queryClient.invalidateQueries({ queryKey: ["session", sessionId] });
 
     reset();

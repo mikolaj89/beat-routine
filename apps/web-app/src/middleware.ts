@@ -4,7 +4,6 @@ import { isPublicPath } from "./utils/middleware-utils";
 
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  console.log('middleware triggered')
   const hasRefreshCookie = Boolean(request.cookies.get("refresh")?.value);
 
   // If logged in, keep users out of /login.

@@ -18,13 +18,10 @@ type UseExercise = {
 
 export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
   const [currentIndex, setCurrentIndex] = useState(exerciseIndex);
-  console.log('Current Index:', currentIndex);
-
   const currentExercise = getFormattedExercise(exercises[currentIndex - 1]);
   const durationSeconds = (currentExercise?.durationMinutes ?? 0) * 60; // in seconds
   const totalExercises = exercises.length;
-  console.log('Total Exercises:', totalExercises);
-
+  
   const [mode, setMode] = useState<ExerciseState>('preview');
   const metronome = useMetronome({
     ...metronomeOptions,

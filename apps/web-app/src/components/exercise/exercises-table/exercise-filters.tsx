@@ -59,7 +59,6 @@ initialValues,
         const params = new URLSearchParams(window.location.search);
         params.set("name", event.target.value);
         router.push(`?${params.toString()}`);
-        console.log(event.target.value);
       }, 500);
     };
   }, []);
