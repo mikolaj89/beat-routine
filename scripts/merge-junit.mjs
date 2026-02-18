@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { XMLParser, XMLBuilder } from 'fast-xml-parser';
+import chalk from 'chalk';
 
 const scriptsDir = fileURLToPath(new URL('.', import.meta.url));
 const rootDir = path.resolve(scriptsDir, '..');
@@ -74,6 +75,9 @@ for (const fullPath of files) {
   const doc = parser.parse(xml);
   const file = path.relative(rootDir, fullPath).replaceAll(path.sep, '/');
 
+  // Extract project name from the path (e.g., 'apps/api/reports/junit.xml' -> 'api')
+  const projectName = file.split('/')[1];
+
   // Supports both <testsuites><testsuite/></testsuites> and single <testsuite/>
   const testsuites = doc.testsuites;
   const topSuite = doc.testsuite;
@@ -82,36 +86,44 @@ for (const fullPath of files) {
     const suites = toArray(testsuites.testsuite);
     for (const suite of suites) mergedSuites.push(suite);
 
+    const failures = num(testsuites['@_failures']);
+    const outputColor = failures === 0 ? chalk.green : chalk.red;
+
     perFile.push({
-      file,
+      file: projectName,
       suites: suites.length,
       tests: num(testsuites['@_tests']),
-      failures: num(testsuites['@_failures']),
+      failures,
       errors: num(testsuites['@_errors']),
       skipped: num(testsuites['@_skipped']),
       time: num(testsuites['@_time']),
+      outputColor,
     });
 
     totals.tests += num(testsuites['@_tests']);
-    totals.failures += num(testsuites['@_failures']);
+    totals.failures += failures;
     totals.errors += num(testsuites['@_errors']);
     totals.skipped += num(testsuites['@_skipped']);
     totals.time += num(testsuites['@_time']);
   } else if (topSuite) {
     mergedSuites.push(topSuite);
 
+    const failures = num(topSuite['@_failures']);
+    const outputColor = failures === 0 ? chalk.green : chalk.red;
+
     perFile.push({
-      file,
+      file: projectName,
       suites: 1,
       tests: num(topSuite['@_tests']),
-      failures: num(topSuite['@_failures']),
+      failures,
       errors: num(topSuite['@_errors']),
       skipped: num(topSuite['@_skipped']),
       time: num(topSuite['@_time']),
+      outputColor,
     });
 
     totals.tests += num(topSuite['@_tests']);
-    totals.failures += num(topSuite['@_failures']);
+    totals.failures += failures;
     totals.errors += num(topSuite['@_errors']);
     totals.skipped += num(topSuite['@_skipped']);
     totals.time += num(topSuite['@_time']);
@@ -140,6 +152,8 @@ console.log(
 console.log('[test] Inputs:');
 for (const entry of perFile) {
   console.log(
-    `  - ${entry.file}: ${entry.tests} tests, ${entry.failures} failures, ${entry.errors} errors (${entry.time}s)`
+    entry.outputColor(
+      `  - [${entry.file}] ${entry.tests} tests, ${entry.failures} failures, ${entry.errors} errors (${entry.time}s)`
+    )
   );
 }

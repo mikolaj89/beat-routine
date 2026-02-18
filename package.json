@@ -13,6 +13,10 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "node ./scripts/prepare-test-reports.mjs && turbo run test -- --silent && node ./scripts/merge-junit.mjs",
+    "test:api": "pnpm --filter @drum-scheduler/api test",
+    "test:web-app": "pnpm --filter web-app test",
+    "test:mobile-app": "pnpm --filter mobile-app test",
+    "test:sdk": "pnpm --filter @drum-scheduler/sdk test",
     "kill:all": "node ./scripts/kill-all.mjs",
     "kill:all:dry": "node ./scripts/kill-all.mjs --dry-run"
   },
@@ -25,6 +29,7 @@
   "dependencies": {
     "@drum-scheduler/config": "workspace:^",
     "@drum-scheduler/contracts": "workspace:^",
-    "@drum-scheduler/sdk": "workspace:^"
+    "@drum-scheduler/sdk": "workspace:^",
+    "chalk": "^5.6.2"
   }
 }
