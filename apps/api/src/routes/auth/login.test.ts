@@ -208,4 +208,43 @@ describe("POST /auth/login", () => {
 
     await app.close();
   });
+
+  it("returns 200 with refreshToken in body and no cookie when X-Client: mobile", async () => {
+    getUserByEmailMock.mockResolvedValue([
+      {
+        id: "user-1",
+        accountId: "account-1",
+        email: "test@example.com",
+        passwordHash: "hash",
+        role: "ADMIN",
+        isActive: true,
+        createdAt: new Date().toISOString(),
+      },
+    ]);
+    bcryptCompareMock.mockResolvedValue(true);
+
+    const app = await buildApp();
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/login",
+      payload: { email: "test@example.com", password: "pass" },
+      headers: { "user-agent": "vitest", "x-client": "mobile" },
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.accessToken).toBe("access-token");
+    expect(body.refreshToken).toBe("refresh-token");
+    expect(body.refreshExpiresAt).toBeDefined();
+    expect(body.user).toEqual({
+      id: "user-1",
+      accountId: "account-1",
+      role: "ADMIN",
+    });
+
+    const setCookie = res.headers["set-cookie"];
+    expect(setCookie).toBeUndefined();
+
+    await app.close();
+  });
 });

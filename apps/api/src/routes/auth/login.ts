@@ -80,16 +80,25 @@ export const login = async (
     ip: (request.ip ?? null) as string | null,
   });
 
-  // 6) Set refresh cookie
-  // Option A: store raw refresh token in cookie (server stores hash in DB)
-  reply.setCookie("refresh", refreshToken, {
-    ...getAuthCookieOptions(),
-    expires: expiresAt,
-  });
+  const isMobile =
+    (request.headers["x-client"] ?? "").toString().toLowerCase() === "mobile";
 
-  // 7) Return access token
-  return reply.code(200).send({
+  // 6) Set refresh cookie (web only; mobile stores refresh token from body)
+  if (!isMobile) {
+    reply.setCookie("refresh", refreshToken, {
+      ...getAuthCookieOptions(),
+      expires: expiresAt,
+    });
+  }
+
+  // 7) Return access token (and for mobile: refresh token in body)
+  const responseBody = {
     accessToken,
     user: { id: user.id, accountId: user.accountId, role: roleValue },
-  });
+    ...(isMobile && {
+      refreshToken,
+      refreshExpiresAt: expiresAt.toISOString(),
+    }),
+  };
+  return reply.code(200).send(responseBody);
 };
