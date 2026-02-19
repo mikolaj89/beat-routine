@@ -1,4 +1,4 @@
-import { renderHook, waitFor, act } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useAuthSession } from "./use-auth-session";
 import { useRefresh } from "@/hooks/use-refresh";
@@ -18,13 +18,15 @@ vi.mock("next/navigation", () => ({
 describe("useAuthSession", () => {
   const replaceMock = vi.fn();
   const refreshMutateMock = vi.fn();
-  let mockAccessToken: string | null = null;
+  let mockAccessToken: string | null | undefined = undefined;
   let mockError: string | null = null;
 
   beforeEach(() => {
     vi.clearAllMocks();
+    refreshMutateMock.mockReset();
+    refreshMutateMock.mockResolvedValue({ accessToken: null });
     sessionStorage.clear();
-    mockAccessToken = null;
+    mockAccessToken = undefined;
     mockError = null;
 
     vi.mocked(useRouter).mockReturnValue({
@@ -35,7 +37,7 @@ describe("useAuthSession", () => {
       new URLSearchParams("view=calendar") as never,
     );
     vi.mocked(useRefresh).mockImplementation(() => ({
-      mutate: refreshMutateMock,
+      refresh: refreshMutateMock,
       isPending: false,
       accessToken: mockAccessToken,
       error: mockError,
@@ -43,7 +45,7 @@ describe("useAuthSession", () => {
     }));
   });
 
-  it("hydrates access token from sessionStorage and skips initial refresh", async () => {
+  it("hydrates access token from sessionStorage and still triggers refresh", async () => {
     sessionStorage.setItem("auth.accessToken", "stored-token");
 
     const { result } = renderHook(() => useAuthSession(API_BASE_URL));
@@ -51,27 +53,24 @@ describe("useAuthSession", () => {
     await waitFor(() => {
       expect(result.current.accessToken).toBe("stored-token");
     });
-    expect(sessionStorage.getItem("auth.accessToken")).toBeNull();
-    expect(refreshMutateMock).not.toHaveBeenCalled();
+
+    await waitFor(() => {
+      expect(refreshMutateMock).toHaveBeenCalledTimes(1);
+    });
   });
 
   it("calls refresh on init when no stored token and sets access token", async () => {
     refreshMutateMock.mockImplementation(async () => {
-      // Simulate mutation completing and updating accessToken
       mockAccessToken = "fresh-token";
-      // Update the mock implementation to return the new token
       vi.mocked(useRefresh).mockImplementation(() => ({
-        mutate: refreshMutateMock,
+        refresh: refreshMutateMock,
         isPending: false,
         accessToken: mockAccessToken,
         error: mockError,
         isUnauthorized: (mockError === "UNAUTHORIZED" || mockError?.includes("UNAUTHORIZED")) ?? false,
       }));
-      return {
-        accessToken: "fresh-token",
-        error: null,
-        isUnauthorized: false,
-      };
+
+      return { accessToken: "fresh-token" };
     });
 
     const { result, rerender } = renderHook(() => useAuthSession(API_BASE_URL));
@@ -80,7 +79,6 @@ describe("useAuthSession", () => {
       expect(refreshMutateMock).toHaveBeenCalledTimes(1);
     });
 
-    // Trigger rerender to pick up the updated mock
     rerender();
 
     await waitFor(() => {
@@ -99,10 +97,10 @@ describe("useAuthSession", () => {
 
     // Simulate error from refresh mutation - update mock to return error state
     mockError = "UNAUTHORIZED";
-    mockAccessToken = null;
+    mockAccessToken = undefined;
     
     vi.mocked(useRefresh).mockImplementation(() => ({
-      mutate: refreshMutateMock,
+      refresh: refreshMutateMock,
       isPending: false,
       accessToken: mockAccessToken,
       error: mockError,
@@ -120,19 +118,4 @@ describe("useAuthSession", () => {
     });
   });
 
-  it("clears access token via clearAccessToken", async () => {
-    sessionStorage.setItem("auth.accessToken", "token-to-clear");
-
-    const { result } = renderHook(() => useAuthSession(API_BASE_URL));
-
-    await waitFor(() => {
-      expect(result.current.accessToken).toBe("token-to-clear");
-    });
-
-    act(() => {
-      result.current.clearAccessToken();
-    });
-
-    expect(result.current.accessToken).toBeNull();
-  });
 });

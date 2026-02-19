@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { login } from "@drum-scheduler/sdk";
 import type { UserInput } from "@drum-scheduler/contracts";
+import { setSessionStorageAccessToken } from "@/utils/auth-utils";
 
 export function useLogin(baseUrl: string) {
   const router = useRouter();
@@ -19,7 +20,7 @@ export function useLogin(baseUrl: string) {
       if (response && typeof response === "object" && "accessToken" in response) {
         const accessToken = response.accessToken as string;
         if (accessToken) {
-          sessionStorage.setItem("auth.accessToken", accessToken);
+          setSessionStorageAccessToken(accessToken);
         }
       }
       const from = searchParams.get("from");

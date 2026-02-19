@@ -7,7 +7,6 @@ export function useRefresh(baseUrl: string) {
   const { mutateAsync, isPending, data, error } = useMutation({
     mutationFn: async () => {
       const response = await refreshAccessTokenPOST(baseUrl);
-      console.log('response in useRefresh: ',response);
 
       if ("error" in response) {
         throw new Error(response.error.errorCode);
@@ -19,17 +18,14 @@ export function useRefresh(baseUrl: string) {
     },
   });
 
-  // Extract error message string and detect unauthorized errors
-  const errorMessage =
-    error instanceof Error ? error.message : error ? String(error) : null;
-  const isUnauthorized =
-    (errorMessage === "UNAUTHORIZED" ||
-      errorMessage?.includes("UNAUTHORIZED")) ??
-    false;
+  const errorMessage = error instanceof Error ? error.message : null;
+  const isUnauthorized = Boolean(
+    errorMessage && errorMessage.includes("UNAUTHORIZED"),
+  );
 
   return {
-    accessToken: data?.accessToken ?? null,
-    mutate: mutateAsync,
+    accessToken: data?.accessToken,
+    refresh: mutateAsync,
     isPending,
     error: errorMessage,
     isUnauthorized,

@@ -72,7 +72,7 @@ export class ApiClient {
         credentials: "include",
       });
 
-      const responseData = await this.parseJsonSafe<ApiResponse<T>>(response);
+      const responseData = await this.parseJsonSafe<unknown>(response);
 
       if (!responseData && !response.ok) {
         return {
@@ -90,7 +90,19 @@ export class ApiClient {
         return { data: null };
       }
 
-      return responseData;
+      if (response.ok) {
+        if (
+          responseData !== null &&
+          typeof responseData === "object" &&
+          ("data" in responseData || "error" in responseData)
+        ) {
+          return responseData as ApiResponse<T | null>;
+        }
+
+        return { data: responseData as T };
+      }
+
+      return responseData as ApiResponse<T | null>;
     } catch (error) {
       return {
         error: {

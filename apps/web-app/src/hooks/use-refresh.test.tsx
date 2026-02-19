@@ -39,7 +39,7 @@ describe("useRefresh", () => {
     );
 
     await act(async () => {
-      const data = await result.current.mutate();
+      const data = await result.current.refresh();
       expect(data).toEqual({
         accessToken: "refreshed-token",
       });
@@ -67,7 +67,7 @@ describe("useRefresh", () => {
 
     await act(async () => {
       try {
-        await result.current.mutate();
+        await result.current.refresh();
       } catch (error) {
         // Mutation throws error, which is expected
         expect(error).toBeInstanceOf(Error);
@@ -77,7 +77,7 @@ describe("useRefresh", () => {
     await waitFor(() => {
       expect(result.current.error).toBe("UNAUTHORIZED");
       expect(result.current.isUnauthorized).toBe(true);
-      expect(result.current.accessToken).toBeNull();
+      expect(result.current.accessToken).toBeUndefined();
     });
   });
 });

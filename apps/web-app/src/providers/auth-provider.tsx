@@ -1,29 +1,16 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext } from "react";
 import { useAuthSession } from "@/hooks/use-auth-session";
 import { API_BASE_URL } from "@/config/globals";
-import { UseMutateAsyncFunction } from "@tanstack/react-query";
-import type { RefreshResponse } from "@drum-scheduler/contracts";
 
-type AuthContextValue = {
-  accessToken: string | null;
-  isRefreshing: boolean;
-  refresh: UseMutateAsyncFunction<RefreshResponse, Error, void, unknown>;
-  clearAccessToken: () => void;
-};
+type AuthContextValue = ReturnType<typeof useAuthSession>;
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const { accessToken, isRefreshing, refresh, clearAccessToken } =
-    useAuthSession(API_BASE_URL);
-
-  const value = useMemo<AuthContextValue>(
-    () => ({ accessToken, isRefreshing, refresh, clearAccessToken }),
-    [accessToken, clearAccessToken, isRefreshing, refresh],
-  );
+  const value = useAuthSession(API_BASE_URL);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

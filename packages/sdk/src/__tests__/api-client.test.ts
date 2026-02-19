@@ -28,6 +28,20 @@ describe("ApiClient", () => {
     );
   });
 
+  it("wraps successful flat JSON payload in data", async () => {
+    const fetchMock = vi.fn(async () => ({
+      ok: true,
+      json: async () => ({ accessToken: "token" }),
+    })) as unknown as typeof fetch;
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    const client = new ApiClient("http://localhost:8000");
+    const result = await client.get<{ accessToken: string }>("/auth/refresh");
+
+    expect(result).toEqual({ data: { accessToken: "token" } });
+  });
+
   it("returns api error payload when response contains error", async () => {
     const fetchMock = vi.fn(async () => ({
       ok: false,

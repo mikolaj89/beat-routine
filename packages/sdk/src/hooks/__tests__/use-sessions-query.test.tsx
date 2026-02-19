@@ -20,17 +20,34 @@ afterEach(() => {
 });
 
 describe("useSessionsQuery", () => {
-  it("returns sessions data", async () => {
+  it("returns sessions data when accessToken is provided", async () => {
     const { useSessionsQuery } = await import("../use-sessions-query");
     const queryClient = createTestQueryClient();
     const wrapper = createWrapper(queryClient);
 
-    const { result } = renderHook(() => useSessionsQuery(baseUrl), { wrapper });
+    const { result } = renderHook(
+      () => useSessionsQuery(baseUrl, { accessToken: "token-123" }),
+      { wrapper }
+    );
 
     await waitFor(() => {
       expect(result.current.data).toEqual(mockSessions);
     });
 
-    expect(fetchSessions).toHaveBeenCalledWith(baseUrl, { accessToken: undefined });
+    expect(fetchSessions).toHaveBeenCalledWith(baseUrl, {
+      accessToken: "token-123",
+    });
+  });
+
+  it("does not run query when accessToken is missing", async () => {
+    const { useSessionsQuery } = await import("../use-sessions-query");
+    const queryClient = createTestQueryClient();
+    const wrapper = createWrapper(queryClient);
+
+    renderHook(() => useSessionsQuery(baseUrl), { wrapper });
+
+    await waitFor(() => {
+      expect(fetchSessions).not.toHaveBeenCalled();
+    });
   });
 });

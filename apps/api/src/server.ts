@@ -26,6 +26,22 @@ await fastify.register(cookie);
 fastify.decorate("auth", auth);
 fastify.decorate("env", env);
 
+fastify.addHook("preSerialization", async (_request, reply, payload) => {
+  if (reply.statusCode >= 400 || reply.statusCode === 204) {
+    return payload;
+  }
+
+  if (
+    payload !== null &&
+    typeof payload === "object" &&
+    ("data" in payload || "error" in payload)
+  ) {
+    return payload;
+  }
+
+  return { data: payload };
+});
+
 fastify.addHook("onRequest", async (request) => {
   console.log(`${request.method} ${request.url}`);
 });

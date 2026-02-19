@@ -1,9 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useRefresh } from "@/hooks/use-refresh";
 import { API_BASE_URL } from "@/config/globals";
+import {
+  getSessionStorageAccessToken,
+  removeSessionStorageAccessToken,
+} from "@/utils/auth-utils";
 
 export function useAuthSession(baseUrl: string = API_BASE_URL) {
   const router = useRouter();
@@ -11,42 +15,27 @@ export function useAuthSession(baseUrl: string = API_BASE_URL) {
   const searchParams = useSearchParams();
   const qs = searchParams.toString();
 
-  const {
-    mutate: refreshTokenMutate,
-    isPending: isRefreshing,
-    accessToken: accToken,
-    error,
-    isUnauthorized,
-  } = useRefresh(baseUrl);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-
   const initializedRef = useRef(false);
 
-  const clearAccessToken = useCallback(() => {
+  const { refresh, isPending: isRefreshing, error } = useRefresh(baseUrl);
+
+  const clearAuthToken = () => {
     setAccessToken(null);
-  }, []);
+    removeSessionStorageAccessToken();
+  };
 
-  useEffect(() => {
-    if (accToken !== undefined) {
-      setAccessToken(accToken);
-    }
-  }, [accToken]);
+  const redirectToLogin = useCallback(() => {
+    const redirectTarget = `/login?from=${encodeURIComponent(
+      `${pathname}${qs ? `?${qs}` : ""}`,
+    )}`;
+    router.replace(redirectTarget);
+  }, [pathname, qs, router]);
 
-  useEffect(() => {
-    if (error && !isRefreshing) {
-      setAccessToken(null);
-      const from = `${pathname}${qs ? `?${qs}` : ""}`;
-      router.replace(`/login?from=${encodeURIComponent(from)}`);
-    }
-  }, [
-    isUnauthorized,
-    accToken,
-    accessToken,
-    isRefreshing,
-    pathname,
-    qs,
-    router,
-  ]);
+  const handleAuthFailure = useCallback(() => {
+    clearAuthToken();
+    redirectToLogin();
+  }, [clearAuthToken, redirectToLogin]);
 
   useEffect(() => {
     if (initializedRef.current) {
@@ -54,20 +43,32 @@ export function useAuthSession(baseUrl: string = API_BASE_URL) {
     }
     initializedRef.current = true;
 
-    const storedToken = sessionStorage.getItem("auth.accessToken");
-    if (storedToken) {
-      setAccessToken(storedToken);
-      sessionStorage.removeItem("auth.accessToken");
-      return;
-    }
+    const initializeSession = async () => {
+      const storedToken = getSessionStorageAccessToken();
+      if (storedToken) {
+        setAccessToken(storedToken);
+        removeSessionStorageAccessToken();
+      }
 
-    void refreshTokenMutate();
-  }, []);
+      try {
+        const result = await refresh();
+        setAccessToken(result?.accessToken ?? null);
+      } catch {
+        handleAuthFailure();
+      }
+    };
+    void initializeSession();
+  }, [refresh]);
+
+  useEffect(() => {
+    if (error && !isRefreshing) {
+      handleAuthFailure();
+    }
+  }, [error, isRefreshing, handleAuthFailure]);
 
   return {
     accessToken,
     isRefreshing,
-    refresh: refreshTokenMutate,
-    clearAccessToken,
+    refresh,
   };
 }

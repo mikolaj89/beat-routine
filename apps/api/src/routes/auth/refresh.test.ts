@@ -228,7 +228,7 @@ describe("POST /auth/refresh", () => {
 
     expect(res.statusCode).toBe(200);
     const body = res.json();
-    expect(body.accessToken).toBe(ACCESS_TOKEN);
+    expect(body.data?.accessToken).toBe(ACCESS_TOKEN);
 
     const setCookie = res.headers["set-cookie"];
     expect(setCookie).toContain(`refresh=${NEW_REFRESH_TOKEN}`);
@@ -263,9 +263,9 @@ describe("POST /auth/refresh", () => {
 
     expect(res.statusCode).toBe(200);
     const body = res.json();
-    expect(body.accessToken).toBe(ACCESS_TOKEN);
-    expect(body.refreshToken).toBe(NEW_REFRESH_TOKEN);
-    expect(body.refreshExpiresAt).toBeDefined();
+    expect(body.data?.accessToken).toBe(ACCESS_TOKEN);
+    expect(body.data?.refreshToken).toBe(NEW_REFRESH_TOKEN);
+    expect(body.data?.refreshExpiresAt).toBeDefined();
 
     const setCookie = res.headers["set-cookie"];
     expect(setCookie).toBeUndefined();

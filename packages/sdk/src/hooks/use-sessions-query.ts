@@ -11,10 +11,12 @@ export function useSessionsQuery(
   }
 ) {
   const accessToken = options?.accessToken ?? null;
+
   return useQuery({
     queryKey: [...sessionsQueryKeys.all, accessToken],
     queryFn: () => fetchSessions(baseUrl, { accessToken: accessToken ?? undefined }),
     initialData: options?.initialData,
     refetchOnMount: options?.refetchOnMount ?? true,
+    enabled: Boolean(accessToken),
   });
 }
