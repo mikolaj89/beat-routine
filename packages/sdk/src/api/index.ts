@@ -1,3 +1,4 @@
+export type { RequestOptions } from "../utils/auth-headers";
 export * from "./categories-query-keys";
 export * from "./exercises-query-keys";
 export * from "./fetch-categories";

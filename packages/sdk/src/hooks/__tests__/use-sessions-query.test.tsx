@@ -31,6 +31,6 @@ describe("useSessionsQuery", () => {
       expect(result.current.data).toEqual(mockSessions);
     });
 
-    expect(fetchSessions).toHaveBeenCalledWith(baseUrl);
+    expect(fetchSessions).toHaveBeenCalledWith(baseUrl, { accessToken: undefined });
   });
 });

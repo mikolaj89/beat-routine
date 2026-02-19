@@ -15,18 +15,24 @@ import { useState } from "react";
 import { useSessionsQuery, useDeleteSession } from "@drum-scheduler/sdk";
 import { Session } from "@drum-scheduler/contracts";
 import { API_BASE_URL } from "@/config/globals";
+import { useAuth } from "@/providers/auth-provider";
 
-export const SessionsList = ({ sessionsData }: { sessionsData: Session[] }) => {
+export const SessionsList = ({
+  sessionsData,
+}: { sessionsData?: Session[] }) => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [sessionIdToDelete, setSessionIdToDelete] = useState<number | null>(
     null
   );
+  const { accessToken } = useAuth();
+  
   const result = useSessionsQuery(API_BASE_URL, {
     initialData: sessionsData,
     refetchOnMount: false,
+    accessToken,
   });
 
-  const deleteMutation = useDeleteSession(API_BASE_URL);
+  const deleteMutation = useDeleteSession(API_BASE_URL, { accessToken });
 
   const onDeleteBtnClick = (sessionId: number) => {
     setSessionIdToDelete(sessionId);

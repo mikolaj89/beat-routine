@@ -32,7 +32,9 @@ describe("useCreateSession", () => {
       await result.current.mutateAsync(mockSessionInsert);
     });
 
-    expect(createSession).toHaveBeenCalledWith(baseUrl, mockSessionInsert);
+    expect(createSession).toHaveBeenCalledWith(baseUrl, mockSessionInsert, {
+      accessToken: undefined,
+    });
     expect(invalidateSpy).toHaveBeenCalledWith({
       queryKey: sessionsQueryKeys.all,
     });

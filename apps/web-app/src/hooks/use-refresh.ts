@@ -7,6 +7,7 @@ export function useRefresh(baseUrl: string) {
   const { mutateAsync, isPending, data, error } = useMutation({
     mutationFn: async () => {
       const response = await refreshAccessTokenPOST(baseUrl);
+      console.log('response in useRefresh: ',response);
 
       if ("error" in response) {
         throw new Error(response.error.errorCode);

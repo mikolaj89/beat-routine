@@ -8,18 +8,23 @@ import { useRouter } from "next/navigation";
 import { FormError } from "@/components/common/typography";
 import { useCreateSession } from "@drum-scheduler/sdk";
 import { API_BASE_URL } from "@/config/globals";
+import { useAuth } from "@/providers/auth-provider";
 
 export const SessionForm = () => {
   const { push } = useRouter();
+  const { accessToken } = useAuth();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
+    // @ts-expect-error - zodResolver type inference issue with react-hook-form
     resolver: zodResolver(sessionSchema),
   });
-  const { error, mutate, isPending } = useCreateSession(API_BASE_URL);
+  const { error, mutate, isPending } = useCreateSession(API_BASE_URL, {
+    accessToken,
+  });
 
   const onSubmit = (data: SessionFormData) => {
     mutate(data, {

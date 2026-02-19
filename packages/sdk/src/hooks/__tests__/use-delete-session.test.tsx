@@ -31,7 +31,9 @@ describe("useDeleteSession", () => {
       await result.current.mutateAsync(4);
     });
 
-    expect(deleteSession).toHaveBeenCalledWith(baseUrl, 4);
+    expect(deleteSession).toHaveBeenCalledWith(baseUrl, 4, {
+      accessToken: undefined,
+    });
     expect(invalidateSpy).toHaveBeenCalledWith({
       queryKey: sessionsQueryKeys.all,
     });

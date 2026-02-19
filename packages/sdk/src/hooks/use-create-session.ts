@@ -3,12 +3,15 @@ import { createSession, sessionsQueryKeys } from "../api";
 import { SessionInsert } from "@drum-scheduler/contracts";
 
 export function useCreateSession(
-  baseUrl: string
+  baseUrl: string,
+  options?: { accessToken?: string | null }
 ) {
   const queryClient = useQueryClient();
+  const accessToken = options?.accessToken ?? null;
 
   return useMutation({
-    mutationFn: (session: SessionInsert) => createSession(baseUrl, session),
+    mutationFn: (session: SessionInsert) =>
+      createSession(baseUrl, session, { accessToken: accessToken ?? undefined }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: sessionsQueryKeys.all,
