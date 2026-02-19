@@ -248,4 +248,44 @@ describe("POST /auth/refresh", () => {
 
     await app.close();
   });
+
+  it("returns 200 with refreshToken in body and no cookie when X-Client: mobile", async () => {
+    getAuthSessionByRefreshHashMock.mockResolvedValue([validSession()]);
+    getUserByIdMock.mockResolvedValue([validUser()]);
+
+    const app = await buildApp();
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/refresh",
+      payload: { refreshToken: REFRESH_TOKEN },
+      headers: { "x-client": "mobile", "content-type": "application/json" },
+    });
+
+    expect(res.statusCode).toBe(200);
+    const body = res.json();
+    expect(body.accessToken).toBe(ACCESS_TOKEN);
+    expect(body.refreshToken).toBe(NEW_REFRESH_TOKEN);
+    expect(body.refreshExpiresAt).toBeDefined();
+
+    const setCookie = res.headers["set-cookie"];
+    expect(setCookie).toBeUndefined();
+
+    await app.close();
+  });
+
+  it("returns 401 when X-Client: mobile but body refreshToken missing", async () => {
+    const app = await buildApp();
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/refresh",
+      payload: {},
+      headers: { "x-client": "mobile", "content-type": "application/json" },
+    });
+
+    expect(res.statusCode).toBe(401);
+    const body = res.json();
+    expect(body.error?.errorCode).toBe("UNAUTHORIZED");
+
+    await app.close();
+  });
 });

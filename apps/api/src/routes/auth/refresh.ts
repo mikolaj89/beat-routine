@@ -9,13 +9,21 @@ import { hasAuthCredentials, parseRole } from "../../utils/auth-validation";
 import { getAuthCookieOptions } from "../../utils/auth-cookies";
 
 
+type RefreshBody = { refreshToken?: string };
+
 export const refresh = async (
-  request: FastifyRequest,
+  request: FastifyRequest<{ Body?: RefreshBody }>,
   reply: FastifyReply
 ) => {
-  // 1) Read refresh token from cookie
-  const refreshToken = (request.cookies as any)?.refresh as string | undefined;
-  if (!refreshToken) {
+  const isMobile =
+    (request.headers["x-client"] ?? "").toString().toLowerCase() === "mobile";
+
+  // 1) Read refresh token: from body for mobile, from cookie for web
+  const refreshToken = isMobile
+    ? (request.body as RefreshBody | undefined)?.refreshToken
+    : (request.cookies as { refresh?: string })?.refresh;
+
+  if (!refreshToken || typeof refreshToken !== "string") {
     return reply.code(401).send(getFormattedErrorBody("Refresh token missing", "UNAUTHORIZED"));
   }
 
@@ -99,11 +107,21 @@ export const refresh = async (
       accountId: session.accountId,
       role: parsedRole,
     });
-    // 7) Set new refresh cookie
-    reply.setCookie("refresh", newRefreshToken, {
-      ...getAuthCookieOptions(),
-      expires: newExpiresAt,
-    });
 
-    return reply.code(200).send({ accessToken });
+    // 7) Set new refresh cookie (web only); for mobile return tokens in body
+    if (!isMobile) {
+      reply.setCookie("refresh", newRefreshToken, {
+        ...getAuthCookieOptions(),
+        expires: newExpiresAt,
+      });
+    }
+
+    const responseBody = {
+      accessToken,
+      ...(isMobile && {
+        refreshToken: newRefreshToken,
+        refreshExpiresAt: newExpiresAt.toISOString(),
+      }),
+    };
+    return reply.code(200).send(responseBody);
 };

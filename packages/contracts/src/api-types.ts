@@ -13,5 +13,7 @@ export type LoginResponse = {
 
 export type RefreshResponse = {
   accessToken: string | null;
+  refreshToken?: string;
+  refreshExpiresAt?: string;
 };
   
