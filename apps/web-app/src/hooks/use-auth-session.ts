@@ -20,10 +20,10 @@ export function useAuthSession(baseUrl: string = API_BASE_URL) {
 
   const { refresh, isPending: isRefreshing, error } = useRefresh(baseUrl);
 
-  const clearAuthToken = () => {
+  const clearAuthToken = useCallback(() => {
     setAccessToken(null);
     removeSessionStorageAccessToken();
-  };
+  }, []);
 
   const redirectToLogin = useCallback(() => {
     const redirectTarget = `/login?from=${encodeURIComponent(
@@ -58,7 +58,7 @@ export function useAuthSession(baseUrl: string = API_BASE_URL) {
       }
     };
     void initializeSession();
-  }, [refresh]);
+  }, [refresh, handleAuthFailure]);
 
   useEffect(() => {
     if (error && !isRefreshing) {
