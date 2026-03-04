@@ -39,6 +39,7 @@ describe('SessionScreen', () => {
       <SessionScreen
         baseUrl="http://example.test"
         sessionId={1}
+        accessToken="token-123"
         onBack={() => {}}
         onStart={() => {}}
       />
@@ -47,6 +48,9 @@ describe('SessionScreen', () => {
     expect(getByText('Session 2026')).toBeTruthy();
     expect(getByText('Total duration: 0 min')).toBeTruthy();
     expect(getByText('No exercises in this session.')).toBeTruthy();
+    expect(mockUseSessionQuery).toHaveBeenCalledWith('http://example.test', 1, {
+      accessToken: 'token-123',
+    });
   });
 
   it('renders exercise list when present', () => {
@@ -64,6 +68,7 @@ describe('SessionScreen', () => {
       <SessionScreen
         baseUrl="http://example.test"
         sessionId={1}
+        accessToken="token-123"
         onBack={() => {}}
         onStart={() => {}}
       />

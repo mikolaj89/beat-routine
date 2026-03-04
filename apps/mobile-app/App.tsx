@@ -9,6 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { API_BASE_URL } from './config/api';
 import { RootStackParamList } from './types/navigation';
+import { AuthProvider, useAuth } from './providers/auth-provider';
+import { ActivityIndicator } from 'react-native-paper';
 
 const queryClient = new QueryClient();
 
@@ -20,34 +22,41 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <AppContent />
+        <AuthProvider>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <AppContent />
+        </AuthProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
   );
 }
 
-
 import LoginScreen from './components/login/login-screen';
-import { useState } from 'react';
 
 function AppContent() {
+  const { accessToken, isAuthenticated, isRefreshing } = useAuth();
   const baseUrl = API_BASE_URL;
-  const [user, setUser] = useState<any>(null);
+
+  if (isRefreshing) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {!user ? (
-            <Stack.Screen name="Login">
-              {() => <LoginScreen onLoginSuccess={setUser} />}
-            </Stack.Screen>
+          {!isAuthenticated ? (
+            <Stack.Screen name="Login" component={LoginScreen} />
           ) : (
             <>
               <Stack.Screen name="Sessions">
                 {({ navigation }) => (
                   <SessionsScreen
+                    accessToken={accessToken}
                     onOpenSession={sessionId =>
                       navigation.navigate('Session', { sessionId })
                     }
@@ -60,6 +69,7 @@ function AppContent() {
                   <SessionScreen
                     baseUrl={baseUrl}
                     sessionId={route.params.sessionId}
+                    accessToken={accessToken}
                     onBack={() => navigation.goBack()}
                     onStart={(exercises, sessionName, exerciseIndex) =>
                       navigation.navigate('Exercise', {
@@ -93,6 +103,11 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

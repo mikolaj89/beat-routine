@@ -17,11 +17,13 @@ import { Text } from 'react-native-paper';
 export default function SessionScreen({
   baseUrl,
   sessionId,
+  accessToken,
   onBack,
   onStart,
 }: {
   baseUrl: string;
   sessionId: number;
+  accessToken: string | null;
   onBack: () => void;
   onStart?: (
     exercises: Exercise[],
@@ -29,7 +31,7 @@ export default function SessionScreen({
     exerciseIndex: number,
   ) => void;
 }) {
-  const sessionResult = useSessionQuery(baseUrl, sessionId);
+  const sessionResult = useSessionQuery(baseUrl, sessionId, { accessToken });
 
   const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
     return <ExerciseCard exercise={item} />;

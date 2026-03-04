@@ -11,13 +11,15 @@ import { SessionListItem } from '../session-list/session-list-item/session-list-
 import { styles } from './sessions-screen.style';
 
 export default function SessionsScreen({
+  accessToken,
   onOpenSession,
 }: {
+  accessToken: string | null;
   onOpenSession?: (sessionId: number) => void;
 }) {
   const [query, setQuery] = useState('');
 
-  const sessionsResult = useSessionsQuery(API_BASE_URL);
+  const sessionsResult = useSessionsQuery(API_BASE_URL, { accessToken });
   const sessions = sessionsResult?.data ?? [];
   const isLoading = Boolean(sessionsResult?.isLoading);
   const isEmpty = !isLoading && sessions.length === 0;

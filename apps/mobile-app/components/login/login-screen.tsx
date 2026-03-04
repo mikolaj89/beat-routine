@@ -4,21 +4,24 @@ import { Button, Text } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormSchema, LoginFormData } from './login-form.utils';
-import { useLogin } from '@drum-scheduler/sdk';
-import { API_BASE_URL } from '@drum-scheduler/config';
 import { styles } from './login-screen.style';
 import { theme } from '../../utils/theme';
+import { useAuth } from '../../providers/auth-provider';
 
-export default function LoginScreen({ onLoginSuccess }: { onLoginSuccess: (user: any) => void }) {
-  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+export default function LoginScreen() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     defaultValues: { email: '', password: '' },
     // @ts-expect-error - zodResolver type inference issue with react-hook-form
     resolver: zodResolver(LoginFormSchema),
   });
-  const { mutate: login, isPending, error } = useLogin(API_BASE_URL);
+  const { login, isLoginPending, loginError } = useAuth();
 
   const onSubmit = (data: LoginFormData) => {
-    login(data);
+    void login(data);
   };
 
   return (
@@ -41,7 +44,9 @@ export default function LoginScreen({ onLoginSuccess }: { onLoginSuccess: (user:
           />
         )}
       />
-      {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
+      {errors.email && (
+        <Text style={styles.errorText}>{errors.email.message}</Text>
+      )}
       <Controller
         control={control}
         name="password"
@@ -57,19 +62,23 @@ export default function LoginScreen({ onLoginSuccess }: { onLoginSuccess: (user:
           />
         )}
       />
-      {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
-      {error && <Text style={styles.errorText}>{error.message}</Text>}
+      {errors.password && (
+        <Text style={styles.errorText}>{errors.password.message}</Text>
+      )}
+      {loginError && <Text style={styles.errorText}>{loginError}</Text>}
       <View style={styles.buttonWrap}>
         <Button
           mode="contained"
-          onPress={handleSubmit(onSubmit)}
-          disabled={isPending}
+          onPress={handleSubmit(data => {
+            void onSubmit(data);
+          })}
+          disabled={isLoginPending}
           style={{ width: '100%' }}
         >
-          {isPending ? 'Signing in...' : 'Sign In'}
+          {isLoginPending ? 'Signing in...' : 'Sign In'}
         </Button>
       </View>
-      {isPending && <ActivityIndicator style={styles.loading} />}
+      {isLoginPending && <ActivityIndicator style={styles.loading} />}
     </View>
   );
 }

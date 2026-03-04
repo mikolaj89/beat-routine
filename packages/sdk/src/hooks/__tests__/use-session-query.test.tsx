@@ -31,7 +31,7 @@ describe("useSessionQuery", () => {
     const wrapper = createWrapper(queryClient);
 
     const { result } = renderHook(
-      () => useSessionQuery(baseUrl, 123),
+      () => useSessionQuery(baseUrl, 123, { accessToken: "token-123" }),
       { wrapper }
     );
 
@@ -52,7 +52,7 @@ describe("useSessionQuery", () => {
     const wrapper = createWrapper(queryClient);
 
     const { result } = renderHook(
-      () => useSessionQuery(baseUrl, 999),
+      () => useSessionQuery(baseUrl, 999, { accessToken: "token-123" }),
       { wrapper }
     );
 
@@ -66,5 +66,18 @@ describe("useSessionQuery", () => {
       `${baseUrl}/sessions/999`,
       expect.any(Object)
     );
+  });
+
+  it("does not run query when accessToken is missing", async () => {
+    vi.stubGlobal("fetch", fetchMock);
+    const { useSessionQuery } = await import("../use-session-query");
+    const queryClient = createTestQueryClient();
+    const wrapper = createWrapper(queryClient);
+
+    renderHook(() => useSessionQuery(baseUrl, 123), { wrapper });
+
+    await waitFor(() => {
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
   });
 });
