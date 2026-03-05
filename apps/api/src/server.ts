@@ -61,6 +61,6 @@ await fastify.register(authRoutes);
 
 const PORT = Number(process.env.PORT ?? 8000);
 
-fastify.listen({ port: PORT }).then(() => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+fastify.listen({ port: PORT, host: "0.0.0.0" }).then(() => {
+  console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });

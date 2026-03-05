@@ -27,8 +27,6 @@ export function useMobileRefresh(baseUrl: string) {
     },
   });
 
-  console.log({isPending, error, data});
-
   const errorMessage = error instanceof Error ? error.message : null;
   const isUnauthorized = Boolean(
     errorMessage && errorMessage.includes("UNAUTHORIZED"),

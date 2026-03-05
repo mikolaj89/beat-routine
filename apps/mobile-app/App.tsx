@@ -12,13 +12,14 @@ import { RootStackParamList } from './types/navigation';
 import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';
 import { SplashScreen } from './components/splash/splash-screen';
+import { theme } from './utils/theme';
 
 const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = false;
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -35,8 +36,9 @@ function App() {
 import LoginScreen from './components/login/login-screen';
 
 function AppContent() {
-  const { accessToken, isAuthenticated, isRefreshing, isSessionInitialized } = useAuth();
-  const baseUrl = API_BASE_URL;
+  const { accessToken, isAuthenticated, isRefreshing, isSessionInitialized } =
+    useAuth();
+
   const hasHiddenNativeSplashRef = useRef(false);
 
   useEffect(() => {
@@ -74,7 +76,7 @@ function AppContent() {
               <Stack.Screen name="Session">
                 {({ navigation, route }) => (
                   <SessionScreen
-                    baseUrl={baseUrl}
+                    baseUrl={API_BASE_URL}
                     sessionId={route.params.sessionId}
                     accessToken={accessToken}
                     onBack={() => navigation.goBack()}
@@ -110,6 +112,7 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    color: theme.colors.text,
   },
 });
 
