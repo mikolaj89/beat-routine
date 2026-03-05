@@ -6,6 +6,7 @@ import type { UserInput } from "@drum-scheduler/contracts";
 
 export function useMobileAuthSession(baseUrl: string) {
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [isSessionInitialized, setIsSessionInitialized] = useState(false);
   const initializedRef = useRef(false);
 
   const {
@@ -54,6 +55,8 @@ export function useMobileAuthSession(baseUrl: string) {
         await refresh();
       } catch {
         await handleAuthFailure();
+      } finally {
+        setIsSessionInitialized(true);
       }
     };
 
@@ -69,6 +72,7 @@ export function useMobileAuthSession(baseUrl: string) {
   return {
     accessToken,
     isAuthenticated: Boolean(accessToken),
+    isSessionInitialized,
     isRefreshing,
     isLoginPending,
     loginError,

@@ -10,8 +10,8 @@ jest.mock('../api/mobile-auth', () => ({
 }));
 
 jest.mock('../utils/auth-storage', () => ({
-  getRefreshToken: jest.fn(),
-  setRefreshToken: jest.fn(),
+  getRefreshTokenFromStorage: jest.fn(),
+  setRefreshTokenInStorage: jest.fn(),
 }));
 
 const mockedMobileRefresh = mobileRefresh as jest.MockedFunction<

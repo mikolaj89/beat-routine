@@ -42,3 +42,13 @@ jest.mock('react-native-audio-api', () => {
 jest.mock('react-native-fs', () => ({
 	readFileAssets: jest.fn().mockResolvedValue(''),
 }));
+
+jest.mock('react-native-bootsplash', () => ({
+	hide: jest.fn().mockResolvedValue(undefined),
+	isVisible: jest.fn(() => true),
+	useHideAnimation: jest.fn(() => ({
+		container: { style: {} },
+		logo: { source: 0, style: {} },
+		brand: { source: 0, style: {} },
+	})),
+}));

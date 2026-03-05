@@ -55,6 +55,7 @@ describe("useMobileAuthSession", () => {
     await waitFor(() => {
       expect(result.current.accessToken).toBe("access-token");
       expect(result.current.isAuthenticated).toBe(true);
+      expect(result.current.isSessionInitialized).toBe(true);
       expect(result.current.isRefreshing).toBe(false);
       expect(result.current.isLoginPending).toBe(false);
       expect(result.current.loginError).toBeNull();
@@ -83,6 +84,7 @@ describe("useMobileAuthSession", () => {
       expect(mockedClearAuthTokens).toHaveBeenCalled();
       expect(result.current.accessToken).toBeNull();
       expect(result.current.isAuthenticated).toBe(false);
+      expect(result.current.isSessionInitialized).toBe(true);
     });
   });
 
@@ -115,6 +117,7 @@ describe("useMobileAuthSession", () => {
     await waitFor(() => {
       expect(result.current.accessToken).toBeNull();
       expect(result.current.isAuthenticated).toBe(false);
+      expect(result.current.isSessionInitialized).toBe(true);
     });
 
     await result.current.login({

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SessionsScreen from './components/session/sessions-screen/sessions-screen';
@@ -10,7 +10,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { API_BASE_URL } from './config/api';
 import { RootStackParamList } from './types/navigation';
 import { AuthProvider, useAuth } from './providers/auth-provider';
-import { ActivityIndicator } from 'react-native-paper';
+import BootSplash from 'react-native-bootsplash';
+import { SplashScreen } from './components/splash/splash-screen';
 
 const queryClient = new QueryClient();
 
@@ -34,15 +35,21 @@ function App() {
 import LoginScreen from './components/login/login-screen';
 
 function AppContent() {
-  const { accessToken, isAuthenticated, isRefreshing } = useAuth();
+  const { accessToken, isAuthenticated, isRefreshing, isSessionInitialized } = useAuth();
   const baseUrl = API_BASE_URL;
+  const hasHiddenNativeSplashRef = useRef(false);
 
-  if (isRefreshing) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator />
-      </View>
-    );
+  useEffect(() => {
+    if (!isSessionInitialized || hasHiddenNativeSplashRef.current) {
+      return;
+    }
+
+    hasHiddenNativeSplashRef.current = true;
+    void BootSplash.hide({ fade: true });
+  }, [isSessionInitialized]);
+
+  if (!isSessionInitialized || isRefreshing) {
+    return <SplashScreen />;
   }
 
   return (
@@ -103,11 +110,6 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
