@@ -13,7 +13,6 @@ import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';
 import { SplashScreen } from './components/splash/splash-screen';
 import { MD3LightTheme, PaperProvider } from 'react-native-paper';
-import { theme as appTheme } from './utils/theme';
 
 const queryClient = new QueryClient();
 
