@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SessionsScreen from './components/session/sessions-screen/sessions-screen';
 import SessionScreen from './components/session/session-screen/session-screen';
@@ -12,11 +12,16 @@ import { RootStackParamList } from './types/navigation';
 import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';
 import { SplashScreen } from './components/splash/splash-screen';
-import { theme } from './utils/theme';
+import { MD3LightTheme, PaperProvider } from 'react-native-paper';
+import { theme as appTheme } from './utils/theme';
 
 const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const paperTheme = {
+  ...MD3LightTheme,
+};
 
 function App() {
   const isDarkMode = false;
@@ -24,10 +29,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
-        <AuthProvider>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <AppContent />
-        </AuthProvider>
+        <PaperProvider theme={paperTheme}>
+          <AuthProvider>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            />
+            <AppContent />
+          </AuthProvider>
+        </PaperProvider>
       </SafeAreaProvider>
     </QueryClientProvider>
   );
@@ -112,7 +121,6 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: theme.colors.text,
   },
 });
 

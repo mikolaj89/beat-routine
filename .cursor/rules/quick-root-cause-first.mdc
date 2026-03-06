@@ -1,0 +1,20 @@
+---
+description: Prefer fast root-cause checks before deep fixes
+alwaysApply: true
+---
+
+# Quick Root-Cause First
+
+For any issue request (bug, failing test, build error, runtime behavior, styling, API mismatch, performance regression), prefer this order before broad changes:
+
+1. Confirm exact symptom and scope (what fails, where, since when, reproducible steps).
+2. Check fast, high-probability causes first:
+   - stale cache/build artifacts
+   - environment/config mismatch
+   - dependency/version mismatch
+   - platform/runtime flags or system settings
+3. Validate assumptions with a minimal high-signal change or command.
+4. Apply the smallest fix that addresses the verified root cause.
+5. Escalate to broader refactors only if minimal fixes do not solve the issue.
+
+When a quick root cause is found, implement it first and explain why it solves the problem.
