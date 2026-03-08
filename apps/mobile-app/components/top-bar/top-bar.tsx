@@ -10,6 +10,7 @@ export function TopBar({
   onMenu,
   menuVisible,
   onMenuVisibleChange,
+  onLogout,
   children,
 }: {
   title?: string;
@@ -17,6 +18,7 @@ export function TopBar({
   onMenu?: () => void;
   menuVisible?: boolean;
   onMenuVisibleChange?: (visible: boolean) => void;
+  onLogout: () => void;
   children?: ReactNode;
 }) {
   const showTitle = Boolean(title) && !children;
@@ -67,7 +69,11 @@ export function TopBar({
         )}
       </Appbar.Header>
 
-      <TopBarDrawer visible={resolvedMenuVisible} onDismiss={handleDismiss} />
+      <TopBarDrawer
+        visible={resolvedMenuVisible}
+        onDismiss={handleDismiss}
+        onLogout={onLogout}
+      />
     </>
   );
 }

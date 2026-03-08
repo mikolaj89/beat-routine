@@ -11,10 +11,17 @@ import { theme } from '@/utils/theme';
 export function TopBarDrawer({
   visible,
   onDismiss,
+  onLogout,
 }: {
   visible: boolean;
   onDismiss: () => void;
+  onLogout: () => void;
 }) {
+  const handleLogout = () => {
+    onDismiss();
+    onLogout();
+  };
+
   return (
     <Portal>
       <Modal
@@ -29,15 +36,9 @@ export function TopBarDrawer({
         <Drawer.Section showDivider={false}>
           <Drawer.Item
             theme={{ colors: { onSurfaceVariant: theme.colors.text } }}
-            label="Schedule"
-            icon="calendar"
-            onPress={onDismiss}
-          />
-          <Drawer.Item
-            theme={{ colors: { onSurfaceVariant: theme.colors.text } }}
-            label="Settings"
-            icon="cog"
-            onPress={onDismiss}
+            label="Logout"
+            icon="logout"
+            onPress={handleLogout}
           />
         </Drawer.Section>
       </Modal>

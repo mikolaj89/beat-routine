@@ -55,7 +55,7 @@ describe("useMobileAuthSession", () => {
     await waitFor(() => {
       expect(result.current.accessToken).toBe("access-token");
       expect(result.current.isAuthenticated).toBe(true);
-      expect(result.current.isSessionInitialized).toBe(true);
+      expect(result.current.isAuthSessionInitialized).toBe(true);
       expect(result.current.isRefreshing).toBe(false);
       expect(result.current.isLoginPending).toBe(false);
       expect(result.current.loginError).toBeNull();
@@ -63,6 +63,35 @@ describe("useMobileAuthSession", () => {
       expect(typeof result.current.refresh).toBe("function");
       expect(typeof result.current.logout).toBe("function");
     });
+  });
+
+  it("clears auth state and tokens when logout is called", async () => {
+    const refresh = jest.fn().mockResolvedValue({ accessToken: "access-token" });
+
+    mockedUseMobileRefresh.mockReturnValue({
+      accessToken: undefined,
+      refresh,
+      isPending: false,
+      error: null,
+      isUnauthorized: false,
+    });
+
+    const { result } = renderHook(() =>
+      useMobileAuthSession("http://localhost:8000"),
+    );
+
+    await waitFor(() => {
+      expect(result.current.accessToken).toBe("access-token");
+      expect(result.current.isAuthenticated).toBe(true);
+    });
+
+    await act(async () => {
+      await result.current.logout();
+    });
+
+    expect(mockedClearAuthTokens).toHaveBeenCalled();
+    expect(result.current.accessToken).toBeNull();
+    expect(result.current.isAuthenticated).toBe(false);
   });
 
   it("clears auth state when bootstrap refresh fails", async () => {
@@ -84,7 +113,7 @@ describe("useMobileAuthSession", () => {
       expect(mockedClearAuthTokens).toHaveBeenCalled();
       expect(result.current.accessToken).toBeNull();
       expect(result.current.isAuthenticated).toBe(false);
-      expect(result.current.isSessionInitialized).toBe(true);
+      expect(result.current.isAuthSessionInitialized).toBe(true);
     });
   });
 
@@ -117,7 +146,7 @@ describe("useMobileAuthSession", () => {
     await waitFor(() => {
       expect(result.current.accessToken).toBeNull();
       expect(result.current.isAuthenticated).toBe(false);
-      expect(result.current.isSessionInitialized).toBe(true);
+      expect(result.current.isAuthSessionInitialized).toBe(true);
     });
 
     await act(async () => {

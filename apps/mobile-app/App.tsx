@@ -44,21 +44,21 @@ function App() {
 import LoginScreen from './components/login/login-screen';
 
 function AppContent() {
-  const { accessToken, isAuthenticated, isRefreshing, isSessionInitialized } =
+  const { accessToken, isAuthenticated, isRefreshing, isAuthSessionInitialized } =
     useAuth();
 
   const hasHiddenNativeSplashRef = useRef(false);
 
   useEffect(() => {
-    if (!isSessionInitialized || hasHiddenNativeSplashRef.current) {
+    if (!isAuthSessionInitialized || hasHiddenNativeSplashRef.current) {
       return;
     }
 
     hasHiddenNativeSplashRef.current = true;
     void BootSplash.hide({ fade: true });
-  }, [isSessionInitialized]);
+  }, [isAuthSessionInitialized]);
 
-  if (!isSessionInitialized || isRefreshing) {
+  if (!isAuthSessionInitialized || isRefreshing) {
     return <SplashScreen />;
   }
 

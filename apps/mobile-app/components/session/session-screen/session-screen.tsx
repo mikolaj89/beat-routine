@@ -40,7 +40,7 @@ export default function SessionScreen({
   return (
     <ScreenContainer>
       <View style={styles.screen}>
-        <TopBar title={sessionResult.data?.name} onBack={onBack} />
+        <TopBar title={sessionResult.data?.name} onBack={onBack} onLogout={() => {}} />
 
         {sessionResult.isLoading ? (
           <Text style={styles.sectionTitle}>Loading session…</Text>
