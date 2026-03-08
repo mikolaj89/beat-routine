@@ -1,6 +1,13 @@
 import '@testing-library/jest-native/extend-expect';
 
-jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon');
+// Mock icon libs so react-native-paper (and other components) don't warn in tests.
+// Paper uses .default when requiring; use a component so require(...).default works.
+const MockIcon = () => null;
+jest.mock('react-native-vector-icons/MaterialIcons', () => MockIcon);
+jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => ({
+  __esModule: true,
+  default: MockIcon,
+}));
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );

@@ -9,7 +9,7 @@ export const theme = {
     pillBg: '#E7E9ED',
     pillText: '#374151',
     primary: '#6B7280', // grayscale primary
-    primaryText: '#FFFFFF',
+    primaryText: '#000000',
     shadow: 'rgba(0,0,0,0.12)',
   },
   radius: {

@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react-native";
+import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { useMobileAuthSession } from "./use-mobile-auth-session";
 import { useMobileRefresh } from "./use-mobile-refresh";
 import { useMobileLogin } from "./use-mobile-login";
@@ -120,13 +120,14 @@ describe("useMobileAuthSession", () => {
       expect(result.current.isSessionInitialized).toBe(true);
     });
 
-    await result.current.login({
-      email: "john@example.com",
-      password: "secret",
+    await act(async () => {
+      await result.current.login({
+        email: "john@example.com",
+        password: "secret",
+      });
     });
 
-
-    //after login, auth state should reflect login result
+    // after login, auth state should reflect login result
     await waitFor(() => {
       expect(result.current.accessToken).toBe("access-from-login");
       expect(result.current.isAuthenticated).toBe(true);

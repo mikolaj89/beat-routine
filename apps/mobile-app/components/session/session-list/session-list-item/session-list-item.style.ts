@@ -1,3 +1,4 @@
+import { theme } from '@/utils/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: '700',
-    color: '#2F2838',
+    color: theme.colors.text,
   },
   cardMeta: {
     color: '#6E647B',

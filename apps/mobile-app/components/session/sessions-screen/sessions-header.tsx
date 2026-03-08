@@ -13,7 +13,7 @@ export function SessionsHeader({
 }) {
   return (
     <>
-      <TopBar title="Sessions" onMenu={() => {}} />
+      <TopBar title="Sessions" />
 
       <View style={styles.searchWrap}>
         <Searchbar
