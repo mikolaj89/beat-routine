@@ -20,7 +20,6 @@ const fastify = Fastify({
   logger: false,
 });
 
-
 await fastify.register(cookie);
 
 fastify.decorate("auth", auth);
@@ -47,7 +46,7 @@ fastify.addHook("onRequest", async (request) => {
 });
 
 await fastify.register(cors, {
-  origin: "http://localhost:3000",
+  origin: env.CORS_ORIGIN,
   credentials: true,
 });
 
@@ -59,8 +58,10 @@ await fastify.register(sessionExercisesRoutes);
 await fastify.register(categoriesRoutes);
 await fastify.register(authRoutes);
 
-const PORT = Number(process.env.PORT ?? 8000);
+const PORT = env.PORT;
+const HOST = env.HOST;
+const baseUrl = env.API_BASE_URL ?? `http://${HOST}:${PORT}`;
 
-fastify.listen({ port: PORT, host: "0.0.0.0" }).then(() => {
-  console.log(`Server is running on http://0.0.0.0:${PORT}`);
+fastify.listen({ port: PORT, host: HOST }).then(() => {
+  console.log(`Server is running on ${baseUrl}`);
 });

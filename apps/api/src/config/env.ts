@@ -3,7 +3,8 @@ import { z } from "zod";
 
 const EnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-  PORT: z.coerce.number().default(3000),
+  PORT: z.coerce.number().default(8000),
+  HOST: z.string().default("0.0.0.0"),
 
   // JWT
   JWT_ACCESS_SECRET: z.string().min(32), // HS256 shared secret
@@ -18,6 +19,12 @@ const EnvSchema = z.object({
     .optional(),
   COOKIE_SAMESITE: z.enum(["lax", "strict", "none"]).default("lax"),
   COOKIE_DOMAIN: z.string().optional(), // set only if you need cross-subdomain cookies
+
+  // HTTP / CORS
+  CORS_ORIGIN: z.string().default("http://localhost:3000"),
+
+  // Optional public-facing base URL (useful for remote deployments)
+  API_BASE_URL: z.string().url().optional(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;
