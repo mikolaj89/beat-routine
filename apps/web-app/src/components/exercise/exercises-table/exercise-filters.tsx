@@ -61,7 +61,7 @@ initialValues,
         router.push(`?${params.toString()}`);
       }, 500);
     };
-  }, []);
+  }, [router]);
 
   const onCategoryChange = (value: string) => {
     const params = new URLSearchParams(window.location.search);
@@ -78,7 +78,7 @@ initialValues,
    
   };
 
-  const debouncedTextChange = useMemo(() => onTextChange(), []); // TODO: probably better would be to use useRef inside custom hook
+  const debouncedTextChange = useMemo(() => onTextChange(), [onTextChange]); // TODO: probably better would be to use useRef inside custom hook
 
   return (
     <Card sx={{marginBottom: 1}} variant="outlined">

@@ -19,7 +19,6 @@ export const SessionForm = () => {
     reset,
     formState: { errors },
   } = useForm({
-    // @ts-expect-error - zodResolver type inference issue with react-hook-form
     resolver: zodResolver(sessionSchema),
   });
   const { error, mutate, isPending } = useCreateSession(API_BASE_URL, {
