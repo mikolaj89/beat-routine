@@ -10,8 +10,17 @@ import sessionExercisesRoutes from "./routes/session-exercises";
 import categoriesRoutes from "./routes/categories";
 import authRoutes from "./routes/auth";
 
+// Load base .env (if present)
 dotenv.config();
-dotenv.config({ path: "local.env" });
+
+// Load environment-specific overrides:
+// - NODE_ENV=test  -> test.env
+// - otherwise      -> local.env (for development)
+if (process.env.NODE_ENV === "test") {
+  dotenv.config({ path: "test.env" });
+} else {
+  dotenv.config({ path: "local.env" });
+}
 
 const env = loadEnv();
 const auth = authConfig(env);
