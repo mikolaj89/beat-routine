@@ -10,8 +10,8 @@ ENV CI=true
 RUN corepack enable
 
 # Copy the entire monorepo into the image.
-# Build context should be the repo root, e.g.:
-#   docker build -f apps/api/Dockerfile -t drum-scheduler-api .
+# Build context MUST be the repo root so pnpm-lock.yaml and workspace packages are available, e.g.:
+#   cd /path/to/drum-scheduler-web && docker build -f apps/api/Dockerfile -t drum-scheduler-api .
 COPY . .
 
 # Install only the dependencies needed for the API (and its workspace deps).

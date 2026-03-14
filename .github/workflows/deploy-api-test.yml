@@ -1,0 +1,48 @@
+name: Deploy test API
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-api-test
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.DROPLET_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy on Droplet
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" << 'EOF'
+            sed 's/^[[:space:]]*//' << 'EOT' > /root/test.env
+              NODE_ENV=test
+              HOST=0.0.0.0
+              PORT=8000
+              API_BASE_URL=http://167.71.34.89:8000
+              ACCESS_TOKEN_TTL_SECONDS=900
+              REFRESH_TOKEN_TTL_DAYS=30
+              COOKIE_SAMESITE=lax
+              DB_URL=${{ secrets.DB_URL }}
+              JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}
+            EOT
+
+            chmod 600 /root/test.env
+
+            cd /root/beat-routine
+            git pull
+
+            docker build -f apps/api/Dockerfile -t drum-scheduler-api .
+
+            /root/run-test-api-2.sh
+          EOF
