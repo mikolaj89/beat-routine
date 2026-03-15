@@ -26,8 +26,8 @@ jobs:
       - name: Deploy on Droplet
         shell: bash
         run: |
-          ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" << EOF
-            cat > /root/test.env << EOT
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" 'bash -se' <<EOF
+          cat > /root/test.env <<EOT
           NODE_ENV=test
           HOST=0.0.0.0
           PORT=8000
@@ -39,12 +39,12 @@ jobs:
           JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}
           EOT
 
-                      chmod 600 /root/test.env
+          chmod 600 /root/test.env
 
-                      cd /root/beat-routine
-                      git pull
+          cd /root/beat-routine
+          git pull
 
-                      docker build -f apps/api/Dockerfile -t drum-scheduler-api .
+          docker build -f apps/api/Dockerfile -t drum-scheduler-api .
 
-                      /root/run-test-api-2.sh
-                    EOF
+          bash /root/run-test-api-2.sh
+          EOF
