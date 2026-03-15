@@ -26,6 +26,7 @@ jobs:
       - name: Deploy on Droplet
         shell: bash
         run: |
+          DEPLOYED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
           ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" 'bash -se' <<EOF
           cat > /root/beat-routine-api-deploy/test/test.env <<EOT
           NODE_ENV=test
@@ -37,6 +38,8 @@ jobs:
           COOKIE_SAMESITE=lax
           DB_URL=${{ secrets.DB_URL }}
           JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}
+          APP_GIT_SHA=${{ github.sha }}
+          APP_DEPLOYED_AT=${DEPLOYED_AT}
           EOT
 
           chmod 600 /root/beat-routine-api-deploy/test/test.env
