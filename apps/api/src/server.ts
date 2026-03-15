@@ -61,6 +61,11 @@ await fastify.register(cors, {
 
 fastify.get("/health", async () => ({ ok: true }));
 
+fastify.get("/version", async () => ({
+  APP_GIT_SHA: process.env.APP_GIT_SHA,
+  APP_DEPLOYED_AT: process.env.APP_DEPLOYED_AT,
+}));
+
 await fastify.register(exercisesRoutes);
 await fastify.register(sessionsRoutes);
 await fastify.register(sessionExercisesRoutes);
