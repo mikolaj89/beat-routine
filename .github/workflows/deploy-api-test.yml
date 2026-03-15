@@ -26,30 +26,16 @@ jobs:
       - name: Validate SSH key
         shell: bash
         run: |
-          ssh-keygen -y -f ~/.ssh/id_ed25519 > /dev/null
+          ssh-keygen -y -f ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
+          ssh-keygen -lf ~/.ssh/id_ed25519.pub
 
-      - name: Deploy on Droplet
+      - name: Debug non-secret inputs
         shell: bash
         run: |
-          ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" << 'EOF'
-            sed 's/^[[:space:]]*//' << 'EOT' > /root/test.env
-              NODE_ENV=test
-              HOST=0.0.0.0
-              PORT=8000
-              API_BASE_URL=http://167.71.34.89:8000
-              ACCESS_TOKEN_TTL_SECONDS=900
-              REFRESH_TOKEN_TTL_DAYS=30
-              COOKIE_SAMESITE=lax
-              DB_URL=${{ secrets.DB_URL }}
-              JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}
-            EOT
+          echo "DROPLET_HOST=${{ secrets.DROPLET_HOST }}"
+          echo "DROPLET_USER=${{ secrets.DROPLET_USER }}"
 
-            chmod 600 /root/test.env
-
-            cd /root/beat-routine
-            git pull
-
-            docker build -f apps/api/Dockerfile -t drum-scheduler-api .
-
-            /root/run-test-api-2.sh
-          EOF
+      - name: Debug SSH connection
+        shell: bash
+        run: |
+          ssh -vvv -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" exit
