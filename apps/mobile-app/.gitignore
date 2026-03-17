@@ -55,6 +55,8 @@ xcshareddata/
 .env
 .env.local
 .env.*.local
+env.json
+env.active.json
 
 # Cache and temp files
 .cache/

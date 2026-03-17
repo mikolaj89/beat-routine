@@ -3,7 +3,7 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
 import { Session } from '@drum-scheduler/contracts';
-import { API_BASE_URL } from '../../../config/api';
+import { API_BASE_URL } from '../../../config/env';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
 import { SessionsHeader } from './sessions-header';
 import { SessionLoadingPlaceholder } from '../session-list/session-loading-placeholder/session-loading-placeholder';

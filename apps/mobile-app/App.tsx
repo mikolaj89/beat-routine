@@ -7,7 +7,7 @@ import ExerciseScreen from './components/exercise/exercise-screen/exercise-scree
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { API_BASE_URL } from './config/api';
+import { API_BASE_URL } from './config/env';
 import { RootStackParamList } from './types/navigation';
 import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';

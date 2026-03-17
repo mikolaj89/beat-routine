@@ -1,97 +1,136 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Mobile App
 
-# Getting Started
+React Native mobile app for Drum Scheduler.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Prerequisites
 
-## Step 1: Start Metro
+Make sure your machine is set up for React Native development before running the app:
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- [React Native environment setup](https://reactnative.dev/docs/set-up-your-environment)
+- Node.js `>=20`
 
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+For iOS, install CocoaPods after native dependency changes:
 
 ```sh
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## Running the App
+
+Start Metro:
 
 ```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+npm run start
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+Run Android:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```sh
+npm run android
+```
 
-## Step 3: Modify your app
+Run iOS:
 
-Now that you have successfully run the app, let's make changes!
+```sh
+npm run ios
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Other useful commands:
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+```sh
+npm run lint
+npm run test
+npm run typecheck
+```
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## Environment Config
 
-## Congratulations! :tada:
+The mobile app reads its config from JSON files in `apps/mobile-app`.
 
-You've successfully run and modified your React Native App. :partying_face:
+Tracked template:
 
-### Now what?
+- `env.example.json`
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+Local override, ignored by git:
 
-# Troubleshooting
+- `env.json`
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Selected environment, ignored by git:
 
-# Learn More
+- `env.active.json`
 
-To learn more about React Native, take a look at the following resources:
+The active config is resolved like this:
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+1. `env.example.json` provides the base config shape.
+2. `env.json` overrides any local values.
+3. `env.active.json` chooses which environment from `envs` is active.
+4. `config/env.ts` validates the result with `zod` and exports the resolved values.
+
+### `env.example.json`
+
+This file defines the available environment names and their values:
+
+```json
+{
+  "envs": {
+    "local": {
+      "API_BASE_URL": "http://10.0.2.2:8000"
+    },
+    "test": {
+      "API_BASE_URL": "http://10.0.2.2:8001"
+    }
+  }
+}
+```
+
+### `env.json`
+
+Create a local `env.json` if you want to override the example values on your machine:
+
+```json
+{
+  "envs": {
+    "local": {
+      "API_BASE_URL": "http://192.168.0.249:8000"
+    },
+    "test": {
+      "API_BASE_URL": "http://167.71.34.89:8000"
+    }
+  }
+}
+```
+
+You only need to include the values you want to override.
+
+### `env.active.json`
+
+This file picks which entry from `envs` is active:
+
+```json
+{
+  "active_env_name": "local"
+}
+```
+
+Switch to the test backend by changing it to:
+
+```json
+{
+  "active_env_name": "test"
+}
+```
+
+If `env.active.json` is missing, the app falls back to `local`.
+
+## Notes
+
+- `API_BASE_URL` is currently exported from `config/env.ts`
+- `config/env.ts` also exports `activeEnvConfig`, which is useful if you add more per-environment fields later.
+- After changing `env.active.json` or `env.json`, restart Metro or reload the app to ensure the new config is picked up.
+
+## Localhost Tips
+
+- Android emulator cannot use your machine's `localhost` directly. Use `http://10.0.2.2:<port>`.
+- iOS simulator can usually use `http://127.0.0.1:<port>` or `http://localhost:<port>`.
+- A physical device should use your computer's LAN IP, for example `http://192.168.x.x:<port>`.

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import SessionsScreen from './sessions-screen';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
-import { API_BASE_URL } from '../../../config/api';
+import { API_BASE_URL } from '../../../config/env';
 
 jest.mock('@drum-scheduler/sdk', () => ({
   useSessionsQuery: jest.fn(),

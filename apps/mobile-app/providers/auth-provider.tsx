@@ -1,5 +1,5 @@
 import { createContext, useContext, type PropsWithChildren } from 'react';
-import { API_BASE_URL } from '../config/api';
+import { API_BASE_URL } from '../config/env';
 import { useMobileAuthSession } from '../hooks/use-mobile-auth-session';
 
 type AuthContextValue = ReturnType<typeof useMobileAuthSession>;
