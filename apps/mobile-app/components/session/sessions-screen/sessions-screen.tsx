@@ -19,7 +19,11 @@ export default function SessionsScreen({
 }) {
   const [query, setQuery] = useState('');
 
-  const sessionsResult = useSessionsQuery(API_BASE_URL, { accessToken });
+  const sessionsResult = useSessionsQuery(API_BASE_URL, {
+    accessToken,
+    query,
+    debounceMs: 500,
+  });
   const sessions = sessionsResult?.data ?? [];
   const isLoading = Boolean(sessionsResult?.isLoading);
   const isEmpty = !isLoading && sessions.length === 0;
