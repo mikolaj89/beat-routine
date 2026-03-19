@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { deleteSession as deleteSessionDb } from "../../db/sessions";
+import { deleteSessionDB } from "../../db/sessions";
 import { getFormattedErrorBody } from "../../utils/response";
 
 type Params = { id?: string };
@@ -17,7 +17,7 @@ export const deleteSession = async (
       return;
     }
 
-    const result = await deleteSessionDb(parseInt(id));
+    const result = await deleteSessionDB(parseInt(id));
     if (result) {
       reply.status(200).send(result.command);
     } else {

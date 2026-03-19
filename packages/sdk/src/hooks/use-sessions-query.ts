@@ -8,6 +8,7 @@ export function useSessionsQuery(
     initialData?: Session[];
     refetchOnMount?: boolean;
     accessToken?: string | null;
+    query?: string | null;
   }
 ) {
   const accessToken = options?.accessToken ?? null;

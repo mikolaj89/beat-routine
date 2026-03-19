@@ -4,21 +4,22 @@ import {
   sessionexercisesSchema,
   sessionsSchema,
 } from "./schema";
-import { eq, sql } from "drizzle-orm";
+import { eq, ilike, or, sql } from "drizzle-orm";
 import type { SessionInput } from "./types";
 
-export async function getSession(id: number) {
-  return await db
-    .select()
-    .from(sessionsSchema)
-    .where(eq(sessionsSchema.id, id));
-}
+const buildSessionsQuery = (query?: string | null) => {
+  const normalizedQuery = query?.trim();
+  const filter = normalizedQuery
+    ? or(
+        ilike(sessionsSchema.name, `%${normalizedQuery}%`),
+        ilike(sessionsSchema.notes, `%${normalizedQuery}%`)
+      )
+    : undefined;
 
-export async function getSessions() {
   // Derive totalDuration from the session's exercises.
   // Prefer per-session override duration (sessionexercises.durationMinutes),
   // falling back to the base exercise duration (exercises.durationMinutes).
-  return await db
+  return db
     .select({
       id: sessionsSchema.id,
       name: sessionsSchema.name,
@@ -38,6 +39,7 @@ export async function getSessions() {
       exercisesSchema,
       eq(sessionexercisesSchema.exerciseId, exercisesSchema.id)
     )
+    .where(filter)
     .groupBy(
       sessionsSchema.id,
       sessionsSchema.name,
@@ -47,10 +49,21 @@ export async function getSessions() {
     );
 }
 
-export const addSession = async (session: SessionInput) => {
+export async function getSessionDB(id: number) {
+  return await db
+    .select()
+    .from(sessionsSchema)
+    .where(eq(sessionsSchema.id, id));
+}
+
+export async function filterSessionsDB(query: string | null) {
+  return await buildSessionsQuery(query);
+}
+
+export const addSessionDB = async (session: SessionInput) => {
   return await db.insert(sessionsSchema).values(session).returning();
 };
 
-export const deleteSession = async (id: number) => {
+export const deleteSessionDB = async (id: number) => {
   return await db.delete(sessionsSchema).where(eq(sessionsSchema.id, id));
 };

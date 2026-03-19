@@ -4,10 +4,10 @@ import { authHeaders, type RequestOptions } from "../utils/auth-headers";
 
 export const fetchSessions = async (
   baseUrl: string,
-  options?: RequestOptions
+  options?: RequestOptions & { query?: string | null }
 ) => {
   const apiClient = new ApiClient(baseUrl, authHeaders(options?.accessToken));
-  const result = await apiClient.get<Session[]>("/sessions");
+  const result = await apiClient.get<Session[]>(`/sessions?query=${options?.query ?? ""}`);
 
   if ("error" in result) {
     throw new Error(result.error.message);

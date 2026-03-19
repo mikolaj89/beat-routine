@@ -16,7 +16,9 @@ afterEach(() => {
 });
 
 describe("sessions api", () => {
-  it("fetchSessions returns data", async () => {
+
+
+  it("fetchSessions returns data without query", async () => {
     const fetchMock = createFetchMock([
       {
         url: `${baseUrl}/sessions`,
@@ -24,8 +26,18 @@ describe("sessions api", () => {
       },
     ]);
     vi.stubGlobal("fetch", fetchMock);
+  });
 
-    const result = await fetchSessions(baseUrl);
+  it("fetchSessions returns data with query", async () => {
+    const fetchMock = createFetchMock([
+      {
+        url: `${baseUrl}/sessions?query=superSession`,
+        response: { data: [{ id: 1, name: "S1", notes: null }] },
+      },
+    ]);
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await fetchSessions(baseUrl, { query: "superSession" });
     expect(result).toEqual([{ id: 1, name: "S1", notes: null }]);
   });
 

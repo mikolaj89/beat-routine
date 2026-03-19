@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { getSession as getSessionDb } from "../../db/sessions";
+import { getSessionDB } from "../../db/sessions";
 import { getSessionExercises as getSessionExercisesDb } from "../../db/session-exercises";
 import { getFormattedErrorBody } from "../../utils/response";
 import { getFormattedSession } from "../../utils/session";
@@ -19,7 +19,7 @@ export const getSessionById = async (
       return;
     }
 
-    const result = await getSessionDb(parseInt(id));
+    const result = await getSessionDB(parseInt(id));
     if (result.length === 0) {
       reply
         .status(404)

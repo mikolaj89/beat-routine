@@ -1,18 +1,18 @@
 import Fastify from "fastify";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import sessionsRoutes from "../../sessions";
-import { getSessions as getSessionsDb } from "../../../db/sessions";
+import { filterSessionsDB } from "../../../db/sessions";
 import { verifyAccessToken } from "../../../utils/auth-tokens";
 
 vi.mock("../../../db/sessions", () => ({
-  getSessions: vi.fn(),
+  filterSessionsDB: vi.fn(),
 }));
 
 vi.mock("../../../utils/auth-tokens", () => ({
   verifyAccessToken: vi.fn(),
 }));
 
-const getSessionsMock = vi.mocked(getSessionsDb);
+const filterSessionsDBMock = vi.mocked(filterSessionsDB);
 const verifyAccessTokenMock = vi.mocked(verifyAccessToken);
 
 const buildApp = async () => {
@@ -24,7 +24,7 @@ const buildApp = async () => {
 describe("sessions routes auth", () => {
   beforeEach(() => {
     vi.resetAllMocks();
-    getSessionsMock.mockResolvedValue([]);
+    filterSessionsDBMock.mockResolvedValue([]);
     verifyAccessTokenMock.mockResolvedValue({
       userId: "user-1",
       accountId: "account-1",
@@ -77,7 +77,7 @@ describe("sessions routes auth", () => {
     expect(res.statusCode).toBe(200);
     expect(res.json()).toEqual({ data: [] });
     expect(verifyAccessTokenMock).toHaveBeenCalledWith("valid-access-token");
-    expect(getSessionsMock).toHaveBeenCalled();
+    expect(filterSessionsDBMock).toHaveBeenCalledWith(null);
 
     await app.close();
   });

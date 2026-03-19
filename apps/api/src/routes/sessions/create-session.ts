@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { addSession } from "../../db/sessions";
+import { addSessionDB } from "../../db/sessions";
 import type { SessionInput } from "../../db/types";
 import {
   ApiSuccessResponse,
@@ -27,7 +27,7 @@ export const createSession = async (
       return;
     }
 
-    const result = await addSession({
+    const result = await addSessionDB({
       name,
       notes,
     });
