@@ -11,7 +11,7 @@ export default function AccountScreen() {
 
   return (
     <ScreenContainer>
-      <TopBar title="Account" onLogout={logout} />
+      <TopBar title="Account" />
 
       <View style={styles.content}>
         <Surface elevation={1} style={styles.card}>

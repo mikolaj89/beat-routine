@@ -39,7 +39,7 @@ export default function ExerciseScreen({
   return (
     <ScreenContainer>
       <View style={styles.screen}>
-        <TopBar title="Exercise" onBack={onBack} onLogout={() => {}} />
+        <TopBar title="Exercise" onBack={onBack} />
 
         {mode === 'active' || mode === 'paused' ? (
           <ActiveExerciseView
