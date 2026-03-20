@@ -2,16 +2,12 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
-  appbar: {
-    backgroundColor: '#EDE4F5',
-    marginTop: 0,
-    paddingHorizontal:4,
-  },
+
 
   searchWrap: {
     paddingHorizontal: theme.spacing.horizontalMargin,
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.md,
   },
   searchbar: {
     borderRadius: 999,

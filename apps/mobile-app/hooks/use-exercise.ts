@@ -9,7 +9,7 @@ import { getFormattedExercise } from '../components/exercise/exercise.utils';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import { HomeStackParamList } from '../types/navigation';
 
 type UseExercise = {
   exercises: Exercise[];
@@ -36,7 +36,7 @@ export const useExercise = ({ exercises, exerciseIndex }: UseExercise) => {
     useTimer(durationSeconds, onTimerFinish);
 
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   const isPlayDisabled = mode === 'active';
   const isPendingExercise = mode !== 'preview';

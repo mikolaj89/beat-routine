@@ -16,8 +16,6 @@ export function SessionsHeader({
 
   return (
     <>
-      <TopBar title="Sessions" onLogout={logout} />
-
       <View style={styles.searchWrap}>
         <Searchbar
           placeholder="Search sessions..."

@@ -2,9 +2,12 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../../utils/theme';
 export const styles = StyleSheet.create({
   appbar: {
-    backgroundColor: '#EDE4F5',
+    
     marginTop: 0,
     paddingHorizontal: 4,
+    backgroundColor: 'transparent',
+    elevation: 0,
+    shadowColor: 'transparent',
   },
   content: {
     flex: 1,

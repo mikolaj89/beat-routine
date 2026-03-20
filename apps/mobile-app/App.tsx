@@ -1,18 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SessionsScreen from './components/session/sessions-screen/sessions-screen';
-import SessionScreen from './components/session/session-screen/session-screen';
-import ExerciseScreen from './components/exercise/exercise-screen/exercise-screen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { API_BASE_URL } from './config/env';
 import { RootStackParamList } from './types/navigation';
 import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';
 import { SplashScreen } from './components/splash/splash-screen';
 import { MD3LightTheme, PaperProvider } from 'react-native-paper';
+import LoginScreen from './components/login/login-screen';
+import { AppBottomTabs } from './components/navigation/app-bottom-tabs';
 
 const queryClient = new QueryClient();
 
@@ -41,8 +39,6 @@ function App() {
   );
 }
 
-import LoginScreen from './components/login/login-screen';
-
 function AppContent() {
   const { accessToken, isAuthenticated, isRefreshing, isAuthSessionInitialized } =
     useAuth();
@@ -69,47 +65,9 @@ function AppContent() {
           {!isAuthenticated ? (
             <Stack.Screen name="Login" component={LoginScreen} />
           ) : (
-            <>
-              <Stack.Screen name="Sessions">
-                {({ navigation }) => (
-                  <SessionsScreen
-                    accessToken={accessToken}
-                    onOpenSession={sessionId =>
-                      navigation.navigate('Session', { sessionId })
-                    }
-                  />
-                )}
-              </Stack.Screen>
-
-              <Stack.Screen name="Session">
-                {({ navigation, route }) => (
-                  <SessionScreen
-                    baseUrl={API_BASE_URL}
-                    sessionId={route.params.sessionId}
-                    accessToken={accessToken}
-                    onBack={() => navigation.goBack()}
-                    onStart={(exercises, sessionName, exerciseIndex) =>
-                      navigation.navigate('Exercise', {
-                        exercises,
-                        sessionName,
-                        exerciseIndex,
-                      })
-                    }
-                  />
-                )}
-              </Stack.Screen>
-
-              <Stack.Screen name="Exercise">
-                {({ navigation, route }) => (
-                  <ExerciseScreen
-                    exercises={route.params.exercises}
-                    sessionName={route.params.sessionName}
-                    exerciseIndex={route.params.exerciseIndex}
-                    onBack={() => navigation.goBack()}
-                  />
-                )}
-              </Stack.Screen>
-            </>
+            <Stack.Screen name="MainTabs">
+              {() => <AppBottomTabs accessToken={accessToken} />}
+            </Stack.Screen>
           )}
         </Stack.Navigator>
       </NavigationContainer>

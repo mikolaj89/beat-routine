@@ -40,27 +40,19 @@ export function TopBar({
     [isMenuControlled, onMenuVisibleChange],
   );
 
-  const handleMenuPress = useCallback(() => {
-    setMenuVisible(!resolvedMenuVisible);
-    onMenu?.();
-  }, [onMenu, resolvedMenuVisible, setMenuVisible]);
-
   const handleDismiss = useCallback(() => {
     setMenuVisible(false);
   }, [setMenuVisible]);
 
   return (
     <>
-      <Appbar.Header mode="small" elevated statusBarHeight={0} style={styles.appbar}>
-        {onBack ? (
-          <Appbar.Action icon="arrow-left" onPress={onBack} />
-        ) : showMenu ? (
-          <Appbar.Action
-            icon="menu"
-            onPress={handleMenuPress}
-            testID="topbar-menu-button"
-          />
-        ) : null}
+      <Appbar.Header
+        mode="small"
+        elevated
+        statusBarHeight={0}
+        style={styles.appbar}
+      >
+        {onBack && <Appbar.Action icon="arrow-left" onPress={onBack} />}
 
         {showTitle ? (
           <Appbar.Content title={title} />

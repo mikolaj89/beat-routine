@@ -15,7 +15,6 @@ export default function LoginScreen() {
     formState: { errors },
   } = useForm<LoginFormData>({
     defaultValues: { email: '', password: '' },
-    // @ts-expect-error - zodResolver type inference issue with react-hook-form
     resolver: zodResolver(LoginFormSchema),
   });
   const { login, isLoginPending, loginError } = useAuth();

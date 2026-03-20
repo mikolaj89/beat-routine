@@ -1,8 +1,7 @@
+import { NavigatorScreenParams } from "@react-navigation/native";
 import { Exercise } from "@drum-scheduler/contracts";
 
-
-export type RootStackParamList = {
-  Login: undefined;
+export type HomeStackParamList = {
   Sessions: undefined;
   Session: { sessionId: number };
   Exercise: {
@@ -10,4 +9,14 @@ export type RootStackParamList = {
     sessionName: string;
     exerciseIndex: number;
   };
+};
+
+export type RootTabParamList = {
+  Home: NavigatorScreenParams<HomeStackParamList> | undefined;
+  Account: undefined;
+};
+
+export type RootStackParamList = {
+  Login: undefined;
+  MainTabs: NavigatorScreenParams<RootTabParamList> | undefined;
 };
