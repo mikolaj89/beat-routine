@@ -1,18 +1,13 @@
 import React from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  
-  View,
-} from 'react-native';
-import { Button, Divider } from 'react-native-paper';
+import { View } from 'react-native';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useSessionQuery } from '@drum-scheduler/sdk';
+import { Text } from 'react-native-paper';
 import { TopBar } from '../../top-bar/top-bar';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
-import { ExerciseCard } from './exercise-card/exercise-card';
+import { SessionPracticePlanSection } from './session-practice-plan-section/session-practice-plan-section';
+import { SessionScreenActions } from './session-screen-actions/session-screen-actions';
 import { styles } from './session-screen.style';
-import { Text } from 'react-native-paper';
 
 export default function SessionScreen({
   baseUrl,
@@ -20,6 +15,7 @@ export default function SessionScreen({
   accessToken,
   onBack,
   onStart,
+  onOpenAddExercises,
 }: {
   baseUrl: string;
   sessionId: number;
@@ -30,12 +26,11 @@ export default function SessionScreen({
     sessionName: string,
     exerciseIndex: number,
   ) => void;
+  onOpenAddExercises?: (sessionId: number) => void;
 }) {
   const sessionResult = useSessionQuery(baseUrl, sessionId, { accessToken });
-
-  const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
-    return <ExerciseCard exercise={item} />;
-  };
+  const sessionExercises = sessionResult.data?.exercises ?? [];
+  const hasExercises = Boolean(sessionExercises[0]);
 
   return (
     <ScreenContainer>
@@ -52,50 +47,27 @@ export default function SessionScreen({
           </Text>
         ) : null}
 
-        {sessionResult.data ? (
-          <View style={styles.header}>
-            <Text style={styles.sessionMeta}>
-              Total duration: {sessionResult.data.totalDuration ?? 0} min
-            </Text>
-          </View>
-        ) : null}
-        <Divider horizontalInset={true}  />
-        <Text style={styles.listTitle}>Practice session plan</Text>
-
-        <FlatList
-          data={sessionResult.data?.exercises ?? []}
-          keyExtractor={e => e.id.toString()}
-          renderItem={renderItem}
-          contentContainerStyle={styles.listContent}
-          ListEmptyComponent={
-            !sessionResult.isLoading && !sessionResult.error ? (
-              <Text style={styles.emptyText}>
-                No exercises in this session.
-              </Text>
-            ) : null
-          }
-          showsVerticalScrollIndicator={false}
-        />
-
-        <View style={styles.ctaWrap}>
-          <Button
-            style={{ width: '100%' }}
-            mode="contained"
-            
-            onPress={() => {
+        {sessionResult.data && sessionExercises.length > 0 && (
+          <SessionPracticePlanSection
+            totalDurationMinutes={sessionResult.data.totalDuration ?? 0}
+            exercises={sessionExercises}
+            isLoading={sessionResult.isLoading}
+            hasError={Boolean(sessionResult.error)}
+          />
+        )}
+        {sessionResult.data && (
+          <SessionScreenActions
+            hasExercises={hasExercises}
+            onPressStartSession={() => {
               const firstExercise = sessionResult.data?.exercises?.[0];
               const sessionName = sessionResult.data?.name;
-              const exercises = sessionResult.data?.exercises ?? [];
               if (firstExercise && sessionName && onStart) {
-                onStart(exercises, sessionName, 1);
+                onStart(sessionExercises, sessionName, 1);
               }
             }}
-            disabled={!sessionResult.data?.exercises?.[0]}
-            
-          >
-            Start Session
-          </Button>
-        </View>
+            onPressAddExercises={() => onOpenAddExercises?.(sessionId)}
+          />
+        )}
       </View>
     </ScreenContainer>
   );

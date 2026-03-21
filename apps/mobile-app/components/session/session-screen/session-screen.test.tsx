@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import SessionScreen from './session-screen';
 import { useSessionQuery } from '@drum-scheduler/sdk';
 import type { Exercise } from '@drum-scheduler/contracts';
@@ -35,6 +35,8 @@ describe('SessionScreen', () => {
       error: null,
     } as any);
 
+    const onOpenAddExercises = jest.fn();
+
     const { getByText } = render(
       <SessionScreen
         baseUrl="http://example.test"
@@ -42,12 +44,13 @@ describe('SessionScreen', () => {
         accessToken="token-123"
         onBack={() => {}}
         onStart={() => {}}
+        onOpenAddExercises={onOpenAddExercises}
       />
     );
 
     expect(getByText('Session 2026')).toBeTruthy();
-    expect(getByText('Total duration: 0 min')).toBeTruthy();
-    expect(getByText('No exercises in this session.')).toBeTruthy();
+    fireEvent.press(getByText('Add exercises'));
+    expect(onOpenAddExercises).toHaveBeenCalledWith(1);
     expect(mockUseSessionQuery).toHaveBeenCalledWith('http://example.test', 1, {
       accessToken: 'token-123',
     });

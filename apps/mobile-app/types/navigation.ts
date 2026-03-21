@@ -5,6 +5,7 @@ export type HomeStackParamList = {
   Sessions: undefined;
   NewSession: undefined;
   Session: { sessionId: number };
+  AddSessionExercises: { sessionId: number };
   Exercise: {
     exercises: Exercise[];
     sessionName: string;
