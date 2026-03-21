@@ -1,0 +1,18 @@
+---
+description: Questions are answered in text only; no code edits unless implementation is requested
+alwaysApply: true
+---
+
+# Answer Questions Without Changing Code
+
+When the user’s message is **primarily a question** (explanation, comparison, “why”, “what”, trade-offs, how something works, or “any better idea?” as **advice**):
+
+1. **Do not** edit files, create/delete files, or run tools that modify the codebase (including formatting or “small fixes” unless they explicitly asked for that).
+2. **Do** answer clearly and directly.
+3. **Optionally** add **suggestions** as prose only: possible approaches, example snippets in markdown **as illustration**, or “you could change X to Y” — without applying them.
+
+## When code changes *are* appropriate
+
+If the user **explicitly asks for implementation** — e.g. “add…”, “fix…”, “refactor…”, “implement…”, “apply…”, “update the file…”, or “do it” after a suggestion — then make the requested changes as usual.
+
+If unclear, prefer **answering first** and ask whether they want changes applied.
