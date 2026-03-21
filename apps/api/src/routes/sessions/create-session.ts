@@ -19,7 +19,7 @@ export const createSession = async (
   try {
     const { name, notes } = request.body as Body;
 
-    if (typeof name !== "string" || typeof notes !== "string") {
+    if (typeof name !== "string") {
       console.error("Invalid input data:", { name, notes });
       reply
         .status(400)
