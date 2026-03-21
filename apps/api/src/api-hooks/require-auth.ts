@@ -25,7 +25,8 @@ export async function requireAuth(
   try {
     const payload = await verifyAccessToken(token);
     request.auth = payload;
-  } catch {
+  } catch(error) {
+    console.error("Error verifying access token:", error);
     await reply
       .code(401)
       .send(getFormattedErrorBody("Invalid or expired token", "UNAUTHORIZED"));
