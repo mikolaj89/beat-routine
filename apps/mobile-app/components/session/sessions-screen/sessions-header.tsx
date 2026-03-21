@@ -1,14 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { Button, Searchbar } from 'react-native-paper';
 import { styles } from './sessions-header.style';
 
 export function SessionsHeader({
   query,
   onChangeQuery,
+  onPressCreateSession,
 }: {
   query: string;
   onChangeQuery: (value: string) => void;
+  onPressCreateSession?: () => void;
 }) {
   return (
     <>
@@ -20,6 +22,17 @@ export function SessionsHeader({
           style={styles.searchbar}
           inputStyle={styles.searchInput}
         />
+      </View>
+
+      <View style={styles.actionsWrap}>
+        <Button
+          mode="contained"
+          icon="plus"
+          onPress={onPressCreateSession}
+          disabled={!onPressCreateSession}
+        >
+          New Session
+        </Button>
       </View>
     </>
   );

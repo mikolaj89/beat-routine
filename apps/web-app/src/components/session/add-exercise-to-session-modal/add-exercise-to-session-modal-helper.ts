@@ -6,7 +6,10 @@ export const useAddExerciseToSession = (
   exerciseId: string,
   onSuccess: (id: number) => void
 ) => {
-  const mutation = useAddExerciseToSessionSDK(API_BASE_URL, sessionId);
+  const mutation = useAddExerciseToSessionSDK({
+    baseUrl: API_BASE_URL,
+    sessionId,
+  });
   
   return {
     ...mutation,

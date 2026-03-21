@@ -27,15 +27,25 @@ describe("useAddExerciseToSession", () => {
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
     const wrapper = createWrapper(queryClient);
 
-    const { result } = renderHook(() => useAddExerciseToSession(baseUrl, 12), {
-      wrapper,
-    });
+    const { result } = renderHook(
+      () =>
+        useAddExerciseToSession({
+          baseUrl,
+          sessionId: 12,
+        }),
+      { wrapper }
+    );
 
     await act(async () => {
       await result.current.mutateAsync("ex-1");
     });
 
-    expect(addExerciseToSession).toHaveBeenCalledWith(baseUrl, 12, "ex-1");
+    expect(addExerciseToSession).toHaveBeenCalledWith({
+      baseUrl,
+      sessionId: 12,
+      exerciseId: "ex-1",
+      accessToken: undefined,
+    });
     expect(invalidateSpy).toHaveBeenCalledWith({
       queryKey: sessionsQueryKeys.byId(12),
     });

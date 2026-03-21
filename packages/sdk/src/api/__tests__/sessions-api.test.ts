@@ -141,7 +141,11 @@ describe("sessions api", () => {
     ]);
     vi.stubGlobal("fetch", fetchMock);
 
-    const result = await addExerciseToSession(baseUrl, 6, "8");
+    const result = await addExerciseToSession({
+      baseUrl,
+      sessionId: 6,
+      exerciseId: "8",
+    });
     expect(result).toEqual({ data: { id: 6 } });
   });
 });

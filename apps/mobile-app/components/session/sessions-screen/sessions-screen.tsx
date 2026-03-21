@@ -13,9 +13,11 @@ import { styles } from './sessions-screen.style';
 export default function SessionsScreen({
   accessToken,
   onOpenSession,
+  onOpenCreateSession,
 }: {
   accessToken: string | null;
   onOpenSession?: (sessionId: number) => void;
+  onOpenCreateSession?: () => void;
 }) {
   const [query, setQuery] = useState('');
 
@@ -34,7 +36,11 @@ export default function SessionsScreen({
 
   return (
     <ScreenContainer>
-      <SessionsHeader query={query} onChangeQuery={setQuery} />
+      <SessionsHeader
+        query={query}
+        onChangeQuery={setQuery}
+        onPressCreateSession={onOpenCreateSession}
+      />
 
       <SessionLoadingPlaceholder isLoading={isLoading} />
 

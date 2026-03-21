@@ -3,6 +3,7 @@ import { Exercise } from "@drum-scheduler/contracts";
 
 export type HomeStackParamList = {
   Sessions: undefined;
+  NewSession: undefined;
   Session: { sessionId: number };
   Exercise: {
     exercises: Exercise[];
