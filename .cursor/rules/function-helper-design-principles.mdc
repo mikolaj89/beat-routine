@@ -1,0 +1,19 @@
+---
+description: Keep function and helper implementations modular, readable, and pure where practical
+alwaysApply: true
+---
+
+# Function and Helper Design Principles
+
+When asked to create a function, utility, or helper:
+
+1. Place it in a dedicated file and choose the directory that best matches its domain/context.
+2. Prefer clean, predictable transformations (input -> output). Avoid hidden side effects unless explicitly required.
+3. Split large or mixed-responsibility logic into smaller focused functions when it improves clarity.
+4. Prioritize readability and clear naming over clever, short, or hard-to-follow code.
+
+Preferred direction:
+
+- One responsibility per function
+- Explicit arguments and return values
+- Descriptive names for files, functions, and variables

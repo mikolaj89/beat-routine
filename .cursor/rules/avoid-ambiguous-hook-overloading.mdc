@@ -1,0 +1,29 @@
+---
+description: Prefer new focused hooks/utilities over overloading existing APIs for ambiguous scenarios
+alwaysApply: true
+---
+
+# Avoid Ambiguous Hook Overloading
+
+When requirements are ambiguous or may diverge by use case, do not overload an existing hook/utility with dual behavior just to make one flow work.
+
+Preferred approach:
+
+1. Keep existing hooks/utilities stable and single-purpose.
+2. Create a new dedicated hook/utility/function for the new behavior.
+3. Name the new abstraction by intent (what flow it serves), not by implementation detail.
+4. Share small internal helpers only when they are truly common and keep the public API explicit.
+5. Choose clarity over temporary DRY if combining logic would create confusing unions, optional modes, or hidden branching.
+
+Use overloading only when:
+
+- behavior is genuinely the same operation with the same lifecycle semantics, and
+- API remains obvious without mode flags or union-heavy call contracts.
+
+Quick check before modifying an existing hook:
+
+- Would a new caller need a different input shape or control flow?
+- Would existing callers need to understand new optional branches?
+- Would this make tests harder to reason about?
+
+If any answer is "yes", create a separate hook/utility.

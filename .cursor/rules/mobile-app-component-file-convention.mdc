@@ -1,0 +1,22 @@
+---
+description: Enforce mobile-app component and style file conventions
+globs: apps/mobile-app/components/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Mobile App Component File Convention
+
+When creating or refactoring React components in `apps/mobile-app/components`:
+
+1. Create each component in its own dedicated `component-name.tsx` file (kebab-case).
+2. Keep styles in a matching `component-name.style.ts` file.
+3. Do not use inline styles in component JSX.
+4. Import styles from the colocated style file: `import { styles } from './component-name.style';`.
+5. Create or update a local `index.ts` barrel in the component folder and export the component.
+6. Do not place multiple new components in one file unless explicitly requested.
+
+Preferred folder pattern:
+
+- `component-name.tsx`
+- `component-name.style.ts`
+- `index.ts`
