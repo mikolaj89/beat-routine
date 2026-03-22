@@ -1,6 +1,7 @@
 export * from "./use-categories-query";
 export * from "./use-category-exercises-query";
 export * from "./use-exercise-query";
+export * from "./use-exercises-query";
 export * from "./use-create-exercise";
 export * from "./use-update-exercise";
 export * from "./use-delete-exercise";

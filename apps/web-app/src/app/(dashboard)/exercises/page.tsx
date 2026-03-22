@@ -3,8 +3,11 @@ import { Typography } from "@mui/material";
 import { CreateExercise } from "@/components/exercise/create-exercise";
 import { ExerciseFilters } from "@/components/exercise/exercises-table/exercise-filters";
 import { TableButtonsWrapper } from "@/components/common/container";
-import { fetchCategories, fetchExercises } from "@drum-scheduler/sdk";
-import { buildExercisesQueryParams } from "@/utils/query-params";
+import {
+  buildExercisesQueryParams,
+  fetchCategories,
+  fetchExercises,
+} from "@drum-scheduler/sdk";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { API_BASE_URL } from "@/config/globals";

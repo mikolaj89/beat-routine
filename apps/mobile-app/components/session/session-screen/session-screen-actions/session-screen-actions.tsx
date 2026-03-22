@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Icon, Text } from 'react-native-paper';
 import { styles } from './session-screen-actions.style';
 
 export function SessionScreenActions({
@@ -25,6 +25,9 @@ export function SessionScreenActions({
           Start Session
         </Button>
       ) : (
+        <>
+        {/* rocket icon */}
+        <Text style={styles.ctaButtonLabel}>No exercises in this session. Start by adding some! 🚀 </Text>
         <Button
           style={styles.ctaButton}
           contentStyle={styles.ctaButtonContent}
@@ -34,7 +37,7 @@ export function SessionScreenActions({
         >
           Add exercises
         </Button>
-      )}
+      </>)}
     </View>
   );
 }

@@ -9,7 +9,7 @@ import { HomeStackNavigator } from './home-stack-navigator';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-export function AppBottomTabs({ accessToken }: { accessToken: string | null }) {
+export function AppBottomTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -36,7 +36,7 @@ export function AppBottomTabs({ accessToken }: { accessToken: string | null }) {
       })}
     >
       <Tab.Screen name="Home" options={{ tabBarLabel: 'Home' }}>
-        {() => <HomeStackNavigator accessToken={accessToken} />}
+        {() => <HomeStackNavigator />}
       </Tab.Screen>
 
       <Tab.Screen

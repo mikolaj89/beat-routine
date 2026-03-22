@@ -7,14 +7,13 @@ import NewSessionScreen from '../session/new-session-screen';
 import AddSessionExercisesScreen from '../session/add-session-exercises-screen/add-session-exercises-screen';
 import { API_BASE_URL } from '../../config/env';
 import { HomeStackParamList } from '../../types/navigation';
+import { useMobileAuthSession } from '@/hooks/use-mobile-auth-session';
+import { useAuth } from '@/providers/auth-provider';
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
-export function HomeStackNavigator({
-  accessToken,
-}: {
-  accessToken: string | null;
-}) {
+export function HomeStackNavigator(){
+  const { accessToken } = useAuth();
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Sessions">
@@ -64,8 +63,13 @@ export function HomeStackNavigator({
       </HomeStack.Screen>
 
       <HomeStack.Screen name="AddSessionExercises">
-        {({ navigation }) => (
-          <AddSessionExercisesScreen onBack={() => navigation.goBack()} />
+        {({ navigation, route }) => (
+          <AddSessionExercisesScreen
+            baseUrl={API_BASE_URL}
+            sessionId={route.params.sessionId}
+            accessToken={accessToken}
+            onBack={() => navigation.goBack()}
+          />
         )}
       </HomeStack.Screen>
 

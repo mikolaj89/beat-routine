@@ -40,7 +40,7 @@ function App() {
 }
 
 function AppContent() {
-  const { accessToken, isAuthenticated, isRefreshing, isAuthSessionInitialized } =
+  const { isAuthenticated, isRefreshing, isAuthSessionInitialized } =
     useAuth();
 
   const hasHiddenNativeSplashRef = useRef(false);
@@ -66,7 +66,7 @@ function AppContent() {
             <Stack.Screen name="Login" component={LoginScreen} />
           ) : (
             <Stack.Screen name="MainTabs">
-              {() => <AppBottomTabs accessToken={accessToken} />}
+              {() => <AppBottomTabs/>}
             </Stack.Screen>
           )}
         </Stack.Navigator>

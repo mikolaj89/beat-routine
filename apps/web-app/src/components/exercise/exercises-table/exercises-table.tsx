@@ -6,8 +6,7 @@ import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { EditExerciseModal } from "../edit-exercise-modal";
 import { ConfirmationDialog } from "@/components/common/confirmation-dialog";
-import { useDeleteExercise } from "@drum-scheduler/sdk";
-import { useExercisesQuery } from "@/hooks/use-exercises-query";
+import { useDeleteExercise, useExercisesQuery } from "@drum-scheduler/sdk";
 import type { Exercise } from "@drum-scheduler/contracts";
 import { API_BASE_URL } from "@/config/globals";
 

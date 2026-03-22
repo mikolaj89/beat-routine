@@ -1,6 +1,7 @@
-export const buildExercisesQueryParams = (
-  filters: { name: string | null; categoryId: string | null }
-): string => {
+export const buildExercisesQueryParams = (filters: {
+  name: string | null;
+  categoryId: string | null;
+}): string => {
   const params = new URLSearchParams();
   if (filters.name) {
     params.set("name", filters.name);
