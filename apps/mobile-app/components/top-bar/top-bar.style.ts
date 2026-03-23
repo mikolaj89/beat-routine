@@ -12,4 +12,8 @@ export const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
+  rightAction: {
+    margin: 0,
+    padding: 0,
+  }
 });

@@ -6,10 +6,14 @@ import { styles } from './top-bar.style';
 export function TopBar({
   title,
   onBack,
+  onEdit,
+  onDelete,
   children,
 }: {
   title?: string;
   onBack?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
   children?: ReactNode;
 }) {
   const showTitle = Boolean(title) && !children;
@@ -33,6 +37,24 @@ export function TopBar({
         <Appbar.Content title={title} />
       ) : (
         <View style={styles.content}>{children}</View>
+      )}
+      {onEdit && (
+        <Appbar.Action
+          icon="pencil"
+          onPress={onEdit}
+          testID="topbar-edit-button"
+          style={styles.rightAction}
+          size={24}
+        />
+      )}
+      {onDelete && (
+        <Appbar.Action
+          icon="delete"
+          onPress={onDelete}
+          testID="topbar-delete-button"
+          style={styles.rightAction}
+          size={24}
+        />
       )}
     </Appbar.Header>
   );

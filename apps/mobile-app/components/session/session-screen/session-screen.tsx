@@ -16,11 +16,15 @@ export default function SessionScreen({
   onBack,
   onStart,
   onOpenAddExercises,
+  onEditSession,
+  onDeleteSession,
 }: {
   baseUrl: string;
   sessionId: number;
   accessToken: string | null;
   onBack: () => void;
+  onEditSession?: () => void;
+  onDeleteSession?: () => void;
   onStart?: (
     exercises: Exercise[],
     sessionName: string,
@@ -34,7 +38,12 @@ export default function SessionScreen({
 
   return (
     <ScreenContainer>
-      <TopBar title="Session plan" onBack={onBack} />
+      <TopBar
+        title="Session plan"
+        onBack={onBack}
+        onEdit={() => {}}
+        onDelete={() => {}}
+      />
       <View style={styles.screen}>
         {sessionResult.isLoading ? (
           <Text style={styles.sectionTitle}>Loading session…</Text>

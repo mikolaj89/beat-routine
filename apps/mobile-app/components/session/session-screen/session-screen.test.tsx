@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
+import { PaperProvider } from 'react-native-paper';
 import SessionScreen from './session-screen';
 import { useSessionQuery } from '@drum-scheduler/sdk';
 import type { Exercise } from '@drum-scheduler/contracts';
@@ -37,18 +38,28 @@ describe('SessionScreen', () => {
 
     const onOpenAddExercises = jest.fn();
 
-    const { getByText } = render(
-      <SessionScreen
-        baseUrl="http://example.test"
-        sessionId={1}
-        accessToken="token-123"
-        onBack={() => {}}
-        onStart={() => {}}
-        onOpenAddExercises={onOpenAddExercises}
-      />
+    const onEditSession = jest.fn();
+    const onDeleteSession = jest.fn();
+    const { getByText, getByTestId } = render(
+      <PaperProvider>
+        <SessionScreen
+          baseUrl="http://example.test"
+          sessionId={1}
+          accessToken="token-123"
+          onBack={() => {}}
+          onStart={() => {}}
+          onOpenAddExercises={onOpenAddExercises}
+          onEditSession={onEditSession}
+          onDeleteSession={onDeleteSession}
+        />
+      </PaperProvider>,
     );
 
-    expect(getByText('Session 2026')).toBeTruthy();
+    expect(getByText('Session plan')).toBeTruthy();
+    fireEvent.press(getByTestId('topbar-edit-button'));
+    fireEvent.press(getByTestId('topbar-delete-button'));
+    expect(onEditSession).toHaveBeenCalledTimes(1);
+    expect(onDeleteSession).toHaveBeenCalledTimes(1);
     fireEvent.press(getByText('Add exercises'));
     expect(onOpenAddExercises).toHaveBeenCalledWith(1);
     expect(mockUseSessionQuery).toHaveBeenCalledWith('http://example.test', 1, {
@@ -68,13 +79,15 @@ describe('SessionScreen', () => {
     } as any);
 
     const { getByText } = render(
-      <SessionScreen
-        baseUrl="http://example.test"
-        sessionId={1}
-        accessToken="token-123"
-        onBack={() => {}}
-        onStart={() => {}}
-      />
+      <PaperProvider>
+        <SessionScreen
+          baseUrl="http://example.test"
+          sessionId={1}
+          accessToken="token-123"
+          onBack={() => {}}
+          onStart={() => {}}
+        />
+      </PaperProvider>,
     );
 
     expect(getByText('Paradiddle')).toBeTruthy();

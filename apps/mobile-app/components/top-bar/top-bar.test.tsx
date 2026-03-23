@@ -40,4 +40,23 @@ describe('TopBar', () => {
     expect(getByText('Custom header')).toBeTruthy();
     expect(queryByText('Sessions')).toBeNull();
   });
+
+  it('calls onEdit and onDelete when the action buttons are pressed', () => {
+    const onEdit = jest.fn();
+    const onDelete = jest.fn();
+    const { getByTestId } = renderTopBar(
+      <TopBar
+        title="Session plan"
+        onBack={() => {}}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />,
+    );
+
+    fireEvent.press(getByTestId('topbar-edit-button'));
+    fireEvent.press(getByTestId('topbar-delete-button'));
+
+    expect(onEdit).toHaveBeenCalledTimes(1);
+    expect(onDelete).toHaveBeenCalledTimes(1);
+  });
 });
