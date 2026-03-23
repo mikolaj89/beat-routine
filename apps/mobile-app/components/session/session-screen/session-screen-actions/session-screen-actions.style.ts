@@ -2,6 +2,25 @@ import { Platform, StyleSheet } from 'react-native';
 import { theme } from '../../../../utils/theme';
 
 export const styles = StyleSheet.create({
+  noExercisesWrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing.md,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    paddingHorizontal: theme.spacing.horizontalMargin,
+  },
+  noExercisesContent: {
+    width: '100%',
+    flexDirection: 'column',
+    gap: theme.spacing.md,
+    textAlign: 'center',
+  },
+  noExercisesText: {
+    textAlign: 'center',
+  },
   ctaWrap: {
     position: 'absolute',
     padding: theme.spacing.horizontalMargin,

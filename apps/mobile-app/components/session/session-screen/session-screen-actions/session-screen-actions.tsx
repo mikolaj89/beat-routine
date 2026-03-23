@@ -13,31 +13,39 @@ export function SessionScreenActions({
   onPressAddExercises: () => void;
 }) {
   return (
-    <View style={styles.ctaWrap}>
+    <>
       {hasExercises ? (
-        <Button
-          style={styles.ctaButton}
-          contentStyle={styles.ctaButtonContent}
-          labelStyle={styles.ctaButtonLabel}
-          mode="contained"
-          onPress={onPressStartSession}
-        >
-          Start Session
-        </Button>
+        <View style={styles.ctaWrap}>
+          <Button
+            style={styles.ctaButton}
+            contentStyle={styles.ctaButtonContent}
+            labelStyle={styles.ctaButtonLabel}
+            mode="contained"
+            onPress={onPressStartSession}
+          >
+            Start Session
+          </Button>
+        </View>
       ) : (
-        <>
-        {/* rocket icon */}
-        <Text style={styles.ctaButtonLabel}>No exercises in this session. Start by adding some! 🚀 </Text>
-        <Button
-          style={styles.ctaButton}
-          contentStyle={styles.ctaButtonContent}
-          labelStyle={styles.ctaButtonLabel}
-          mode="contained"
-          onPress={onPressAddExercises}
-        >
-          Add exercises
-        </Button>
-      </>)}
-    </View>
+        <View style={styles.noExercisesWrap}>
+          <View style={styles.noExercisesContent}>
+            <Text variant="headlineMedium" style={styles.noExercisesText}>No exercises in this session. </Text>
+            <Text variant="bodyLarge" style={styles.noExercisesText}>
+              {' '}
+              Start by adding some exercises! 🚀{' '}
+            </Text>
+            <Button
+              style={styles.ctaButton}
+              contentStyle={styles.ctaButtonContent}
+              labelStyle={styles.ctaButtonLabel}
+              mode="contained"
+              onPress={onPressAddExercises}
+            >
+              Add exercises
+            </Button>
+          </View>
+        </View>
+      )}
+    </>
   );
 }

@@ -34,9 +34,8 @@ export default function SessionScreen({
 
   return (
     <ScreenContainer>
+      <TopBar title="Session plan" onBack={onBack} />
       <View style={styles.screen}>
-        <TopBar title={sessionResult.data?.name} onBack={onBack} />
-
         {sessionResult.isLoading ? (
           <Text style={styles.sectionTitle}>Loading session…</Text>
         ) : sessionResult.error ? (
