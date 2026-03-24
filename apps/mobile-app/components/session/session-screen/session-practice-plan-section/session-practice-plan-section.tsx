@@ -10,11 +10,17 @@ export function SessionPracticePlanSection({
   exercises,
   isLoading,
   hasError,
+  isEditMode = false,
+  onReorderExercises,
+  onRemoveExercise,
 }: {
   totalDurationMinutes: number;
   exercises: Exercise[];
   isLoading: boolean;
   hasError: boolean;
+  isEditMode?: boolean;
+  onReorderExercises?: (exercises: Exercise[]) => void;
+  onRemoveExercise?: (exerciseId: number) => void;
 }) {
   return (
     <>
@@ -29,7 +35,9 @@ export function SessionPracticePlanSection({
         exercises={exercises}
         isLoading={isLoading}
         hasError={hasError}
-        isDraggable={true}
+        isEditMode={isEditMode}
+        onReorderExercises={onReorderExercises}
+        onRemoveExercise={onRemoveExercise}
       />
     </>
   );

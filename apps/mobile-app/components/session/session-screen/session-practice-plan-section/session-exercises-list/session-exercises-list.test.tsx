@@ -75,12 +75,15 @@ const exerciseB: Exercise = {
 
 describe('SessionExercisesList', () => {
   it('renders drag handles and reorders exercises on drag end', () => {
+    const onReorderExercises = jest.fn();
+
     const { getAllByTestId, getByTestId, toJSON } = render(
       <SessionExercisesList
         exercises={[exerciseA, exerciseB]}
         isLoading={false}
         hasError={false}
-        isDraggable={true}
+        isEditMode={true}
+        onReorderExercises={onReorderExercises}
       />,
     );
 
@@ -93,19 +96,22 @@ describe('SessionExercisesList', () => {
 
     fireEvent.press(getByTestId('draggable-list-trigger-reorder'));
 
-    const reorderedTree = JSON.stringify(toJSON());
-    expect(reorderedTree.indexOf('Second Exercise')).toBeLessThan(
-      reorderedTree.indexOf('First Exercise'),
+    expect(onReorderExercises).toHaveBeenCalledTimes(1);
+    expect(onReorderExercises).toHaveBeenCalledWith([exerciseB, exerciseA]);
+
+    const renderedTree = JSON.stringify(toJSON());
+    expect(renderedTree.indexOf('First Exercise')).toBeLessThan(
+      renderedTree.indexOf('Second Exercise'),
     );
   });
 
-  it('does not render drag handles when isDraggable is false', () => {
+  it('does not render drag handles when isEditMode is false', () => {
     const { queryByTestId, getByText } = render(
       <SessionExercisesList
         exercises={[exerciseA, exerciseB]}
         isLoading={false}
         hasError={false}
-        isDraggable={false}
+        isEditMode={false}
       />,
     );
 
@@ -113,5 +119,23 @@ describe('SessionExercisesList', () => {
     expect(getByText('Second Exercise')).toBeTruthy();
     expect(queryByTestId('exercise-card-drag-handle')).toBeNull();
     expect(queryByTestId('draggable-list-trigger-reorder')).toBeNull();
+  });
+
+  it('calls onRemoveExercise when delete button is pressed in edit mode', () => {
+    const onRemoveExercise = jest.fn();
+
+    const { getAllByTestId } = render(
+      <SessionExercisesList
+        exercises={[exerciseA, exerciseB]}
+        isLoading={false}
+        hasError={false}
+        isEditMode={true}
+        onRemoveExercise={onRemoveExercise}
+      />,
+    );
+
+    fireEvent.press(getAllByTestId('exercise-card-delete-button')[0]);
+
+    expect(onRemoveExercise).toHaveBeenCalledWith(1);
   });
 });

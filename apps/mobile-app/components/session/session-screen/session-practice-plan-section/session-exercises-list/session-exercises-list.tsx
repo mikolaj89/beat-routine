@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { Text } from 'react-native-paper';
 import type { Exercise } from '@drum-scheduler/contracts';
@@ -12,19 +12,17 @@ export function SessionExercisesList({
   exercises,
   isLoading,
   hasError,
-  isDraggable = false,
+  isEditMode = false,
+  onReorderExercises,
+  onRemoveExercise,
 }: {
   exercises: Exercise[];
   isLoading: boolean;
   hasError: boolean;
-  isDraggable?: boolean;
+  isEditMode?: boolean;
+  onReorderExercises?: (exercises: Exercise[]) => void;
+  onRemoveExercise?: (exerciseId: number) => void;
 }) {
-  const [orderedExercises, setOrderedExercises] = useState(exercises);
-
-  useEffect(() => {
-    setOrderedExercises(exercises);
-  }, [exercises]);
-
   const emptyComponent = useMemo(
     () =>
       !isLoading && !hasError ? (
@@ -38,6 +36,7 @@ export function SessionExercisesList({
       exercise={item}
       onDragHandlePressIn={drag}
       isDragging={isActive}
+      onDeletePress={() => onRemoveExercise?.(item.id)}
     />
   );
   const renderPlainItem = ({ item }: ListRenderItemInfo<Exercise>) => (
@@ -47,19 +46,19 @@ export function SessionExercisesList({
   return (
     <>
       <Text style={styles.listTitle}>Practice session plan</Text>
-      {isDraggable ? (
+      {isEditMode ? (
         <DraggableFlatList
-          data={orderedExercises}
+          data={exercises}
           keyExtractor={e => e.id.toString()}
           renderItem={renderItem}
-          onDragEnd={({ data }) => setOrderedExercises(data)}
+          onDragEnd={({ data }) => onReorderExercises?.(data)}
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={emptyComponent}
           showsVerticalScrollIndicator={false}
         />
       ) : (
         <FlatList
-          data={orderedExercises}
+          data={exercises}
           keyExtractor={e => e.id.toString()}
           renderItem={renderPlainItem}
           contentContainerStyle={styles.listContent}

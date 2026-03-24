@@ -8,10 +8,12 @@ export function ExerciseCard({
   exercise,
   onDragHandlePressIn,
   isDragging = false,
+  onDeletePress,
 }: {
   exercise: Exercise;
   onDragHandlePressIn?: () => void;
   isDragging?: boolean;
+  onDeletePress?: () => void;
 }) {
   const duration = exercise.durationMinutes ?? 0;
 
@@ -33,6 +35,16 @@ export function ExerciseCard({
             <Text style={styles.name}>{exercise.name}</Text>
             <Text style={styles.meta}>{duration} min</Text>
           </View>
+          {onDeletePress && (
+            <Pressable
+              onPress={onDeletePress}
+              testID="exercise-card-delete-button"
+              hitSlop={8}
+              style={styles.deleteButton}
+            >
+              <Icon source="delete-outline" size={20} />
+            </Pressable>
+          )}
         </View>
       </Card.Content>
     </Card>

@@ -8,6 +8,7 @@ import { ScreenContainer } from '../../layout/screen-container/screen-container'
 import { SessionPracticePlanSection } from './session-practice-plan-section/session-practice-plan-section';
 import { SessionScreenActions } from './session-screen-actions/session-screen-actions';
 import { styles } from './session-screen.style';
+import { useSessionScreenEditMode } from './use-session-screen-edit-mode';
 
 export default function SessionScreen({
   baseUrl,
@@ -16,15 +17,11 @@ export default function SessionScreen({
   onBack,
   onStart,
   onOpenAddExercises,
-  onEditSession,
-  onDeleteSession,
 }: {
   baseUrl: string;
   sessionId: number;
   accessToken: string | null;
   onBack: () => void;
-  onEditSession?: () => void;
-  onDeleteSession?: () => void;
   onStart?: (
     exercises: Exercise[],
     sessionName: string,
@@ -34,15 +31,33 @@ export default function SessionScreen({
 }) {
   const sessionResult = useSessionQuery(baseUrl, sessionId, { accessToken });
   const sessionExercises = sessionResult.data?.exercises ?? [];
-  const hasExercises = Boolean(sessionExercises[0]);
+  const {
+    isEditMode,
+    visibleExercises,
+    hasDraftChanges,
+    isSavingChanges,
+    saveErrorMessage,
+    enterEditMode,
+    closeEditMode,
+    reorderDraftExercises,
+    removeDraftExercise,
+    saveChanges,
+  } = useSessionScreenEditMode({
+    baseUrl,
+    sessionId,
+    sessionExercises,
+    hasSessionData: Boolean(sessionResult.data),
+  });
+  const hasExercises = Boolean(visibleExercises[0]);
 
   return (
     <ScreenContainer>
       <TopBar
         title="Session plan"
-        onBack={onBack}
-        onEdit={() => {}}
-        onDelete={() => {}}
+        onBack={isEditMode ? closeEditMode : onBack}
+        backIcon={isEditMode ? 'close' : 'arrow-left'}
+        onEdit={isEditMode ? undefined : () => enterEditMode()}
+        onDelete={isEditMode ? undefined : () => {}}
       />
       <View style={styles.screen}>
         {sessionResult.isLoading ? (
@@ -55,25 +70,38 @@ export default function SessionScreen({
           </Text>
         ) : null}
 
-        {sessionResult.data && sessionExercises.length > 0 && (
+        {saveErrorMessage ? (
+          <Text style={styles.sectionTitle}>{saveErrorMessage}</Text>
+        ) : null}
+
+        {sessionResult.data && (visibleExercises.length > 0 || isEditMode) && (
           <SessionPracticePlanSection
             totalDurationMinutes={sessionResult.data.totalDuration ?? 0}
-            exercises={sessionExercises}
+            exercises={visibleExercises}
             isLoading={sessionResult.isLoading}
             hasError={Boolean(sessionResult.error)}
+            isEditMode={isEditMode}
+            onReorderExercises={reorderDraftExercises}
+            onRemoveExercise={removeDraftExercise}
           />
         )}
         {sessionResult.data && (
           <SessionScreenActions
+            isEditMode={isEditMode}
             hasExercises={hasExercises}
             onPressStartSession={() => {
-              const firstExercise = sessionResult.data?.exercises?.[0];
+              const firstExercise = visibleExercises[0];
               const sessionName = sessionResult.data?.name;
               if (firstExercise && sessionName && onStart) {
-                onStart(sessionExercises, sessionName, 1);
+                onStart(visibleExercises, sessionName, 1);
               }
             }}
             onPressAddExercises={() => onOpenAddExercises?.(sessionId)}
+            onPressSaveChanges={() => {
+              void saveChanges();
+            }}
+            isSavingChanges={isSavingChanges}
+            isSaveChangesDisabled={!hasDraftChanges}
           />
         )}
       </View>

@@ -35,14 +35,29 @@ describe('SessionScreenActions', () => {
       />,
     );
 
-    expect(
-      getByText('No exercises in this session. Start by adding some! 🚀 '),
-    ).toBeTruthy();
+    expect(getByText('No exercises in this session.')).toBeTruthy();
+    expect(getByText(' Start by adding some exercises! 🚀 ')).toBeTruthy();
     expect(getByText('Add exercises')).toBeTruthy();
     expect(queryByText('Start Session')).toBeNull();
 
     fireEvent.press(getByText('Add exercises'));
     expect(onPressAddExercises).toHaveBeenCalledTimes(1);
     expect(onPressStartSession).not.toHaveBeenCalled();
+  });
+
+  it('shows save changes CTA in edit mode', () => {
+    const { getByText, queryByText } = render(
+      <SessionScreenActions
+        hasExercises={true}
+        onPressStartSession={() => {}}
+        onPressAddExercises={() => {}}
+        isEditMode={true}
+        onPressSaveChanges={() => {}}
+      />,
+    );
+
+    expect(getByText('Save changes')).toBeTruthy();
+    expect(queryByText('Start Session')).toBeNull();
+    expect(queryByText('Add exercises')).toBeNull();
   });
 });

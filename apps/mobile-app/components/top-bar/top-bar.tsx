@@ -8,12 +8,14 @@ export function TopBar({
   onBack,
   onEdit,
   onDelete,
+  backIcon = 'arrow-left',
   children,
 }: {
   title?: string;
   onBack?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
+  backIcon?: string;
   children?: ReactNode;
 }) {
   const showTitle = Boolean(title) && !children;
@@ -27,7 +29,7 @@ export function TopBar({
     >
       {onBack && (
         <Appbar.Action
-          icon="arrow-left"
+          icon={backIcon}
           onPress={onBack}
           testID="topbar-back-button"
         />

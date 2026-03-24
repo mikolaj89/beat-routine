@@ -22,6 +22,9 @@ export const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
   },
+  deleteButton: {
+    marginLeft: 10,
+  },
   name: {
     fontSize: 14,
     fontWeight: '800',
