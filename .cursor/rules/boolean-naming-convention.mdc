@@ -1,0 +1,20 @@
+---
+description: Enforce clear boolean naming for props and variables
+alwaysApply: true
+---
+
+# Boolean Naming Convention
+
+When introducing or renaming any boolean prop, parameter, variable, or return value:
+
+1. Use an explicit boolean prefix such as `is`, `has`, `can`, `should`, `was`, or `did`.
+2. Prefer names that read naturally in conditionals (for example: `if (isLoading)`, `if (hasError)`).
+3. Avoid ambiguous boolean names without a prefix (for example: `loading`, `visible`, `draggable`).
+4. Keep existing naming consistent when extending a module, unless you are explicitly refactoring for clarity.
+
+Examples:
+
+- `draggable` -> `isDraggable`
+- `loading` -> `isLoading`
+- `error` (boolean flag) -> `hasError`
+- `enabled` -> `isEnabled`
