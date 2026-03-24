@@ -5,9 +5,22 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginBottom: 10,
   },
+  draggingCard: {
+    opacity: 0.9,
+  },
   content: {
     paddingHorizontal: 14,
     paddingVertical: 14,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dragHandle: {
+    marginRight: 10,
+  },
+  textContainer: {
+    flex: 1,
   },
   name: {
     fontSize: 14,

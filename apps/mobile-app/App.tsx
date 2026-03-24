@@ -9,6 +9,7 @@ import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';
 import { SplashScreen } from './components/splash/splash-screen';
 import { MD3LightTheme, PaperProvider } from 'react-native-paper';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LoginScreen from './components/login/login-screen';
 import { AppBottomTabs } from './components/navigation/app-bottom-tabs';
 
@@ -24,18 +25,20 @@ function App() {
   const isDarkMode = false;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <PaperProvider theme={paperTheme}>
-          <AuthProvider>
-            <StatusBar
-              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            />
-            <AppContent />
-          </AuthProvider>
-        </PaperProvider>
-      </SafeAreaProvider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={styles.container}>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <PaperProvider theme={paperTheme}>
+            <AuthProvider>
+              <StatusBar
+                barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+              />
+              <AppContent />
+            </AuthProvider>
+          </PaperProvider>
+        </SafeAreaProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
 

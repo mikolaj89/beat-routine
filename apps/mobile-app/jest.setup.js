@@ -59,3 +59,32 @@ jest.mock('react-native-bootsplash', () => ({
 		brand: { source: 0, style: {} },
 	})),
 }));
+
+jest.mock('react-native-draggable-flatlist', () => {
+	const React = require('react');
+	const { FlatList } = require('react-native');
+
+	const MockDraggableFlatList = ({
+		data,
+		renderItem,
+		keyExtractor,
+		...rest
+	}) =>
+		React.createElement(FlatList, {
+			data,
+			keyExtractor,
+			renderItem: ({ item, index }) =>
+				renderItem({
+					item,
+					drag: jest.fn(),
+					isActive: false,
+					getIndex: () => index,
+				}),
+			...rest,
+		});
+
+	return {
+		__esModule: true,
+		default: MockDraggableFlatList,
+	};
+});
