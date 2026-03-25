@@ -4,12 +4,12 @@ import { theme } from '../../../utils/theme';
 export const styles = StyleSheet.create({
   searchWrap: {
     paddingHorizontal: theme.spacing.horizontalMargin,
-    paddingTop: theme.spacing.xl,
+    paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.sm,
   },
-  actionsWrap: {
-    paddingHorizontal: theme.spacing.horizontalMargin,
-    paddingBottom: theme.spacing.md,
+  title: {
+    color: theme.colors.text,
+    marginBottom: theme.spacing.sm,
   },
   searchbar: {
     borderRadius: 999,

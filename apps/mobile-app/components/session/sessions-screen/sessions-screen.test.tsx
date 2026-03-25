@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import { PaperProvider } from 'react-native-paper';
 import SessionsScreen from './sessions-screen';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
@@ -39,11 +39,35 @@ describe('SessionsScreen', () => {
       </PaperProvider>,
     );
 
+    expect(getByText('My Sessions')).toBeTruthy();
     expect(getByText('No sessions found.')).toBeTruthy();
     expect(mockUseSessionsQuery).toHaveBeenCalledWith(API_BASE_URL, {
       accessToken: 'token-123',
       query: '',
       debounceMs: 500,
     });
+  });
+
+  it('calls onOpenCreateSession when pressing the FAB', () => {
+    mockUseSessionsQuery.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as any);
+    const onOpenCreateSession = jest.fn();
+
+    const { getByTestId } = render(
+      <PaperProvider>
+        <SessionsScreen
+          accessToken="token-123"
+          onOpenSession={() => {}}
+          onOpenCreateSession={onOpenCreateSession}
+        />
+      </PaperProvider>,
+    );
+
+    fireEvent.press(getByTestId('sessions-new-session-fab'));
+
+    expect(onOpenCreateSession).toHaveBeenCalledTimes(1);
   });
 });

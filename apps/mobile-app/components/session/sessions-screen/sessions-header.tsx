@@ -1,19 +1,20 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Searchbar } from 'react-native-paper';
+import { Searchbar, Text } from 'react-native-paper';
 import { styles } from './sessions-header.style';
+import { TopBar } from '@/components/top-bar/top-bar';
 
 export function SessionsHeader({
   query,
   onChangeQuery,
-  onPressCreateSession,
 }: {
   query: string;
   onChangeQuery: (value: string) => void;
-  onPressCreateSession?: () => void;
 }) {
   return (
     <>
+      {' '}
+      <TopBar title="My Practice Sessions" />
       <View style={styles.searchWrap}>
         <Searchbar
           placeholder="Search sessions..."
@@ -22,17 +23,6 @@ export function SessionsHeader({
           style={styles.searchbar}
           inputStyle={styles.searchInput}
         />
-      </View>
-
-      <View style={styles.actionsWrap}>
-        <Button
-          mode="contained"
-          icon="plus"
-          onPress={onPressCreateSession}
-          disabled={!onPressCreateSession}
-        >
-          New Session
-        </Button>
       </View>
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import { Text } from 'react-native-paper';
+import { FAB, Text, useTheme } from 'react-native-paper';
 import { useSessionsQuery } from '@drum-scheduler/sdk';
 import { Session } from '@drum-scheduler/contracts';
 import { API_BASE_URL } from '../../../config/env';
@@ -20,6 +20,7 @@ export default function SessionsScreen({
   onOpenCreateSession?: () => void;
 }) {
   const [query, setQuery] = useState('');
+  const paperTheme = useTheme();
 
   const sessionsResult = useSessionsQuery(API_BASE_URL, {
     accessToken,
@@ -39,7 +40,6 @@ export default function SessionsScreen({
       <SessionsHeader
         query={query}
         onChangeQuery={setQuery}
-        onPressCreateSession={onOpenCreateSession}
       />
 
       <SessionLoadingPlaceholder isLoading={isLoading} />
@@ -58,6 +58,19 @@ export default function SessionsScreen({
           showsVerticalScrollIndicator={false}
         />
       )}
+      <FAB
+        icon="plus"
+        onPress={onOpenCreateSession}
+        disabled={!onOpenCreateSession}
+        color={paperTheme.colors.onPrimary}
+        style={[
+          styles.fab,
+          {
+            backgroundColor: paperTheme.colors.primary,
+          },
+        ]}
+        testID="sessions-new-session-fab"
+      />
     </ScreenContainer>
   );
 }
