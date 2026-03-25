@@ -9,6 +9,7 @@ import { SessionPracticePlanSection } from './session-practice-plan-section/sess
 import { SessionScreenActions } from './session-screen-actions/session-screen-actions';
 import { styles } from './session-screen.style';
 import { useSessionScreenEditMode } from './use-session-screen-edit-mode';
+import { useSessionScreenDeleteAction } from './use-session-screen-delete-action';
 import { useSessionTabBarVisibility } from './use-session-screeen-tab-bar-visibility';
 
 export default function SessionScreen({
@@ -49,6 +50,13 @@ export default function SessionScreen({
     sessionExercises,
     hasSessionData: Boolean(sessionResult.data),
   });
+  const { confirmDeleteSession, deleteErrorMessage, isDeletingSession } =
+    useSessionScreenDeleteAction({
+      baseUrl,
+      sessionId,
+      accessToken,
+      onDeleteSuccess: onBack,
+    });
   const hasExercises = Boolean(visibleExercises[0]);
   useSessionTabBarVisibility({ isEditMode });
 
@@ -59,7 +67,9 @@ export default function SessionScreen({
         onBack={isEditMode ? closeEditMode : onBack}
         backIcon={isEditMode ? 'close' : 'arrow-left'}
         onEdit={isEditMode ? undefined : () => enterEditMode()}
-        onDelete={isEditMode ? undefined : () => {}}
+        onDelete={
+          isEditMode || isDeletingSession ? undefined : confirmDeleteSession
+        }
       />
       <View style={styles.screen}>
         {sessionResult.isLoading ? (
@@ -74,6 +84,9 @@ export default function SessionScreen({
 
         {saveErrorMessage ? (
           <Text style={styles.sectionTitle}>{saveErrorMessage}</Text>
+        ) : null}
+        {deleteErrorMessage ? (
+          <Text style={styles.sectionTitle}>{deleteErrorMessage}</Text>
         ) : null}
 
         {sessionResult.data && (visibleExercises.length > 0 || isEditMode) && (

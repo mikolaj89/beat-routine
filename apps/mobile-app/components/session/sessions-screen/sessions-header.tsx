@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Searchbar, Text } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import { styles } from './sessions-header.style';
 import { TopBar } from '@/components/top-bar/top-bar';
 
@@ -13,7 +13,6 @@ export function SessionsHeader({
 }) {
   return (
     <>
-      {' '}
       <TopBar title="My Practice Sessions" />
       <View style={styles.searchWrap}>
         <Searchbar

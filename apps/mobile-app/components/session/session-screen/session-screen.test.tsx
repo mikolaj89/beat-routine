@@ -1,8 +1,10 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { Alert } from 'react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import { PaperProvider } from 'react-native-paper';
 import SessionScreen from './session-screen';
 import {
+  useDeleteSession,
   useRemoveExerciseFromSession,
   useReorderSessionExercises,
   useSessionQuery,
@@ -24,6 +26,7 @@ jest.mock('@drum-scheduler/sdk', () => ({
   useSessionQuery: jest.fn(),
   useReorderSessionExercises: jest.fn(),
   useRemoveExerciseFromSession: jest.fn(),
+  useDeleteSession: jest.fn(),
 }));
 
 const mockUseSessionQuery = useSessionQuery as jest.MockedFunction<
@@ -37,6 +40,9 @@ const mockUseRemoveExerciseFromSession =
   useRemoveExerciseFromSession as jest.MockedFunction<
     typeof useRemoveExerciseFromSession
   >;
+const mockUseDeleteSession = useDeleteSession as jest.MockedFunction<
+  typeof useDeleteSession
+>;
 
 const exerciseFixture: Exercise = {
   id: 1,
@@ -50,14 +56,21 @@ const exerciseFixture: Exercise = {
 };
 
 describe('SessionScreen', () => {
+  let mockDeleteSessionMutateAsync: jest.Mock;
+
   beforeEach(() => {
     mockSetOptions.mockClear();
+    mockDeleteSessionMutateAsync = jest.fn().mockResolvedValue(undefined);
     mockUseReorderSessionExercises.mockReturnValue({
       mutateAsync: jest.fn(),
       isPending: false,
     } as any);
     mockUseRemoveExerciseFromSession.mockReturnValue({
       mutateAsync: jest.fn(),
+      isPending: false,
+    } as any);
+    mockUseDeleteSession.mockReturnValue({
+      mutateAsync: mockDeleteSessionMutateAsync,
       isPending: false,
     } as any);
   });
@@ -73,6 +86,7 @@ describe('SessionScreen', () => {
       error: null,
     } as any);
 
+    const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
     const onOpenAddExercises = jest.fn();
     const { getByText, getByTestId } = render(
       <PaperProvider>
@@ -89,11 +103,18 @@ describe('SessionScreen', () => {
 
     expect(getByText('Session plan')).toBeTruthy();
     fireEvent.press(getByTestId('topbar-delete-button'));
+    expect(alertSpy).toHaveBeenCalledWith(
+      'Delete session?',
+      'This action cannot be undone.',
+      expect.any(Array),
+      { cancelable: true },
+    );
     fireEvent.press(getByText('Add exercises'));
     expect(onOpenAddExercises).toHaveBeenCalledWith(1);
     expect(mockUseSessionQuery).toHaveBeenCalledWith('http://example.test', 1, {
       accessToken: 'token-123',
     });
+    alertSpy.mockRestore();
   });
 
   it('enters edit mode from top bar edit and shows save CTA', () => {
@@ -150,5 +171,53 @@ describe('SessionScreen', () => {
 
     expect(getByText('Paradiddle')).toBeTruthy();
     expect(getByText('5 min')).toBeTruthy();
+  });
+
+  it('deletes session after confirming top bar delete', async () => {
+    const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation(jest.fn());
+    mockUseSessionQuery.mockReturnValue({
+      data: {
+        name: 'Session 2026',
+        totalDuration: 5,
+        exercises: [exerciseFixture],
+      },
+      isLoading: false,
+      error: null,
+    } as any);
+
+    const onBack = jest.fn();
+    const { getByTestId } = render(
+      <PaperProvider>
+        <SessionScreen
+          baseUrl="http://example.test"
+          sessionId={1}
+          accessToken="token-123"
+          onBack={onBack}
+          onStart={() => {}}
+        />
+      </PaperProvider>,
+    );
+
+    fireEvent.press(getByTestId('topbar-delete-button'));
+
+    const alertButtons = (alertSpy.mock.calls[0]?.[2] ?? []) as Array<{
+      text: string;
+      onPress?: () => void;
+    }>;
+    const deleteButton = alertButtons.find(button => button.text === 'Delete');
+    expect(deleteButton).toBeTruthy();
+
+    act(() => {
+      deleteButton?.onPress?.();
+    });
+
+    await waitFor(() => {
+      expect(mockDeleteSessionMutateAsync).toHaveBeenCalledWith(1);
+    });
+    await waitFor(() => {
+      expect(onBack).toHaveBeenCalledTimes(1);
+    });
+
+    alertSpy.mockRestore();
   });
 });
