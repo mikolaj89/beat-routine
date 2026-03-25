@@ -78,7 +78,7 @@ export default function SessionScreen({
           <SessionPracticePlanSection
             totalDurationMinutes={sessionResult.data.totalDuration ?? 0}
             exercises={visibleExercises}
-            isLoading={sessionResult.isLoading}
+            isLoading={sessionResult.isLoading || sessionResult.isFetching}
             hasError={Boolean(sessionResult.error)}
             isEditMode={isEditMode}
             onReorderExercises={reorderDraftExercises}

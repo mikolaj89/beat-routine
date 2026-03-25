@@ -6,6 +6,7 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 import { ExerciseCard } from '../../exercise-card/exercise-card';
+import { SessionExercisesListPlaceholder } from './session-exercises-list-placeholder/session-exercises-list-placeholder';
 import { styles } from './session-exercises-list.style';
 
 export function SessionExercisesList({
@@ -46,7 +47,9 @@ export function SessionExercisesList({
   return (
     <>
       <Text style={styles.listTitle}>Practice session plan</Text>
-      {isEditMode ? (
+      {isLoading ? (
+        <SessionExercisesListPlaceholder count={4} />
+      ) : isEditMode ? (
         <DraggableFlatList
           data={exercises}
           keyExtractor={e => e.id.toString()}
@@ -64,6 +67,8 @@ export function SessionExercisesList({
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={emptyComponent}
           showsVerticalScrollIndicator={false}
+          
+          
         />
       )}
     </>
