@@ -1,0 +1,45 @@
+---
+description: Enforce tests and component module extraction patterns
+alwaysApply: true
+---
+
+# Component Architecture Enforcement
+
+When creating or modifying a component (for example `super-component.tsx`), follow these rules:
+
+- Add or update a component test file to cover changed behavior.
+- Keep component `.tsx` focused on rendering and event wiring.
+- Move stateful/data logic (state transitions, derived state, query/mutation orchestration, hook composition) into dedicated hooks; create a new hook file when needed.
+- Move pure logic (parsing, mapping, formatting, calculations, utility functions) out of the component into:
+  - a shared `utils` file when broadly reusable, or
+  - a colocated `.helper` file when tightly related to that component flow.
+- Extract styles to a colocated `.style.ts` when style blocks are non-trivial or reused.
+- Extract component-specific types/interfaces to a colocated `.types.ts` when it improves readability or reuse.
+- Use barrel exports (`index.ts`) for component module items when it clearly improves import ergonomics and does not add ambiguity.
+- Update imports/usages after extraction and keep naming explicit and domain-based.
+
+## Quick Example
+
+- `super-component.tsx` handles UI only.
+- `use-super-component.ts` handles state and query behavior.
+- `super-component.helper.ts` handles local pure transforms.
+- `super-component.style.ts` holds extracted styles.
+- `super-component.types.ts` holds component-specific types.
+- `super-component.test.tsx` verifies user-visible behavior.
+- `index.ts` re-exports component module items when useful.
+
+## File Layout Example
+
+Before:
+
+- `super-component.tsx`
+
+After:
+
+- `super-component.tsx`
+- `use-super-component.ts`
+- `super-component.helper.ts`
+- `super-component.style.ts`
+- `super-component.types.ts`
+- `super-component.test.tsx`
+- `index.ts`

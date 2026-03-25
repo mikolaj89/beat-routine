@@ -1,0 +1,30 @@
+---
+description: Rename related sibling files when user requests file rename
+alwaysApply: true
+---
+
+# Rename Related Files Together
+
+When the user asks to rename a file, rename all directly related sibling files that share the same base name.
+
+## Rule
+
+- Start from the exact file the user asked to rename.
+- If sibling files in the same directory share the same base name, rename them too.
+- Update all imports/usages that reference any renamed file.
+- Keep suffixes/extensions intact while changing only the shared base name segment.
+- Do not rename files with different base names unless the user explicitly asks.
+
+## Common Related Patterns
+
+- `foo.ts` -> `bar.ts`
+- `foo.test.ts` -> `bar.test.ts`
+- `foo.test.tsx` -> `bar.test.tsx`
+- `foo.spec.ts` -> `bar.spec.ts`
+- `foo.helper.ts` -> `bar.helper.ts`
+- `foo.style.ts` -> `bar.style.ts`
+- `foo.types.ts` -> `bar.types.ts`
+
+## Example
+
+- If renaming `use-session-tab-bar-visibility.ts` to `use-session-screeen-tab-bar-visibility.ts`, also rename `use-session-tab-bar-visibility.test.tsx` to `use-session-screeen-tab-bar-visibility.test.tsx` and update imports.
