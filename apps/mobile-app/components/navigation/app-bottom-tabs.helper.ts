@@ -10,13 +10,17 @@ const hiddenTabBarStyle = {
   display: 'none' as const,
 };
 
+const homeRoutesWithHiddenTabBar = new Set(['AddSessionExercises']);
+
 type HomeTabRoute = BottomTabScreenProps<RootTabParamList, 'Home'>['route'];
 
 export function getHomeTabOptions(
   route: HomeTabRoute,
 ): BottomTabNavigationOptions {
   const activeHomeRouteName = getFocusedRouteNameFromRoute(route);
-  const isTabBarHidden = activeHomeRouteName === 'AddSessionExercises';
+  const isTabBarHidden = Boolean(
+    activeHomeRouteName && homeRoutesWithHiddenTabBar.has(activeHomeRouteName),
+  );
 
   return {
     tabBarLabel: 'Home',

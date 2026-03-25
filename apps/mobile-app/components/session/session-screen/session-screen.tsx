@@ -9,7 +9,7 @@ import { SessionPracticePlanSection } from './session-practice-plan-section/sess
 import { SessionScreenActions } from './session-screen-actions/session-screen-actions';
 import { styles } from './session-screen.style';
 import { useSessionScreenEditMode } from './use-session-screen-edit-mode';
-import { useSessionTabBarVisibility } from './use-session-tab-bar-visibility';
+import { useSessionTabBarVisibility } from './use-session-screeen-tab-bar-visibility';
 
 export default function SessionScreen({
   baseUrl,

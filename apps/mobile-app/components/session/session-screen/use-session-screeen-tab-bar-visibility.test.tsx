@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-native';
 import { useNavigation } from '@react-navigation/native';
 import { navigationTabBarStyle } from '../../navigation/navigation-tab-bar-style';
-import { useSessionTabBarVisibility } from './use-session-tab-bar-visibility';
+import { useSessionTabBarVisibility } from './use-session-screeen-tab-bar-visibility';
 
 const mockSetOptions = jest.fn();
 const mockGetParent = jest.fn();
@@ -35,9 +35,7 @@ describe('useSessionTabBarVisibility', () => {
   it('sets default tab bar style in non-edit mode', () => {
     renderHook(() => useSessionTabBarVisibility({ isEditMode: false }));
 
-    expect(mockSetOptions).toHaveBeenCalledWith({
-      tabBarStyle: navigationTabBarStyle,
-    });
+    expect(mockSetOptions).not.toHaveBeenCalled();
   });
 
   it('restores default tab bar style on cleanup', () => {

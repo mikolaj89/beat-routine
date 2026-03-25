@@ -10,13 +10,17 @@ export function useSessionTabBarVisibility({
   const navigation = useNavigation();
 
   useEffect(() => {
+    if (!isEditMode) {
+      return;
+    }
+
     const tabsNavigation = navigation.getParent();
     if (!tabsNavigation) {
       return;
     }
 
     tabsNavigation.setOptions({
-      tabBarStyle: isEditMode ? { display: 'none' } : navigationTabBarStyle,
+      tabBarStyle: { display: 'none' },
     });
 
     return () => {
