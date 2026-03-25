@@ -54,13 +54,18 @@ export function SessionScreenActions({
           </Button>
         </View>
       ) : (
-        <View style={styles.noExercisesWrap}>
-          <View style={styles.noExercisesContent}>
-            <Text variant="headlineMedium" style={styles.noExercisesText}>No exercises in this session. </Text>
-            <Text variant="bodyLarge" style={styles.noExercisesText}>
-              {' '}
-              Start by adding some exercises! 🚀{' '}
-            </Text>
+        <>
+          <View style={styles.noExercisesWrap}>
+            <View style={styles.noExercisesContent}>
+              <Text variant="headlineMedium" style={styles.noExercisesText}>
+                No exercises in this session.
+              </Text>
+              <Text variant="bodyLarge" style={styles.noExercisesText}>
+                Start by adding some exercises! 🚀
+              </Text>
+            </View>
+          </View>
+          <View style={styles.ctaWrap}>
             <Button
               style={styles.ctaButton}
               contentStyle={styles.ctaButtonContent}
@@ -71,7 +76,7 @@ export function SessionScreenActions({
               Add exercises
             </Button>
           </View>
-        </View>
+        </>
       )}
     </>
   );

@@ -1,11 +1,13 @@
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountScreen from '../account/account-screen';
 import { RootTabParamList } from '../../types/navigation';
 import { theme } from '../../utils/theme';
 import { HomeStackNavigator } from './home-stack-navigator';
+import { navigationTabBarStyle } from './navigation-tab-bar-style';
+import { getHomeTabOptions } from './app-bottom-tabs.helper';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -17,7 +19,6 @@ export function AppBottomTabs() {
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: theme.colors.text,
         tabBarInactiveTintColor: theme.colors.textMuted,
-        tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarIcon: ({ color, size, focused }) => {
           const iconName =
@@ -35,27 +36,23 @@ export function AppBottomTabs() {
         },
       })}
     >
-      <Tab.Screen name="Home" options={{ tabBarLabel: 'Home' }}>
+      <Tab.Screen
+        name="Home"
+        options={({ route }) => getHomeTabOptions(route)}
+      >
         {() => <HomeStackNavigator />}
       </Tab.Screen>
 
       <Tab.Screen
         name="Account"
         component={AccountScreen}
-        options={{ tabBarLabel: 'Account' }}
+        options={{ tabBarLabel: 'Account', tabBarStyle: navigationTabBarStyle }}
       />
     </Tab.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    height: Platform.OS === 'ios' ? 84 : 64,
-    paddingTop: 8,
-    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
-    backgroundColor: theme.colors.surface,
-    borderTopColor: theme.colors.border,
-  },
   tabBarLabel: {
     fontSize: 12,
     fontWeight: '700',

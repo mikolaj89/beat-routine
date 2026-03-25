@@ -9,6 +9,17 @@ import {
 } from '@drum-scheduler/sdk';
 import type { Exercise } from '@drum-scheduler/contracts';
 
+const mockSetOptions = jest.fn();
+
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useNavigation: () => ({
+    getParent: () => ({
+      setOptions: mockSetOptions,
+    }),
+  }),
+}));
+
 jest.mock('@drum-scheduler/sdk', () => ({
   useSessionQuery: jest.fn(),
   useReorderSessionExercises: jest.fn(),
@@ -40,6 +51,7 @@ const exerciseFixture: Exercise = {
 
 describe('SessionScreen', () => {
   beforeEach(() => {
+    mockSetOptions.mockClear();
     mockUseReorderSessionExercises.mockReturnValue({
       mutateAsync: jest.fn(),
       isPending: false,

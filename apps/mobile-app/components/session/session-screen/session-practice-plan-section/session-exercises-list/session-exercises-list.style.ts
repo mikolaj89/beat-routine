@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   listContent: {
     marginTop: 2,
     paddingHorizontal: theme.spacing.horizontalMargin,
-    paddingBottom: 110,
+    paddingBottom: theme.spacing.xl,
   },
   emptyText: {
     fontSize: theme.typography.body,

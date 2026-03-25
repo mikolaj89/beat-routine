@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
   },
   footer: {
     paddingHorizontal: theme.spacing.horizontalMargin,
-    paddingTop: theme.spacing.sm,
-    paddingBottom: theme.spacing.md,
+    paddingTop: 8,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: theme.colors.border,
     backgroundColor: theme.colors.surface,

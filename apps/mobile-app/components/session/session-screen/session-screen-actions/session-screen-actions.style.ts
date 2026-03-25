@@ -22,11 +22,13 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   ctaWrap: {
-    position: 'absolute',
-    padding: theme.spacing.horizontalMargin,
-    left: 0,
-    right: 0,
-    bottom: 18,
+    marginTop: 'auto',
+    paddingTop: 8,
+    paddingHorizontal: theme.spacing.horizontalMargin,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: theme.colors.border,
+    backgroundColor: theme.colors.surface,
     alignItems: 'center',
   },
   ctaButton: {

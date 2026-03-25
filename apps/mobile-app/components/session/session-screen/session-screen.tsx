@@ -9,6 +9,7 @@ import { SessionPracticePlanSection } from './session-practice-plan-section/sess
 import { SessionScreenActions } from './session-screen-actions/session-screen-actions';
 import { styles } from './session-screen.style';
 import { useSessionScreenEditMode } from './use-session-screen-edit-mode';
+import { useSessionTabBarVisibility } from './use-session-tab-bar-visibility';
 
 export default function SessionScreen({
   baseUrl,
@@ -49,6 +50,7 @@ export default function SessionScreen({
     hasSessionData: Boolean(sessionResult.data),
   });
   const hasExercises = Boolean(visibleExercises[0]);
+  useSessionTabBarVisibility({ isEditMode });
 
   return (
     <ScreenContainer>
