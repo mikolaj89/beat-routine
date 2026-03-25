@@ -28,6 +28,24 @@ describe('getHomeTabOptions', () => {
     expect(options.tabBarStyle).toEqual({ display: 'none' });
   });
 
+  it('hides tab bar on NewSession route', () => {
+    mockGetFocusedRouteNameFromRoute.mockReturnValue('NewSession');
+
+    const options = getHomeTabOptions(homeRoute);
+
+    expect(options.tabBarLabel).toBe('Home');
+    expect(options.tabBarStyle).toEqual({ display: 'none' });
+  });
+
+  it('hides tab bar on Exercise route', () => {
+    mockGetFocusedRouteNameFromRoute.mockReturnValue('Exercise');
+
+    const options = getHomeTabOptions(homeRoute);
+
+    expect(options.tabBarLabel).toBe('Home');
+    expect(options.tabBarStyle).toEqual({ display: 'none' });
+  });
+
   it('shows shared tab bar style on other routes', () => {
     mockGetFocusedRouteNameFromRoute.mockReturnValue('Session');
 

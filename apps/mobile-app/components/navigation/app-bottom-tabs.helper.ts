@@ -10,7 +10,11 @@ const hiddenTabBarStyle = {
   display: 'none' as const,
 };
 
-const homeRoutesWithHiddenTabBar = new Set(['AddSessionExercises']);
+const homeRoutesWithHiddenTabBar = new Set([
+  'AddSessionExercises',
+  'NewSession',
+  'Exercise',
+]);
 
 type HomeTabRoute = BottomTabScreenProps<RootTabParamList, 'Home'>['route'];
 
