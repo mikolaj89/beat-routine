@@ -45,7 +45,7 @@ jobs:
           chmod 600 /root/beat-routine-api-deploy/test/test.env
 
           cd /root/beat-routine
-          git pull
+          git pull --force
 
           docker build -f apps/api/Dockerfile -t drum-scheduler-api .
 
