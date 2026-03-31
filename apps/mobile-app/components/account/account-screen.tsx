@@ -3,11 +3,12 @@ import React from 'react';
 import { Avatar, Button, Surface, Text } from 'react-native-paper';
 import { ScreenContainer } from '../layout/screen-container/screen-container';
 import { TopBar } from '../top-bar/top-bar';
-import { useAuth } from '../../providers/auth-provider';
 import { styles } from './account-screen.style';
+import { useAccountScreen } from './use-account-screen';
 
 export default function AccountScreen() {
-  const { logout } = useAuth();
+  const { currentUserEmail, currentUserRole, isCurrentUserLoading, logout } =
+    useAccountScreen();
 
   return (
     <ScreenContainer>
@@ -23,6 +24,14 @@ export default function AccountScreen() {
           />
           <Text variant="headlineSmall" style={styles.title}>
             Account
+          </Text>
+          <Text variant="titleMedium" style={styles.email}>
+            {isCurrentUserLoading
+              ? 'Loading email...'
+              : currentUserEmail ?? 'Email unavailable'}
+          </Text>
+          <Text variant="bodyMedium" style={styles.role}>
+            {isCurrentUserLoading ? 'Loading role...' : currentUserRole ?? 'Role unavailable'}
           </Text>
           <Text variant="bodyMedium" style={styles.body}>
             Your profile and app settings will live here. For now, you can use

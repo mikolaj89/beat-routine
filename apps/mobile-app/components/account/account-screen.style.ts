@@ -21,6 +21,14 @@ export const styles = StyleSheet.create({
     marginBottom: theme.spacing.xs,
     color: theme.colors.text,
   },
+  email: {
+    marginBottom: theme.spacing.sm,
+    color: theme.colors.text,
+  },
+  role: {
+    marginBottom: theme.spacing.md,
+    color: theme.colors.textMuted,
+  },
   body: {
     marginBottom: theme.spacing.lg,
     color: theme.colors.textMuted,
