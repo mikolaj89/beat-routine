@@ -1,8 +1,10 @@
 export type { RequestOptions } from "../utils/auth-headers";
+export * from "./auth-query-keys";
 export * from "./categories-query-keys";
 export * from "./build-exercises-query-params";
 export * from "./exercises-query-keys";
 export * from "./fetch-categories";
+export * from "./fetch-current-user";
 export * from "./fetch-category-exercises";
 export * from "./fetch-exercise";
 export * from "./fetch-exercises";

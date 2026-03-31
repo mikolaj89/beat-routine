@@ -16,4 +16,13 @@ export type RefreshResponse = {
   refreshToken?: string;
   refreshExpiresAt?: string;
 };
+
+export type CurrentUser = {
+  id: string;
+  accountId: string;
+  email: string;
+  role: string;
+  isActive: boolean;
+  createdAt: string;
+};
   
