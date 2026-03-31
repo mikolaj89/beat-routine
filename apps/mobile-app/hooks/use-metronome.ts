@@ -2,6 +2,15 @@ import { useEffect, useRef } from 'react';
 import { AudioBuffer, AudioContext } from 'react-native-audio-api';
 import RNFS from 'react-native-fs';
 import { MetronomeOptions } from './use-metronome.constants';
+import {
+  getArrayBufferFromBinary,
+  getBeatBuffer,
+  getBeatGain,
+  getInitialNextTimeSec,
+  getIntervalSec,
+  getBeatStartOffsetSec,
+  isAccentBeat,
+} from './use-metronome.helper';
 
 declare const atob: (input: string) => string;
 
@@ -14,6 +23,8 @@ type SchedulerConfig = {
 export const useMetronome = (options: MetronomeOptions) => {
   const audioContextRef = useRef<AudioContext | null>(null);
   const clickBufferRef = useRef<AudioBuffer | null>(null);
+  const accentedClickBufferRef = useRef<AudioBuffer | null>(null);
+  const beatNumberRef = useRef<number>(1);
   const runningRef = useRef<boolean>(false);
   const nextTimeRef = useRef<number>(0);
   const schedulerTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -22,6 +33,7 @@ export const useMetronome = (options: MetronomeOptions) => {
 
   const stop = () => {
     runningRef.current = false;
+    beatNumberRef.current = 1;
     if (schedulerTimeoutRef.current) {
       clearTimeout(schedulerTimeoutRef.current);
       schedulerTimeoutRef.current = null;
@@ -30,30 +42,27 @@ export const useMetronome = (options: MetronomeOptions) => {
 
   const readClickTrackAsset = async (assetPath: string) => {
     const base64 = await RNFS.readFileAssets(assetPath, 'base64');
-    const binary = atob(base64);
-    const len = binary.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i += 1) {
-      bytes[i] = binary.charCodeAt(i);
-    }
-    return bytes.buffer;
+    return getArrayBufferFromBinary(atob(base64));
   };
 
-  const tick = (time: number) => {
+  const tick = (time: number, isAccented: boolean) => {
     const audioContext = audioContextRef.current;
-    if (!audioContext || !clickBufferRef.current) return;
+    const clickBuffer = getBeatBuffer({
+      clickBuffer: clickBufferRef.current,
+      accentedClickBuffer: accentedClickBufferRef.current,
+      isAccented,
+    });
+    if (!audioContext || !clickBuffer) return;
 
     const src = audioContext.createBufferSource();
-    src.buffer = clickBufferRef.current;
+    src.buffer = clickBuffer;
     const gain = audioContext.createGain();
-    gain.gain.setValueAtTime(1, time);
-    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+    gain.gain.setValueAtTime(getBeatGain(isAccented), time);
 
     src.connect(gain);
     gain.connect(audioContext.destination);
 
-    src.start(time);
-    src.stop(time + 0.055);
+    src.start(time, getBeatStartOffsetSec(isAccented));
   };
 
   const scheduler = (config: SchedulerConfig) => {
@@ -65,11 +74,14 @@ export const useMetronome = (options: MetronomeOptions) => {
 
     const now = audioContext.currentTime;
     let nextTime = nextTimeRef.current;
+    let beatNumber = beatNumberRef.current;
     while (nextTime < now + scheduleAheadSec) {
-      tick(nextTime);
+      tick(nextTime, isAccentBeat(beatNumber));
       nextTime += intervalSec;
+      beatNumber += 1;
     }
 
+    beatNumberRef.current = beatNumber;
     nextTimeRef.current = nextTime;
     schedulerTimeoutRef.current = setTimeout(
       () => scheduler(config),
@@ -79,9 +91,15 @@ export const useMetronome = (options: MetronomeOptions) => {
 
   const play = async (beatsPerMinute?: number) => {
     stop();
-    let { bpm, clickAssetPath, lookaheadMs, scheduleAheadSec } = options;
+    let {
+      bpm,
+      clickAssetPath,
+      accentedClickAssetPath,
+      lookaheadMs,
+      scheduleAheadSec,
+    } = options;
     bpm = beatsPerMinute ?? bpm;
-    const intervalSec = 60 / bpm;
+    const intervalSec = getIntervalSec(bpm);
 
     if (!audioContextRef.current) {
       audioContextRef.current = new AudioContext();
@@ -92,8 +110,14 @@ export const useMetronome = (options: MetronomeOptions) => {
       const arrayBuffer = await readClickTrackAsset(clickAssetPath);
       clickBufferRef.current = await audioContext.decodeAudioData(arrayBuffer);
     }
+    if (!accentedClickBufferRef.current) {
+      const arrayBuffer = await readClickTrackAsset(accentedClickAssetPath);
+      accentedClickBufferRef.current =
+        await audioContext.decodeAudioData(arrayBuffer);
+    }
 
-    nextTimeRef.current = audioContext.currentTime + 0.05;
+    nextTimeRef.current = getInitialNextTimeSec(audioContext.currentTime);
+    beatNumberRef.current = 1;
     runningRef.current = true;
 
     scheduler({
