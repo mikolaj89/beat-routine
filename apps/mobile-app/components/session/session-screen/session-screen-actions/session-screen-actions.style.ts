@@ -21,29 +21,19 @@ export const styles = StyleSheet.create({
   noExercisesText: {
     textAlign: 'center',
   },
-  ctaWrap: {
-    marginTop: 'auto',
-    paddingTop: 8,
-    paddingHorizontal: theme.spacing.horizontalMargin,
-    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: theme.colors.border,
-    backgroundColor: theme.colors.surface,
-    alignItems: 'center',
-  },
   ctaButton: {
     width: '100%',
   },
   ctaButtonContent: {
-    minHeight: 48,
+    minHeight: theme.sizes.ctaMinHeight,
     paddingVertical: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
   ctaButtonLabel: {
     marginVertical: 0,
-    marginHorizontal: 24,
-    paddingVertical: 14,
+    marginHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.md,
     lineHeight: 20,
     ...(Platform.OS === 'android'
       ? { textAlignVertical: 'center' as const, includeFontPadding: false }

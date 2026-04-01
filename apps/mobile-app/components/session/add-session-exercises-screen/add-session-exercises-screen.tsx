@@ -1,7 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Searchbar, Snackbar } from 'react-native-paper';
+import { Button, Snackbar } from 'react-native-paper';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
+import { StickyFooterBar } from '../../layout/sticky-footer-bar';
+import { StyledSearchbar } from '../../layout/styled-searchbar';
 import { TopBar } from '../../top-bar/top-bar';
 import { AddSessionExercisesList } from '../add-session-exercises-list';
 import { useAddSessionExercisesScreen } from './use-add-session-exercises-screen';
@@ -45,15 +47,11 @@ export default function AddSessionExercisesScreen({
       <View style={styles.screen}>
         <TopBar title="Add Exercises" onBack={onBack} />
 
-        <View style={styles.searchWrap}>
-          <Searchbar
-            placeholder="Search exercises…"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            style={styles.searchbar}
-            inputStyle={styles.searchInput}
-          />
-        </View>
+        <StyledSearchbar
+          placeholder="Search exercises…"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
 
         <AddSessionExercisesList
           exercises={exercises}
@@ -65,7 +63,7 @@ export default function AddSessionExercisesScreen({
           onToggleSelection={toggleSelection}
         />
 
-        <View style={styles.footer}>
+        <StickyFooterBar>
           <Button
             mode="contained"
             style={styles.addButton}
@@ -77,7 +75,7 @@ export default function AddSessionExercisesScreen({
           >
             Add selected to session
           </Button>
-        </View>
+        </StickyFooterBar>
 
         <Snackbar
           visible={Boolean(addSessionErrorMessage)}

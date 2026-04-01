@@ -3,6 +3,7 @@ import React from 'react';
 import { Avatar, Button, Surface, Text } from 'react-native-paper';
 import { ScreenContainer } from '../layout/screen-container/screen-container';
 import { TopBar } from '../top-bar/top-bar';
+import { theme } from '../../utils/theme';
 import { styles } from './account-screen.style';
 import { useAccountScreen } from './use-account-screen';
 
@@ -20,7 +21,7 @@ export default function AccountScreen() {
             size={56}
             icon="account-outline"
             style={styles.avatar}
-            color="black"
+            color={theme.colors.text}
           />
           <Text variant="headlineSmall" style={styles.title}>
             Account

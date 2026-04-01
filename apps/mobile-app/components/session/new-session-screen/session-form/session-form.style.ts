@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     marginBottom: theme.spacing.xs,
   },
   errorText: {
-    color: '#e53935',
+    color: theme.colors.error,
     fontSize: theme.typography.small,
   },
   submitWrap: {

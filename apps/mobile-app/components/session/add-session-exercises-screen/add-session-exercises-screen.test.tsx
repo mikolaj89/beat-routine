@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { PaperProvider } from 'react-native-paper';
 import AddSessionExercisesScreen from './add-session-exercises-screen';
 import {
   useAddExerciseToSession,
@@ -73,12 +74,14 @@ describe('AddSessionExercisesScreen', () => {
 
   it('renders search and exercises', () => {
     const { getByPlaceholderText, getByText } = render(
-      <AddSessionExercisesScreen
-        baseUrl="http://example.test"
-        sessionId={10}
-        accessToken="token"
-        onBack={() => {}}
-      />,
+      <PaperProvider>
+        <AddSessionExercisesScreen
+          baseUrl="http://example.test"
+          sessionId={10}
+          accessToken="token"
+          onBack={() => {}}
+        />
+      </PaperProvider>,
     );
 
     expect(getByPlaceholderText('Search exercises…')).toBeTruthy();
@@ -97,12 +100,14 @@ describe('AddSessionExercisesScreen', () => {
     const onBack = jest.fn();
 
     const { getByText } = render(
-      <AddSessionExercisesScreen
-        baseUrl="http://example.test"
-        sessionId={10}
-        accessToken="token"
-        onBack={onBack}
-      />,
+      <PaperProvider>
+        <AddSessionExercisesScreen
+          baseUrl="http://example.test"
+          sessionId={10}
+          accessToken="token"
+          onBack={onBack}
+        />
+      </PaperProvider>,
     );
 
     fireEvent.press(getByText('Paradiddle'));

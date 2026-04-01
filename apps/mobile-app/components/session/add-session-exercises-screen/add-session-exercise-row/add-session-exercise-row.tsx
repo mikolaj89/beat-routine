@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Card, Checkbox } from 'react-native-paper';
 import type { Exercise } from '@drum-scheduler/contracts';
+import { theme } from '../../../../utils/theme';
 import { styles } from './add-session-exercise-row.style';
 
 export function AddSessionExerciseRow({
@@ -22,7 +23,7 @@ export function AddSessionExerciseRow({
       onPress={disabled ? undefined : onToggle}
       style={({ pressed }) => [
         styles.pressable,
-        pressed && !disabled ? { opacity: 0.92 } : null,
+        pressed && !disabled ? { opacity: theme.opacity.overlay } : null,
       ]}
     >
       <Card

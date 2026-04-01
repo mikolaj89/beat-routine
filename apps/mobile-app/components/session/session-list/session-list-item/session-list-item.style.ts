@@ -1,26 +1,26 @@
-import { theme } from '@/utils/theme';
 import { StyleSheet } from 'react-native';
+import { theme } from '../../../../utils/theme';
 
 export const styles = StyleSheet.create({
   card: {
-    marginBottom: 12,
-    borderRadius: 16,
-    backgroundColor: '#FFFFFF',
+    marginBottom: theme.spacing.md,
+    borderRadius: theme.radius.lg + 2,
+    backgroundColor: theme.colors.surface,
     borderWidth: 1,
-    borderColor: '#EFE6F4',
+    borderColor: theme.colors.cardBorder,
     overflow: 'hidden',
   },
   cardContent: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md - 2,
   },
   cardRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: theme.spacing.md - 2,
   },
   cardAvatar: {
-    backgroundColor: '#E9E0F2',
+    backgroundColor: theme.colors.avatarBg,
   },
   cardTextWrap: {
     flex: 1,
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     color: theme.colors.text,
   },
   cardMeta: {
-    color: '#6E647B',
+    color: theme.colors.cardMeta,
   },
   cardChevron: {
     margin: 0,

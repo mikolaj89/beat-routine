@@ -1,47 +1,39 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../../../utils/theme';
+import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
-  skeletonWrap: {
-    paddingHorizontal: theme.spacing.lg - 2,
-    paddingTop: theme.spacing.xs,
-    paddingBottom: 4,
-    gap: theme.spacing.md - 2,
-  },
-  skeletonCard: {
+  card: {
     borderRadius: theme.radius.lg + 2,
     backgroundColor: theme.colors.surface,
     borderWidth: 1,
     borderColor: theme.colors.cardBorder,
     overflow: 'hidden',
   },
-  skeletonRow: {
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing.md - 2,
     paddingVertical: theme.spacing.md - 2,
     paddingHorizontal: theme.spacing.md - 2,
   },
-  skeletonAvatar: {
+  avatar: {
     width: theme.sizes.skeletonAvatarSize,
     height: theme.sizes.skeletonAvatarSize,
     borderRadius: theme.sizes.skeletonAvatarSize / 2,
     backgroundColor: theme.colors.skeletonBase,
   },
-  skeletonTextWrap: {
+  textWrap: {
     flex: 1,
     gap: theme.spacing.xs + 2,
   },
-  skeletonLine: {
+  line: {
     height: theme.sizes.skeletonLineHeight,
     borderRadius: theme.radius.sm,
     backgroundColor: theme.colors.skeletonBase,
-    width: '70%',
   },
-  skeletonLineShort: {
+  lineShort: {
     height: theme.sizes.skeletonLineShortHeight,
     borderRadius: theme.radius.xs,
     backgroundColor: theme.colors.skeletonAccent,
-    width: '45%',
   },
 });

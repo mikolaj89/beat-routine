@@ -1,21 +1,7 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
 import { theme } from '../../utils/theme';
+import { LoadingSpinner } from '../layout/loading-spinner';
 
 export function SplashScreen() {
-  return (
-    <View style={styles.container}>
-      <ActivityIndicator />
-    </View>
-  );
+  return <LoadingSpinner style={{ backgroundColor: theme.colors.bg }} />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.bg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

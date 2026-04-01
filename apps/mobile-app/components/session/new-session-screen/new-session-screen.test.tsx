@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { PaperProvider } from 'react-native-paper';
 import { useCreateSession } from '@drum-scheduler/sdk';
 import NewSessionScreen from './new-session-screen';
 
@@ -28,12 +29,14 @@ describe('NewSessionScreen', () => {
     } as any);
 
     const { getByTestId } = render(
-      <NewSessionScreen
-        baseUrl="http://example.test"
-        accessToken="token-123"
-        onBack={() => {}}
-        onOpenSession={onOpenSession}
-      />,
+      <PaperProvider>
+        <NewSessionScreen
+          baseUrl="http://example.test"
+          accessToken="token-123"
+          onBack={() => {}}
+          onOpenSession={onOpenSession}
+        />
+      </PaperProvider>,
     );
 
     fireEvent.changeText(getByTestId('new-session-name-input'), 'My Session Name');

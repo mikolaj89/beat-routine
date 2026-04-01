@@ -1,47 +1,48 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../../../utils/theme';
 
 export const styles = StyleSheet.create({
   pressable: {
     marginBottom: 0,
   },
   card: {
-    backgroundColor: '#FFFFFF',
-    marginBottom: 10,
+    backgroundColor: theme.colors.surface,
+    marginBottom: theme.spacing.sm,
   },
   cardSelected: {
-    backgroundColor: '#E7E9ED',
+    backgroundColor: theme.colors.cardSelected,
   },
   cardDisabled: {
-    opacity: 0.75,
+    opacity: theme.opacity.disabledCard,
   },
   content: {
-    paddingHorizontal: 14,
-    paddingVertical: 14,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.md,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: theme.spacing.xs + 2,
   },
   textBlock: {
     flex: 1,
     minWidth: 0,
   },
   name: {
-    fontSize: 14,
+    fontSize: theme.typography.body,
     fontWeight: '800',
-    color: '#1F2430',
+    color: theme.colors.text,
   },
   meta: {
-    fontSize: 12,
+    fontSize: theme.typography.small,
     fontWeight: '600',
-    color: '#6B7280',
-    marginTop: 2,
+    color: theme.colors.textMuted,
+    marginTop: theme.spacing.xxs,
   },
   alreadyInSession: {
-    fontSize: 12,
+    fontSize: theme.typography.small,
     fontWeight: '600',
-    color: '#6B7280',
+    color: theme.colors.textMuted,
     marginTop: 4,
   },
 });

@@ -1,34 +1,35 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../../../../../utils/theme';
 
 export const styles = StyleSheet.create({
   skeletonWrap: {
-    paddingHorizontal: 16,
-    paddingTop: 6,
+    paddingHorizontal: theme.spacing.lg - 2,
+    paddingTop: theme.spacing.xs,
     paddingBottom: 110,
-    gap: 10,
+    gap: theme.spacing.sm,
   },
   skeletonCard: {
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.surface,
     borderWidth: 1,
-    borderColor: '#EFE6F4',
+    borderColor: theme.colors.cardBorder,
     overflow: 'hidden',
   },
   skeletonRow: {
-    paddingVertical: 14,
-    paddingHorizontal: 14,
-    gap: 10,
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing.md,
+    gap: theme.spacing.sm,
   },
   skeletonLine: {
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#EFE8F6',
+    height: theme.sizes.skeletonLineHeight,
+    borderRadius: theme.radius.sm,
+    backgroundColor: theme.colors.skeletonBase,
     width: '72%',
   },
   skeletonLineShort: {
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#F3ECFA',
+    height: theme.sizes.skeletonLineShortHeight,
+    borderRadius: theme.radius.xs,
+    backgroundColor: theme.colors.skeletonAccent,
     width: '34%',
   },
 });

@@ -1,38 +1,39 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../../../utils/theme';
 
 export const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
-    marginBottom: 10,
+    backgroundColor: theme.colors.surface,
+    marginBottom: theme.spacing.sm,
   },
   draggingCard: {
-    opacity: 0.9,
+    opacity: theme.opacity.dragging,
   },
   content: {
-    paddingHorizontal: 14,
-    paddingVertical: 14,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.md,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   dragHandle: {
-    marginRight: 10,
+    marginRight: theme.spacing.sm,
   },
   textContainer: {
     flex: 1,
   },
   deleteButton: {
-    marginLeft: 10,
+    marginLeft: theme.spacing.sm,
   },
   name: {
-    fontSize: 14,
+    fontSize: theme.typography.body,
     fontWeight: '800',
-    color: '#1F2430',
+    color: theme.colors.text,
   },
   meta: {
-    fontSize: 12,
+    fontSize: theme.typography.small,
     fontWeight: '600',
-    color: '#6B7280',
+    color: theme.colors.textMuted,
   },
 });

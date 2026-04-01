@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../../utils/theme';
+
 export const styles = StyleSheet.create({
   appbar: {
     marginTop: 0,
     paddingHorizontal: 4,
     backgroundColor: 'transparent',
-    elevation: 0,
+    elevation: theme.elevation.none,
     shadowColor: 'transparent',
   },
   content: {
@@ -15,5 +17,5 @@ export const styles = StyleSheet.create({
   rightAction: {
     margin: 0,
     padding: 0,
-  }
+  },
 });

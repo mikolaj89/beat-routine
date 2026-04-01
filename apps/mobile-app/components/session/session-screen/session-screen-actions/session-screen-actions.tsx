@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
+import { Button } from '../../../button/button';
+import { StickyFooterBar } from '../../../layout/sticky-footer-bar';
 import { styles } from './session-screen-actions.style';
 
 export function SessionScreenActions({
@@ -22,37 +24,37 @@ export function SessionScreenActions({
 }) {
   if (isEditMode) {
     return (
-      <View style={styles.ctaWrap}>
+      <StickyFooterBar>
         <Button
+         label='Save changes'
+         type="Primary"
           icon="content-save"
           style={styles.ctaButton}
           contentStyle={styles.ctaButtonContent}
           labelStyle={styles.ctaButtonLabel}
-          mode="contained"
+          
           onPress={onPressSaveChanges}
           loading={isSavingChanges}
           disabled={isSaveChangesDisabled || isSavingChanges}
-        >
-          Save changes
-        </Button>
-      </View>
+        />
+         
+      </StickyFooterBar>
     );
   }
 
   return (
     <>
       {hasExercises ? (
-        <View style={styles.ctaWrap}>
+        <StickyFooterBar>
           <Button
+            label='Start Session'
+            type="Primary"
             style={styles.ctaButton}
             contentStyle={styles.ctaButtonContent}
             labelStyle={styles.ctaButtonLabel}
-            mode="contained"
             onPress={onPressStartSession}
-          >
-            Start Session
-          </Button>
-        </View>
+          />
+        </StickyFooterBar>
       ) : (
         <>
           <View style={styles.noExercisesWrap}>
@@ -65,17 +67,16 @@ export function SessionScreenActions({
               </Text>
             </View>
           </View>
-          <View style={styles.ctaWrap}>
+          <StickyFooterBar>
             <Button
+              label='Add exercises'
+              type="Primary"
               style={styles.ctaButton}
               contentStyle={styles.ctaButtonContent}
               labelStyle={styles.ctaButtonLabel}
-              mode="contained"
               onPress={onPressAddExercises}
-            >
-              Add exercises
-            </Button>
-          </View>
+              />
+          </StickyFooterBar>
         </>
       )}
     </>

@@ -9,16 +9,35 @@ import { AuthProvider, useAuth } from './providers/auth-provider';
 import BootSplash from 'react-native-bootsplash';
 import { SplashScreen } from './components/splash/splash-screen';
 import { MD3LightTheme, PaperProvider } from 'react-native-paper';
+import type { MD3Theme } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LoginScreen from './components/login/login-screen';
 import { AppBottomTabs } from './components/navigation/app-bottom-tabs';
+import { theme as appTheme } from './utils/theme';
 
 const queryClient = new QueryClient();
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const paperTheme = {
+const paperTheme: MD3Theme = {
   ...MD3LightTheme,
+  roundness: 3,
+  fonts: {
+    ...MD3LightTheme.fonts,
+    labelSmall: { ...MD3LightTheme.fonts.labelSmall, fontWeight: '700' },
+    labelMedium: { ...MD3LightTheme.fonts.labelMedium, fontWeight: '700' },
+    labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontWeight: '700' },
+  },
+  colors: {
+    ...MD3LightTheme.colors,
+    background: appTheme.colors.bg,
+    surface: appTheme.colors.surface,
+    primary: appTheme.colors.primary,
+    outline: appTheme.colors.border,
+    onSurface: appTheme.colors.text,
+    onSurfaceVariant: appTheme.colors.textMuted,
+    error: appTheme.colors.error,
+  },
 };
 
 function App() {

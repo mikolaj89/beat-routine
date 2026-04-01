@@ -33,10 +33,10 @@ export const styles = StyleSheet.create({
     color: theme.colors.text,
   },
   inputError: {
-    borderColor: '#e53935',
+    borderColor: theme.colors.error,
   },
   errorText: {
-    color: '#e53935',
+    color: theme.colors.error,
     fontSize: theme.typography.small,
     marginBottom: theme.spacing.sm,
     alignSelf: 'flex-start',

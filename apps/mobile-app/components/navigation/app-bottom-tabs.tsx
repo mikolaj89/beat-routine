@@ -54,7 +54,7 @@ export function AppBottomTabs() {
 
 const styles = StyleSheet.create({
   tabBarLabel: {
-    fontSize: 12,
+    fontSize: theme.typography.small,
     fontWeight: '700',
   },
 });

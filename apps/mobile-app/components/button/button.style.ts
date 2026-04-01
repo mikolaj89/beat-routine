@@ -1,23 +1,24 @@
-import { StyleSheet } from 'react-native';
-import { theme } from '../../../utils/theme';
+import { Platform, StyleSheet } from 'react-native';
+import { theme } from '@/utils/theme';
 
 export const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  addButton: {
+  primaryButton: {
     width: '100%',
+    ...theme.shadows.buttonPrimary,
   },
-  addButtonContent: {
+  primaryContent: {
     minHeight: theme.sizes.ctaMinHeight,
     paddingVertical: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  addButtonLabel: {
+  primaryLabel: {
     marginVertical: 0,
     marginHorizontal: theme.spacing.xl,
     paddingVertical: theme.spacing.md,
     lineHeight: 20,
+    ...(Platform.OS === 'android'
+      ? { textAlignVertical: 'center' as const, includeFontPadding: false }
+      : {}),
   },
 });

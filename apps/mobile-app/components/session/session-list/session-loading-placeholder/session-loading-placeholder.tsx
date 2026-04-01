@@ -1,7 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Surface } from 'react-native-paper';
-import { styles } from './session-loading-placeholder.style';
+import { ListSkeletonPlaceholder } from '../../../layout/list-skeleton-placeholder';
 
 export function SessionLoadingPlaceholder({
   isLoading,
@@ -13,22 +11,10 @@ export function SessionLoadingPlaceholder({
   if (!isLoading) return null;
 
   return (
-    <View style={styles.skeletonWrap}>
-      {Array.from({ length: count }).map((_, index) => (
-        <Surface
-          key={`session-skeleton-${index}`}
-          style={styles.skeletonCard}
-          elevation={1}
-        >
-          <View style={styles.skeletonRow}>
-            <View style={styles.skeletonAvatar} />
-            <View style={styles.skeletonTextWrap}>
-              <View style={styles.skeletonLine} />
-              <View style={styles.skeletonLineShort} />
-            </View>
-          </View>
-        </Surface>
-      ))}
-    </View>
+    <ListSkeletonPlaceholder
+      count={count}
+      isAvatarVisible
+      lineWidths={['70%', '45%']}
+    />
   );
 }

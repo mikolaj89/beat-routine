@@ -39,7 +39,7 @@ describe('SessionsScreen', () => {
       </PaperProvider>,
     );
 
-    expect(getByText('My Sessions')).toBeTruthy();
+    expect(getByText('My Practice Sessions')).toBeTruthy();
     expect(getByText('No sessions found.')).toBeTruthy();
     expect(mockUseSessionsQuery).toHaveBeenCalledWith(API_BASE_URL, {
       accessToken: 'token-123',

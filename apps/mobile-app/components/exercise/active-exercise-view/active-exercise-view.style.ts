@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: 120,
-    gap: 8,
+    gap: theme.spacing.xs + 2,
   },
   activeTitle: {
     fontSize: theme.typography.cardTitle,
@@ -21,10 +21,10 @@ export const styles = StyleSheet.create({
     color: theme.colors.textMuted,
   },
   activeTimer: {
-    fontSize: 64,
+    fontSize: theme.typography.timer,
     fontWeight: '300',
     color: theme.colors.text,
     letterSpacing: 2,
-    marginTop: 10,
+    marginTop: theme.spacing.sm,
   },
 });

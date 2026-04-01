@@ -9,7 +9,9 @@ export const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: theme.spacing.horizontalMargin,
-    bottom: Platform.OS === 'ios' ? 34 : 20,
+    bottom: Platform.OS === 'ios'
+      ? theme.platform.fabBottom.ios
+      : theme.platform.fabBottom.android,
   },
   emptyText: {
     paddingTop: theme.spacing.md,

@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   sessionName: {
     textTransform: 'uppercase',
     letterSpacing: 0.4,
-    marginBottom: 6,
+    marginBottom: theme.spacing.xs,
   },
 
   card: {

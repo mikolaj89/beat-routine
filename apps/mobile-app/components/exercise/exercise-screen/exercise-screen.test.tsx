@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
+import { PaperProvider } from 'react-native-paper';
 import ExerciseScreen from './exercise-screen';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { NavigationContainer } from '@react-navigation/native';
@@ -29,14 +30,16 @@ const exercisesFixture: Exercise[] = Array.from({ length: 10 }, (_, i) => {
 describe('ExerciseScreen', () => {
   it('renders exercise details and progress', () => {
     const { getByText } = render(
-      <NavigationContainer>
-        <ExerciseScreen
-          exercises={exercisesFixture}
-          sessionName="Session 2026"
-          exerciseIndex={2}
-          onBack={() => {}}
-        />
-      </NavigationContainer>,
+      <PaperProvider>
+        <NavigationContainer>
+          <ExerciseScreen
+            exercises={exercisesFixture}
+            sessionName="Session 2026"
+            exerciseIndex={2}
+            onBack={() => {}}
+          />
+        </NavigationContainer>
+      </PaperProvider>,
     );
 
     expect(getByText('Session 2026')).toBeTruthy();
@@ -49,14 +52,16 @@ describe('ExerciseScreen', () => {
 
   it('shows timer after pressing play', () => {
     const { getByLabelText, getByText } = render(
-      <NavigationContainer>
-      <ExerciseScreen
-        exercises={exercisesFixture}
-        sessionName="Session 2026"
-        exerciseIndex={2}
-        onBack={() => {}}
-      />
-      </NavigationContainer>,
+      <PaperProvider>
+        <NavigationContainer>
+          <ExerciseScreen
+            exercises={exercisesFixture}
+            sessionName="Session 2026"
+            exerciseIndex={2}
+            onBack={() => {}}
+          />
+        </NavigationContainer>
+      </PaperProvider>,
     );
 
     fireEvent.press(getByLabelText('Play'));
@@ -67,14 +72,16 @@ describe('ExerciseScreen', () => {
 
   it('prevent from going to previous exercise if on first exercise', () => {
     const { getByLabelText } = render(
-      <NavigationContainer>
-      <ExerciseScreen
-        exercises={exercisesFixture}
-        sessionName="Session 2026"
-        exerciseIndex={1}
-        onBack={() => {}}
-      />
-      </NavigationContainer>,
+      <PaperProvider>
+        <NavigationContainer>
+          <ExerciseScreen
+            exercises={exercisesFixture}
+            sessionName="Session 2026"
+            exerciseIndex={1}
+            onBack={() => {}}
+          />
+        </NavigationContainer>
+      </PaperProvider>,
     );
 
     const prevButton = getByLabelText('Previous');
@@ -83,14 +90,16 @@ describe('ExerciseScreen', () => {
 
   it('allow going to next exercise', () => {
     const { getByLabelText } = render(
-      <NavigationContainer>
-      <ExerciseScreen
-        exercises={exercisesFixture}
-        sessionName="Session 2026"
-        exerciseIndex={1}
-        onBack={() => {}}
-      />
-      </NavigationContainer>,
+      <PaperProvider>
+        <NavigationContainer>
+          <ExerciseScreen
+            exercises={exercisesFixture}
+            sessionName="Session 2026"
+            exerciseIndex={1}
+            onBack={() => {}}
+          />
+        </NavigationContainer>
+      </PaperProvider>,
     );
 
     const nextButton = getByLabelText('Next');

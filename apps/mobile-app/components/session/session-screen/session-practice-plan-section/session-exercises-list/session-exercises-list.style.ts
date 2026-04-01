@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     color: theme.colors.text,
   },
   listContent: {
-    marginTop: 2,
+    marginTop: theme.spacing.xxs,
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: theme.spacing.xl,
   },
