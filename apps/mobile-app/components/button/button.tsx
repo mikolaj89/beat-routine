@@ -1,15 +1,12 @@
 import React from 'react';
 import { Button as PaperButton } from 'react-native-paper';
-import { theme } from '@/utils/theme';
+import { getButtonConfig } from './button.helper';
 import { styles } from './button.style';
 import type { ButtonComponentProps } from './button.types';
 
-const BUTTON_MODE_BY_TYPE = {
-  Primary: 'contained',
-} as const;
-
 export function Button({
   type,
+  mode = 'filled',
   label,
   icon,
   style,
@@ -18,22 +15,24 @@ export function Button({
   disabled = false,
   ...buttonProps
 }: ButtonComponentProps) {
-  const buttonColor =
-    type === 'Primary'
-      ? disabled
-        ? theme.colors.primaryDisabled
-        : theme.colors.primary
-      : theme.colors.primary;
-  const textColor = disabled
-    ? theme.colors.primaryTextDisabled
-    : theme.colors.primaryText;
+  const {
+    mode: paperMode,
+    buttonColor,
+    textColor,
+    buttonTheme,
+  } = getButtonConfig({
+    isDisabled: disabled,
+    mode,
+    type,
+  });
 
   return (
     <PaperButton
       {...buttonProps}
       disabled={disabled}
-      mode={BUTTON_MODE_BY_TYPE[type]}
+      mode={paperMode}
       icon={icon}
+      theme={buttonTheme}
       buttonColor={buttonColor}
       textColor={textColor}
       style={[styles.primaryButton, style]}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
+import type { DimensionValue } from 'react-native';
 import { SkeletonCard } from '../skeleton-card';
 import { styles } from './list-skeleton-placeholder.style';
 
@@ -11,7 +12,7 @@ export function ListSkeletonPlaceholder({
 }: {
   count?: number;
   isAvatarVisible?: boolean;
-  lineWidths?: [string, string];
+  lineWidths?: [DimensionValue, DimensionValue];
   style?: ViewStyle;
 }) {
   return (

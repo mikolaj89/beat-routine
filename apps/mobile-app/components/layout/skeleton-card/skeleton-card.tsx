@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import type { DimensionValue } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { theme } from '../../../utils/theme';
 import { styles } from './skeleton-card.style';
@@ -9,7 +10,7 @@ export function SkeletonCard({
   lineWidths = ['70%', '45%'],
 }: {
   isAvatarVisible?: boolean;
-  lineWidths?: [string, string];
+  lineWidths?: [DimensionValue, DimensionValue];
 }) {
   return (
     <Surface style={styles.card} elevation={theme.elevation.card as 1}>

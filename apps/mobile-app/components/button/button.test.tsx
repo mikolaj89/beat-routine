@@ -24,6 +24,14 @@ describe('Button', () => {
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
+  it('supports the explicit filled mode without changing current behavior', () => {
+    const { getByText } = renderButton(
+      <Button type="Primary" mode="filled" label="Start Session" onPress={() => {}} />,
+    );
+
+    expect(getByText('Start Session')).toBeTruthy();
+  });
+
   it('renders with an optional icon and loading state', () => {
     const { getByText } = renderButton(
       <Button
