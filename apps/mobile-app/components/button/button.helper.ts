@@ -1,5 +1,5 @@
-import { theme } from '@/utils/theme';
 import type { ButtonMode, ButtonType } from './button.types';
+import { buttonPresets } from './button.presets';
 
 type ButtonConfigParams = {
   isDisabled: boolean;
@@ -12,7 +12,7 @@ export function getButtonConfig({
   mode,
   type,
 }: ButtonConfigParams) {
-  const buttonVariants = theme.components.button[type];
+  const buttonVariants = buttonPresets[type];
   const buttonPreset = buttonVariants[mode as keyof typeof buttonVariants] ?? buttonVariants.filled;
 
   return {

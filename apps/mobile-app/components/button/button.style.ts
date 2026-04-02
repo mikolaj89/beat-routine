@@ -1,22 +1,24 @@
 import { Platform, StyleSheet } from 'react-native';
-import { theme } from '@/utils/theme';
+import { buttonPresets } from './button.presets';
+
+const primaryFilledButtonPreset = buttonPresets.Primary.filled;
 
 export const styles = StyleSheet.create({
   primaryButton: {
     width: '100%',
-    ...theme.components.button.Primary.filled.shadow,
+    ...primaryFilledButtonPreset.shadow,
   },
   primaryContent: {
-    minHeight: theme.components.button.Primary.filled.minHeight,
+    minHeight: primaryFilledButtonPreset.minHeight,
     paddingVertical: 0,
     justifyContent: 'center',
     alignItems: 'center',
   },
   primaryLabel: {
     marginVertical: 0,
-    marginHorizontal: theme.components.button.Primary.filled.labelMarginHorizontal,
-    paddingVertical: theme.components.button.Primary.filled.labelPaddingVertical,
-    lineHeight: theme.components.button.Primary.filled.labelLineHeight,
+    marginHorizontal: primaryFilledButtonPreset.labelMarginHorizontal,
+    paddingVertical: primaryFilledButtonPreset.labelPaddingVertical,
+    lineHeight: primaryFilledButtonPreset.labelLineHeight,
     ...(Platform.OS === 'android'
       ? { textAlignVertical: 'center' as const, includeFontPadding: false }
       : {}),
