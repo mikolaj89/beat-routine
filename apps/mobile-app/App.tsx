@@ -26,7 +26,7 @@ const paperTheme: MD3Theme = {
     ...MD3LightTheme.fonts,
     labelSmall: { ...MD3LightTheme.fonts.labelSmall, fontWeight: '700' },
     labelMedium: { ...MD3LightTheme.fonts.labelMedium, fontWeight: '700' },
-    labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontWeight: '700' },
+    labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontSize: 18,  fontWeight: '700' },
   },
   colors: {
     ...MD3LightTheme.colors,

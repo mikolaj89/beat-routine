@@ -46,7 +46,7 @@ export function SessionExercisesList({
 
   return (
     <>
-      <Text style={styles.listTitle}>Practice session plan</Text>
+      <Text style={styles.listTitle}>Exercises</Text>
       {isLoading ? (
         <SessionExercisesListPlaceholder count={4} />
       ) : isEditMode ? (

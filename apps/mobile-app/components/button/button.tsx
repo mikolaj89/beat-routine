@@ -19,7 +19,6 @@ export function Button({
   ...buttonProps
 }: ButtonComponentProps) {
   const {
-    buttonPreset,
     mode: paperMode,
     buttonColor,
     textColor,
@@ -41,7 +40,8 @@ export function Button({
       theme={buttonTheme}
       buttonColor={buttonColor}
       textColor={textColor}
-      style={[isFullWidth && styles.fullWidth, buttonPreset.shadow, style]}
+      
+      style={[isFullWidth && styles.fullWidth, style]}
       contentStyle={[styles.content, contentStyle]}
       labelStyle={[styles.label, labelStyle]}
     >

@@ -89,6 +89,9 @@ export default function SessionScreen({
           <Text style={styles.sectionTitle}>{deleteErrorMessage}</Text>
         ) : null}
 
+        
+          <Text variant="labelLarge" style={styles.sessionName}>{sessionResult.data?.name}</Text>
+        
         {sessionResult.data && (visibleExercises.length > 0 || isEditMode) && (
           <SessionPracticePlanSection
             totalDurationMinutes={sessionResult.data.totalDuration ?? 0}

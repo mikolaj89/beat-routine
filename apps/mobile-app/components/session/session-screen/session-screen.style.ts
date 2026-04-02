@@ -3,7 +3,14 @@ import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
   screen: { flex: 1 },
+  sessionName: {
+    paddingHorizontal: theme.spacing.horizontalMargin,
+    paddingTop: theme.spacing.md,
+    
+    
 
+
+  },
   sectionTitle: {
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: theme.spacing.sm,
