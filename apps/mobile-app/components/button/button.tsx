@@ -13,6 +13,7 @@ export function Button({
   contentStyle,
   labelStyle,
   disabled = false,
+  testID,
   ...buttonProps
 }: ButtonComponentProps) {
   const {
@@ -29,6 +30,7 @@ export function Button({
   return (
     <PaperButton
       {...buttonProps}
+      testID={testID}
       disabled={disabled}
       mode={paperMode}
       icon={icon}

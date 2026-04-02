@@ -2,9 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, HelperText, Text, TextInput } from 'react-native-paper';
+import {  HelperText, Text, TextInput } from 'react-native-paper';
 import { NewSessionFormData, newSessionSchema } from '../new-session-screen-helper';
 import { styles } from './session-form.style';
+import { Button } from '@/components/button';
 
 export function SessionForm({
   isSubmitting,
@@ -53,17 +54,16 @@ export function SessionForm({
       {submitError ? <Text style={styles.errorText}>{submitError}</Text> : null}
 
       <View style={styles.submitWrap}>
-        <Button
+
+        <Button 
           testID="create-session-submit"
-          mode="contained"
-          style={styles.submitButton}
+          type="Primary"
+          label="Create Session"
           onPress={handleSubmit((formData) => {
             void onSubmit(formData);
           })}
           disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Creating...' : 'Create Session'}
-        </Button>
+        />
       </View>
     </View>
   );
