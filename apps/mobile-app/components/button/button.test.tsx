@@ -32,8 +32,8 @@ describe('Button', () => {
     expect(getByText('Start Session')).toBeTruthy();
   });
 
-  it('renders with an optional icon and loading state', () => {
-    const { getByTestId, getByText } = renderButton(
+  it('uses PaperButton loading state', () => {
+    const { getByTestId, queryByTestId } = renderButton(
       <Button
         type="Primary"
         label="Save changes"
@@ -44,7 +44,7 @@ describe('Button', () => {
       />,
     );
 
-    expect(getByTestId('save-button-spinner')).toBeTruthy();
-    expect(getByText('Save changes')).toBeTruthy();
+    expect(getByTestId('save-button')).toBeTruthy();
+    expect(queryByTestId('save-button-spinner')).toBeNull();
   });
 });

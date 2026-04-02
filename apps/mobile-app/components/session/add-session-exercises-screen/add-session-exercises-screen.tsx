@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Snackbar } from 'react-native-paper';
+import { Snackbar } from 'react-native-paper';
+import { Button } from '@/components/button';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
 import { StickyFooterBar } from '../../layout/sticky-footer-bar';
 import { StyledSearchbar } from '../../layout/styled-searchbar';
@@ -65,16 +66,15 @@ export default function AddSessionExercisesScreen({
 
         <StickyFooterBar>
           <Button
-            mode="contained"
+            type="Primary"
+            label="Add selected to session"
             style={styles.addButton}
             contentStyle={styles.addButtonContent}
             labelStyle={styles.addButtonLabel}
             disabled={addButtonDisabled}
             loading={isAddPending}
             onPress={() => void onAddToSession()}
-          >
-            Add selected to session
-          </Button>
+          />
         </StickyFooterBar>
 
         <Snackbar

@@ -1,5 +1,6 @@
 import type { ButtonMode, ButtonType } from './button.types';
 import { buttonPresets } from './button.presets';
+import type { ButtonPreset } from './button.presets';
 
 type ButtonConfigParams = {
   isDisabled: boolean;
@@ -13,9 +14,12 @@ export function getButtonConfig({
   type,
 }: ButtonConfigParams) {
   const buttonVariants = buttonPresets[type];
-  const buttonPreset = buttonVariants[mode as keyof typeof buttonVariants] ?? buttonVariants.filled;
+  const buttonPreset = (
+    buttonVariants[mode as keyof typeof buttonVariants] ?? buttonVariants.filled
+  ) as ButtonPreset;
 
   return {
+    buttonPreset,
     mode: buttonPreset.paperMode,
     buttonColor: isDisabled
       ? buttonPreset.disabledButtonColor
@@ -25,8 +29,11 @@ export function getButtonConfig({
       : buttonPreset.textColor,
     buttonTheme: {
       colors: {
-        primary: buttonPreset.buttonColor,
+        primary: buttonPreset.buttonColor ?? buttonPreset.textColor,
         onPrimary: buttonPreset.textColor,
+        outline: isDisabled
+          ? buttonPreset.disabledOutlineColor ?? buttonPreset.outlineColor
+          : buttonPreset.outlineColor,
         surfaceDisabled: buttonPreset.disabledButtonColor,
         onSurfaceDisabled: buttonPreset.disabledTextColor,
       },

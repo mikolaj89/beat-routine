@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, TextInput, ActivityIndicator } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { View, TextInput } from 'react-native';
+import { Text } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/button';
 import { LoginFormSchema, LoginFormData } from './login-form.utils';
 import { styles } from './login-screen.style';
 import { theme } from '../../utils/theme';
@@ -67,17 +68,16 @@ export default function LoginScreen() {
       {loginError && <Text style={styles.errorText}>{loginError}</Text>}
       <View style={styles.buttonWrap}>
         <Button
-          mode="contained"
+          type="Primary"
+          isFullWidth
+          label={isLoginPending ? 'Signing in...' : 'Sign In'}
           onPress={handleSubmit(data => {
             void onSubmit(data);
           })}
           disabled={isLoginPending}
-          style={{ width: '100%' }}
-        >
-          {isLoginPending ? 'Signing in...' : 'Sign In'}
-        </Button>
+          loading={isLoginPending}
+        />
       </View>
-      {isLoginPending && <ActivityIndicator style={styles.loading} />}
     </View>
   );
 }

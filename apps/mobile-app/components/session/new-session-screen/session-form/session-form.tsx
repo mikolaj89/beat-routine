@@ -58,6 +58,8 @@ export function SessionForm({
         <Button 
           testID="create-session-submit"
           type="Primary"
+          isFullWidth
+          style={styles.submitButton}
           label="Create Session"
           onPress={handleSubmit((formData) => {
             void onSubmit(formData);

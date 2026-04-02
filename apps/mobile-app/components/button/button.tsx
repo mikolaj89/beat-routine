@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { ActivityIndicator, Button as PaperButton } from 'react-native-paper';
+import { Button as PaperButton } from 'react-native-paper';
 import { getButtonConfig } from './button.helper';
 import { styles } from './button.style';
 import type { ButtonComponentProps } from './button.types';
@@ -8,6 +7,7 @@ import type { ButtonComponentProps } from './button.types';
 export function Button({
   type,
   mode = 'filled',
+  isFullWidth = false,
   label,
   icon,
   style,
@@ -19,6 +19,7 @@ export function Button({
   ...buttonProps
 }: ButtonComponentProps) {
   const {
+    buttonPreset,
     mode: paperMode,
     buttonColor,
     textColor,
@@ -40,12 +41,11 @@ export function Button({
       theme={buttonTheme}
       buttonColor={buttonColor}
       textColor={textColor}
-      style={[styles.primaryButton, style]}
-      contentStyle={[styles.primaryContent, contentStyle]}
-      labelStyle={[styles.primaryLabel, labelStyle]}
+      style={[isFullWidth && styles.fullWidth, buttonPreset.shadow, style]}
+      contentStyle={[styles.content, contentStyle]}
+      labelStyle={[styles.label, labelStyle]}
     >
-    
-       {label}
+      {label}
     </PaperButton>
   );
 }

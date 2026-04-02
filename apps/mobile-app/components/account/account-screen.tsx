@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import React from 'react';
-import { Avatar, Button, Surface, Text } from 'react-native-paper';
+import { Avatar, Surface, Text } from 'react-native-paper';
+import { Button } from '@/components/button';
 import { ScreenContainer } from '../layout/screen-container/screen-container';
 import { TopBar } from '../top-bar/top-bar';
 import { theme } from '../../utils/theme';
@@ -39,12 +40,12 @@ export default function AccountScreen() {
             this screen to access account actions like signing out.
           </Text>
           <Button
-            mode="contained-tonal"
+            type="Primary"
+            mode="tonal"
+            label="Log out"
             onPress={() => void logout()}
             style={styles.logoutButton}
-          >
-            Log out
-          </Button>
+          />
         </Surface>
       </View>
     </ScreenContainer>

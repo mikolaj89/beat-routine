@@ -14,6 +14,7 @@ export type ButtonComponentProps = Omit<
 > & {
   type: ButtonType;
   mode?: ButtonMode;
+  isFullWidth?: boolean;
   label: string;
   icon?: ButtonProps['icon'];
   style?: StyleProp<ViewStyle>;
