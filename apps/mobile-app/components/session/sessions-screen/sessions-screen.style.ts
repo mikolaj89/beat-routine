@@ -7,6 +7,8 @@ export const styles = StyleSheet.create({
     paddingBottom: 120,
   },
   fab: {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.primaryText,
     position: 'absolute',
     right: theme.spacing.horizontalMargin,
     bottom: Platform.OS === 'ios'

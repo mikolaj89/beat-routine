@@ -10,6 +10,7 @@ import { SessionLoadingPlaceholder } from '../session-list/session-loading-place
 import { SessionListItem } from '../session-list/session-list-item/session-list-item';
 import { styles } from './sessions-screen.style';
 
+
 export default function SessionsScreen({
   accessToken,
   onOpenSession,
@@ -37,10 +38,7 @@ export default function SessionsScreen({
 
   return (
     <ScreenContainer>
-      <SessionsHeader
-        query={query}
-        onChangeQuery={setQuery}
-      />
+      <SessionsHeader query={query} onChangeQuery={setQuery} />
 
       <SessionLoadingPlaceholder isLoading={isLoading} />
 
@@ -63,12 +61,7 @@ export default function SessionsScreen({
         onPress={onOpenCreateSession}
         disabled={!onOpenCreateSession}
         color={paperTheme.colors.onPrimary}
-        style={[
-          styles.fab,
-          {
-            backgroundColor: paperTheme.colors.primary,
-          },
-        ]}
+        style={[styles.fab]}
         testID="sessions-new-session-fab"
       />
     </ScreenContainer>
