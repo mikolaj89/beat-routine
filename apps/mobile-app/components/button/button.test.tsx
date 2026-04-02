@@ -33,16 +33,18 @@ describe('Button', () => {
   });
 
   it('renders with an optional icon and loading state', () => {
-    const { getByText } = renderButton(
+    const { getByTestId, getByText } = renderButton(
       <Button
         type="Primary"
         label="Save changes"
         icon="content-save"
         loading
         disabled
+        testID="save-button"
       />,
     );
 
+    expect(getByTestId('save-button-spinner')).toBeTruthy();
     expect(getByText('Save changes')).toBeTruthy();
   });
 });

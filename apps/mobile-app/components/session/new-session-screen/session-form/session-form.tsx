@@ -63,6 +63,7 @@ export function SessionForm({
             void onSubmit(formData);
           })}
           disabled={isSubmitting}
+          loading={isSubmitting}
         />
       </View>
     </View>
