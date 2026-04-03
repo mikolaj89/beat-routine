@@ -19,7 +19,6 @@ export function getButtonConfig({
   ) as ButtonPreset;
 
   return {
-    buttonPreset,
     mode: buttonPreset.paperMode,
     buttonColor: isDisabled
       ? buttonPreset.disabledButtonColor

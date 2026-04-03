@@ -7,7 +7,9 @@ import { styles } from './screen-container.style';
 export const ScreenContainer = ({ children }: { children: ReactNode }) => {
   const theme = useTheme();
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView
+      style={[styles.safe, { backgroundColor: theme.colors.background }]}
+    >
       <View
         style={[styles.screen, { backgroundColor: theme.colors.background }]}
       >

@@ -26,7 +26,11 @@ const paperTheme: MD3Theme = {
     ...MD3LightTheme.fonts,
     labelSmall: { ...MD3LightTheme.fonts.labelSmall, fontWeight: '700' },
     labelMedium: { ...MD3LightTheme.fonts.labelMedium, fontWeight: '700' },
-    labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontSize: 18,  fontWeight: '700' },
+    labelLarge: {
+      ...MD3LightTheme.fonts.labelLarge,
+      fontSize: 18,
+      fontWeight: '700',
+    },
   },
   colors: {
     ...MD3LightTheme.colors,
@@ -51,6 +55,7 @@ function App() {
             <AuthProvider>
               <StatusBar
                 barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                backgroundColor={appTheme.colors.bg}
               />
               <AppContent />
             </AuthProvider>
@@ -62,8 +67,7 @@ function App() {
 }
 
 function AppContent() {
-  const { isAuthenticated, isRefreshing, isAuthSessionInitialized } =
-    useAuth();
+  const { isAuthenticated, isRefreshing, isAuthSessionInitialized } = useAuth();
 
   const hasHiddenNativeSplashRef = useRef(false);
 
@@ -88,7 +92,7 @@ function AppContent() {
             <Stack.Screen name="Login" component={LoginScreen} />
           ) : (
             <Stack.Screen name="MainTabs">
-              {() => <AppBottomTabs/>}
+              {() => <AppBottomTabs />}
             </Stack.Screen>
           )}
         </Stack.Navigator>
@@ -100,6 +104,7 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: appTheme.colors.bg,
   },
 });
 

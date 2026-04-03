@@ -8,19 +8,22 @@ export function SearchBar({
   value,
   onChange,
   placeholder = 'Search…',
+  isDisabled = false,
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  isDisabled?: boolean;
 }) {
   return (
     <View style={styles.searchWrap}>
-      <Icon name="search" size={22} color={theme.colors.textMuted} />
+      <Icon name="search" size={22} color={theme.colors.searchBarPlaceholder} />
       <TextInput
         value={value}
         onChangeText={onChange}
         placeholder={placeholder}
-        placeholderTextColor={theme.colors.textMuted}
+        placeholderTextColor={theme.colors.searchBarPlaceholder}
+        editable={!isDisabled}
         style={styles.searchInput}
       />
     </View>

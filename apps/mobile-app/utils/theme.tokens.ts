@@ -1,6 +1,6 @@
 export const themeTokens = {
   colors: {
-    bg: '#F2F3F5',
+    bg: '#ffffff',
     surface: '#FFFFFF',
     border: '#D6D9DE',
     text: '#1F2430',
@@ -14,7 +14,11 @@ export const themeTokens = {
     primaryTextDisabled: '#FFFFFFB3',
     shadow: 'rgba(0,0,0,0.12)',
     error: '#e53935',
-    searchBarBg: '#EFE8F6',
+    searchBarBg: '#F3F4F6CC',
+    searchBarText: '#565D6D',
+    searchBarPlaceholder: '#565D6D99',
+    searchBarBorder: '#000000FF',
+    searchBarShadow: '#171A1F',
     cardBorder: '#EFE6F4',
     avatarBg: '#E9E0F2',
     cardMeta: '#6E647B',
@@ -74,3 +78,5 @@ export const themeTokens = {
     fabBottom: { ios: 34, android: 20 },
   },
 } as const;
+
+
