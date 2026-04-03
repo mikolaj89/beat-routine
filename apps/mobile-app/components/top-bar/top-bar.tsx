@@ -36,7 +36,7 @@ export function TopBar({
       )}
 
       {showTitle ? (
-        <Appbar.Content title={title} />
+        <Appbar.Content title={title ?? ''} titleStyle={styles.titleStyle} />
       ) : (
         <View style={styles.content}>{children}</View>
       )}

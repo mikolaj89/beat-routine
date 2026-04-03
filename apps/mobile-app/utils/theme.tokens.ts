@@ -14,7 +14,7 @@ export const themeTokens = {
     primaryTextDisabled: '#FFFFFFB3',
     shadow: 'rgba(0,0,0,0.12)',
     error: '#e53935',
-    searchBarBg: '#F3F4F6CC',
+    searchBarBg: '#F3F4F6',
     searchBarText: '#565D6D',
     searchBarPlaceholder: '#565D6D99',
     searchBarBorder: '#000000FF',

@@ -17,17 +17,19 @@ export function StyledSearchbar({
 }) {
   return (
     <View style={styles.searchWrap}>
-      <Searchbar
-        placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
-        editable={!isDisabled}
-        iconColor={theme.colors.searchBarPlaceholder}
-        placeholderTextColor={theme.colors.searchBarPlaceholder}
-        inputStyle={styles.searchInput}
-        style={styles.searchbar}
-        testID="styled-searchbar"
-      />
+      <View style={styles.searchbarShadowWrap}>
+        <Searchbar
+          placeholder={placeholder}
+          value={value}
+          onChangeText={onChangeText}
+          editable={!isDisabled}
+          iconColor={theme.colors.searchBarPlaceholder}
+          placeholderTextColor={theme.colors.searchBarPlaceholder}
+          inputStyle={styles.searchInput}
+          style={styles.searchbar}
+          testID="styled-searchbar"
+        />
+      </View>
     </View>
   );
 }
