@@ -3,18 +3,20 @@ import { theme } from '../../../../utils/theme';
 
 export const styles = StyleSheet.create({
   header: {
+    elevation: theme.elevation.none,
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.md,
   },
   sessionStatsCard: {
+    ...theme.card.base,
+    marginBottom: theme.spacing.sm,
+  },
+  sessionStatsCardContent: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.surface,
     paddingVertical: theme.spacing.xl,
+    paddingHorizontal: 0,
   },
   sessionStatItem: {
     flex: 1,

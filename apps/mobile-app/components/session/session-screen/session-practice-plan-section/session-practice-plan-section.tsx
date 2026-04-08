@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Divider, Text } from 'react-native-paper';
+import { Card, Text } from 'react-native-paper';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { SessionExercisesList } from './session-exercises-list/session-exercises-list';
 import { styles } from './session-practice-plan-section.style';
@@ -27,27 +27,29 @@ export function SessionPracticePlanSection({
   return (
     <>
       <View style={styles.header}>
-        
-        <View style={styles.sessionStatsCard} testID="session-practice-plan-stats">
-          <View style={styles.sessionStatItem}>
-            <Text style={styles.sessionStatLabel}>Duration</Text>
-            <View style={styles.sessionStatValueRow}>
-              <Text style={styles.sessionStatValue}>{totalDurationMinutes}</Text>
-              <Text style={styles.sessionStatUnit}> min</Text>
+        <Card style={styles.sessionStatsCard} testID="session-practice-plan-stats">
+          <Card.Content style={styles.sessionStatsCardContent}>
+            <View style={styles.sessionStatItem}>
+              <Text style={styles.sessionStatLabel}>Duration</Text>
+              <View style={styles.sessionStatValueRow}>
+                <Text style={styles.sessionStatValue}>
+                  {totalDurationMinutes}
+                </Text>
+                <Text style={styles.sessionStatUnit}> min</Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.sessionStatDivider} />
-          <View style={styles.sessionStatItem}>
-            <Text style={styles.sessionStatLabel}>Exercises</Text>
-            <View style={styles.sessionStatValueRow}>
-              <Text style={styles.sessionStatValue}>{exercisesCount}</Text>
-              <Text style={styles.sessionStatUnit}> total</Text>
+            <View style={styles.sessionStatDivider} />
+            <View style={styles.sessionStatItem}>
+              <Text style={styles.sessionStatLabel}>Exercises</Text>
+              <View style={styles.sessionStatValueRow}>
+                <Text style={styles.sessionStatValue}>{exercisesCount}</Text>
+                <Text style={styles.sessionStatUnit}> total</Text>
+              </View>
             </View>
-          </View>
-        </View>
+          </Card.Content>
+        </Card>
       </View>
 
-      
       <SessionExercisesList
         exercises={exercises}
         isLoading={isLoading}

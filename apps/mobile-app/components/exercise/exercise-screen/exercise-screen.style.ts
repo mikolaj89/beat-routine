@@ -26,10 +26,7 @@ export const styles = StyleSheet.create({
 
   card: {
     marginHorizontal: theme.spacing.horizontalMargin,
-    backgroundColor: theme.colors.surface,
-    // borderRadius: theme.radius.lg,
-    // borderWidth: 1,
-    // borderColor: theme.colors.border,
+    ...theme.card.base,
   },
   cardContent: {
     paddingHorizontal: theme.spacing.lg,

@@ -9,10 +9,7 @@ export const styles = StyleSheet.create({
     gap: theme.spacing.md - 2,
   },
   skeletonCard: {
-    borderRadius: theme.radius.lg + 2,
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.cardBorder,
+    ...theme.card.base,
     overflow: 'hidden',
   },
   skeletonRow: {

@@ -34,6 +34,14 @@ export const themeTokens = {
     xl: 18,
     full: 999,
   },
+  card: {
+    base: {
+      borderRadius: 16,
+      backgroundColor: '#FFFFFF',
+      borderWidth: 1,
+      borderColor: '#EFE6F4',
+    },
+  },
   spacing: {
     xxs: 2,
     xs: 6,

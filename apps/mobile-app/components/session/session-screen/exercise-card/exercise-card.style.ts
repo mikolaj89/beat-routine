@@ -3,7 +3,7 @@ import { theme } from '../../../../utils/theme';
 
 export const styles = StyleSheet.create({
   card: {
-    backgroundColor: theme.colors.surface,
+    ...theme.card.base,
     marginBottom: theme.spacing.sm,
   },
   draggingCard: {

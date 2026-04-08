@@ -8,9 +8,8 @@ export const styles = StyleSheet.create({
     paddingTop: theme.spacing.lg,
   },
   card: {
-    borderRadius: theme.radius.xl,
+    ...theme.card.base,
     padding: theme.spacing.lg,
-    backgroundColor: theme.colors.surface,
   },
   avatar: {
     alignSelf: 'flex-start',

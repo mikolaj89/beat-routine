@@ -3,10 +3,7 @@ import { theme } from '../../../utils/theme';
 
 export const styles = StyleSheet.create({
   card: {
-    borderRadius: theme.radius.lg + 2,
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.cardBorder,
+    ...theme.card.base,
     overflow: 'hidden',
   },
   row: {

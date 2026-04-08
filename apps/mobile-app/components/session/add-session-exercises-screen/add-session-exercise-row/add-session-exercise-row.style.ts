@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     marginBottom: 0,
   },
   card: {
-    backgroundColor: theme.colors.surface,
+    ...theme.card.base,
     marginBottom: theme.spacing.sm,
   },
   cardSelected: {
