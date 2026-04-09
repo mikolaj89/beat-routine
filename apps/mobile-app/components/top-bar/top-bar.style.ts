@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 20,
     lineHeight: 28,
-    fontWeight: '700',
+    fontWeight: '500',
   },
   rightAction: {
     margin: 0,

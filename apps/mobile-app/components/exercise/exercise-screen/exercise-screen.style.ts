@@ -10,20 +10,27 @@ export const styles = StyleSheet.create({
     paddingBottom: theme.spacing.md,
   },
   exerciseTitle: {
-    flex: 1,
+    color: theme.colors.text,
+    marginBottom: theme.spacing.xs
   },
   titleRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    color: theme.colors.textMuted,
+    
     gap: theme.spacing.sm,
   },
   sessionName: {
     textTransform: 'uppercase',
     letterSpacing: 0.4,
-    marginBottom: theme.spacing.xs,
+    marginBottom: 0,
+    color: theme.colors.textMuted,
   },
-
+  exerciseIndex: {
+    color: theme.colors.textMuted,
+  },
+  exerciseIndexSeparator: {
+    color: theme.colors.textMuted,
+  },
   card: {
     marginHorizontal: theme.spacing.horizontalMargin,
     ...theme.card.base,
@@ -33,20 +40,25 @@ export const styles = StyleSheet.create({
     paddingVertical: theme.spacing.md,
     gap: theme.spacing.sm,
   },
-  cardLabel: {
-
+  cardDivider: {
+    backgroundColor: theme.colors.border,
   },
-  cardMetaLabel: {
-    fontWeight: '700',
+  cardMetaIcon: {
+    color: theme.colors.textMuted,
   },
 
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     gap: theme.spacing.lg,
   },
   kv: {
     flex: 1,
+  },
+  metricRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: theme.spacing.xs,
   },
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { Card, Divider, Icon, Text } from 'react-native-paper';
 import type { Exercise } from '@drum-scheduler/contracts';
 import { useExercise } from '../../../hooks/use-exercise';
 import ActiveExerciseView from '../active-exercise-view/active-exercise-view';
@@ -34,12 +34,11 @@ export default function ExerciseScreen({
     currentExercise,
     currentIndex,
   } = useExercise({ exercises: exercises, exerciseIndex });
-
-
+  
   return (
     <ScreenContainer>
       <View style={styles.screen}>
-        <TopBar title="Exercise" onBack={onBack} />
+        <TopBar title={currentExercise.name} onBack={onBack} />
 
         {mode === 'active' || mode === 'paused' ? (
           <ActiveExerciseView
@@ -50,14 +49,21 @@ export default function ExerciseScreen({
         ) : (
           <>
             <View style={styles.header}>
-              <Text variant="labelSmall" style={styles.sessionName}>
-                {sessionName}
+              <Text variant="titleLarge" style={styles.exerciseTitle}>
+                {currentExercise.name}
               </Text>
+
               <View style={styles.titleRow}>
-                <Text variant="titleMedium" style={styles.exerciseTitle}>
-                  {currentExercise.name}
+                <Text variant="bodyMedium" style={styles.sessionName}>
+                  {sessionName}
                 </Text>
-                <Text variant="bodyMedium">
+                <Text
+                  variant="bodyMedium"
+                  style={styles.exerciseIndexSeparator}
+                >
+                  •
+                </Text>
+                <Text variant="bodyMedium" style={styles.exerciseIndex}>
                   Exercise {currentIndex} / {totalExercises}
                 </Text>
               </View>
@@ -65,27 +71,30 @@ export default function ExerciseScreen({
 
             <Card style={styles.card}>
               <Card.Content style={styles.cardContent}>
-                <Text variant="labelSmall" style={styles.cardLabel}>
-                  Notes
-                </Text>
-                <Text variant="bodyMedium">
-                  {currentExercise.description}
-                </Text>
-
+                <Text variant="bodyMedium">{currentExercise.description}</Text>
+                <Divider style={styles.cardDivider} />
                 <View style={styles.row}>
                   <View style={styles.kv}>
-                    <Text variant="labelSmall" style={styles.cardMetaLabel}>
-                      Duration
-                    </Text>
-                    <Text variant="bodyMedium">
-                      {currentExercise.durationMinutes} min
-                    </Text>
+                    <View style={styles.metricRow}>
+                      <Icon
+                        source="timer-outline"
+                        size={18}
+                        color={styles.cardMetaIcon.color}
+                      />
+                      <Text variant="bodyMedium">
+                        {currentExercise.durationMinutes} min
+                      </Text>
+                    </View>
                   </View>
                   <View style={styles.kv}>
-                    <Text variant="labelSmall" style={styles.cardMetaLabel}>
-                      BPM
-                    </Text>
-                    <Text variant="bodyMedium">{currentExercise.bpm}</Text>
+                    <View style={styles.metricRow}>
+                      <Icon
+                        source="metronome"
+                        size={18}
+                        color={styles.cardMetaIcon.color}
+                      />
+                      <Text variant="bodyMedium">{currentExercise.bpm}</Text>
+                    </View>
                   </View>
                 </View>
               </Card.Content>
@@ -94,16 +103,13 @@ export default function ExerciseScreen({
         )}
 
         <ExerciseControls
-          
           isPrevDisabled={isPrevDisabled}
-          
           onPrev={handlePrev}
           onNext={handleNext}
           onPlay={startExercise}
           onPause={pauseExercise}
           onFinish={finishExercise}
           mode={mode}
-          
         />
       </View>
     </ScreenContainer>

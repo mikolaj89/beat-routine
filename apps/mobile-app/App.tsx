@@ -14,6 +14,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LoginScreen from './components/login/login-screen';
 import { AppBottomTabs } from './components/navigation/app-bottom-tabs';
 import { theme as appTheme } from './utils/theme';
+import { paperThemeFonts } from './utils/paper-theme-fonts';
 
 const queryClient = new QueryClient();
 
@@ -22,16 +23,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const paperTheme: MD3Theme = {
   ...MD3LightTheme,
   roundness: 3,
-  fonts: {
-    ...MD3LightTheme.fonts,
-    labelSmall: { ...MD3LightTheme.fonts.labelSmall, fontWeight: '700' },
-    labelMedium: { ...MD3LightTheme.fonts.labelMedium, fontWeight: '700' },
-    labelLarge: {
-      ...MD3LightTheme.fonts.labelLarge,
-      fontSize: 18,
-      fontWeight: '700',
-    },
-  },
+  fonts: paperThemeFonts,
   colors: {
     ...MD3LightTheme.colors,
     background: appTheme.colors.bg,

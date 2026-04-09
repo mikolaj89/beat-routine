@@ -29,7 +29,7 @@ const exercisesFixture: Exercise[] = Array.from({ length: 10 }, (_, i) => {
 
 describe('ExerciseScreen', () => {
   it('renders exercise details and progress', () => {
-    const { getByText } = render(
+    const { getAllByText, getByText } = render(
       <PaperProvider>
         <NavigationContainer>
           <ExerciseScreen
@@ -43,7 +43,7 @@ describe('ExerciseScreen', () => {
     );
 
     expect(getByText('Session 2026')).toBeTruthy();
-    expect(getByText('Paradiddle')).toBeTruthy();
+    expect(getAllByText('Paradiddle')).toHaveLength(2);
     expect(getByText('RLRR LRLL')).toBeTruthy();
     expect(getByText('5 min')).toBeTruthy();
     expect(getByText('120')).toBeTruthy();
