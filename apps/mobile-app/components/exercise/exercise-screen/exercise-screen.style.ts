@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
   header: {
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: theme.spacing.sm,
-    paddingBottom: theme.spacing.md,
+    paddingBottom: theme.spacing.lg,
   },
   exerciseTitle: {
     color: theme.colors.text,
@@ -31,35 +31,4 @@ export const styles = StyleSheet.create({
   exerciseIndexSeparator: {
     color: theme.colors.textMuted,
   },
-  card: {
-    marginHorizontal: theme.spacing.horizontalMargin,
-    ...theme.card.base,
-  },
-  cardContent: {
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.md,
-    gap: theme.spacing.sm,
-  },
-  cardDivider: {
-    backgroundColor: theme.colors.border,
-  },
-  cardMetaIcon: {
-    color: theme.colors.textMuted,
-  },
-
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    gap: theme.spacing.lg,
-  },
-  kv: {
-    flex: 1,
-  },
-  metricRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: theme.spacing.xs,
-  },
-
 });

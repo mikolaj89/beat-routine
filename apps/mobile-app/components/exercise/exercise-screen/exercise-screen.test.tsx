@@ -46,7 +46,7 @@ describe('ExerciseScreen', () => {
     expect(getAllByText('Paradiddle')).toHaveLength(2);
     expect(getByText('RLRR LRLL')).toBeTruthy();
     expect(getByText('5 min')).toBeTruthy();
-    expect(getByText('120')).toBeTruthy();
+    expect(getByText('120 BPM')).toBeTruthy();
     expect(getByText('Exercise 2 / 10')).toBeTruthy();
   });
 
