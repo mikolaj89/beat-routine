@@ -21,10 +21,10 @@ export function ExercisePlayButton({
       size={40}
       style={styles.button}
       contentStyle={styles.content}
-      icon={({ size, color }) => (
+      icon={({ color }) => (
         <Icon
           name="play-arrow"
-          size={size}
+          size={30}
           color={color}
           style={styles.icon}
         />
