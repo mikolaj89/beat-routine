@@ -4,7 +4,7 @@ import { useCreateSession } from '@drum-scheduler/sdk';
 import { ScreenContainer } from '../../layout/screen-container/screen-container';
 import { TopBar } from '../../top-bar/top-bar';
 import { NewSessionFormData } from './new-session-screen-helper';
-import { SessionForm } from './session-form';
+import { NewSessionForm } from './new-session-form';
 import { styles } from './new-session-screen.style';
 
 export default function NewSessionScreen({
@@ -48,7 +48,7 @@ export default function NewSessionScreen({
     <ScreenContainer>
       <View style={styles.screen}>
         <TopBar title="New Session" onBack={onBack} />
-        <SessionForm
+        <NewSessionForm
           isSubmitting={isSubmitting}
           submitError={submitError}
           onSubmit={onSubmit}

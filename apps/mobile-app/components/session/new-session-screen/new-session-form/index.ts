@@ -1,2 +1,1 @@
-export { default } from './new-session-screen';
 export { NewSessionForm } from './new-session-form';
