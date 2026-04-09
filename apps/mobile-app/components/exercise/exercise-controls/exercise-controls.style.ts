@@ -24,34 +24,4 @@ export const getStyles = ({ isPending }: ControlStylesParams) =>
       paddingVertical: theme.spacing.sm,
       flex: 1,
     },
-    controlBtnSecondary: {
-      minWidth: theme.sizes.controlBtnMinWidth,
-    },
-    controlBtnSecondaryContent: {
-      height: theme.sizes.controlBtnHeight,
-      paddingHorizontal: theme.spacing.xxs,
-      paddingVertical: 0,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 1,
-    },
-    controlBtnSecondaryLabel: {
-      marginVertical: 0,
-      paddingVertical: 0,
-      textAlignVertical: 'center',
-      includeFontPadding: false,
-    },
-    controlBtnSecondaryContentReverse: {
-      flexDirection: 'row-reverse',
-    },
-    controlBtnSecondaryIconLeft: {
-      marginLeft: -8,
-    },
-    controlBtnSecondaryIconRight: {
-      marginRight: -8,
-    },
-    controlBtnDisabled: {
-      opacity: theme.opacity.disabled,
-    },
   });

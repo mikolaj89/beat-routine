@@ -78,7 +78,7 @@ export const themeTokens = {
     skeletonLineHeight: 12,
     skeletonLineShortHeight: 10,
     controlBtnMinWidth: 80,
-    controlBtnHeight: 36,
+    controlBtnHeight: 45,
   },
   platform: {
     tabBarHeight: { ios: 84, android: 64 },

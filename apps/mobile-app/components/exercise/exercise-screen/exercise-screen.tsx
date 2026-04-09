@@ -80,6 +80,7 @@ export default function ExerciseScreen({
 
         <ExerciseControls
           isPrevDisabled={isPrevDisabled}
+          isLastExercise={currentIndex === totalExercises}
           onPrev={handlePrev}
           onNext={handleNext}
           onPlay={startExercise}

@@ -13,6 +13,7 @@ describe('ExerciseControls', () => {
     const { getByLabelText, rerender, queryByLabelText } = render(
       <ExerciseControls
         isPrevDisabled={false}
+        isLastExercise={false}
         mode="preview"
         onPrev={onPrev}
         onPlay={onPlay}
@@ -31,6 +32,7 @@ describe('ExerciseControls', () => {
     rerender(
       <ExerciseControls
         isPrevDisabled={false}
+        isLastExercise={false}
         mode="active"
         onPrev={onPrev}
         onPlay={onPlay}
@@ -45,6 +47,29 @@ describe('ExerciseControls', () => {
     expect(onPrev).toHaveBeenCalledTimes(1);
     expect(onPlay).toHaveBeenCalledTimes(1);
     expect(onPause).toHaveBeenCalledTimes(1);
+    expect(onNext).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows finish label for the last exercise in preview mode', () => {
+    const onNext = jest.fn();
+
+    const { getByLabelText, getByText } = render(
+      <ExerciseControls
+        isPrevDisabled={false}
+        isLastExercise={true}
+        mode="preview"
+        onPrev={() => {}}
+        onPlay={() => {}}
+        onPause={() => {}}
+        onFinish={() => {}}
+        onNext={onNext}
+      />,
+    );
+
+    expect(getByText('Finish')).toBeTruthy();
+
+    fireEvent.press(getByLabelText('Finish'));
+
     expect(onNext).toHaveBeenCalledTimes(1);
   });
 });

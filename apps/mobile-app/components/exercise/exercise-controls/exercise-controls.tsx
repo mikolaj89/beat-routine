@@ -1,12 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Button, IconButton } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { getStyles } from './exercise-controls.style';
+import { ExercisePlayButton } from './exercise-play-button';
+import { ExerciseStepButton } from './exercise-step-button';
 import { ExerciseState } from '../exercise-screen/exercise-screen.types';
 
 export default function ExerciseControls({
   isPrevDisabled,
+  isLastExercise,
 
   mode,
   onPrev,
@@ -16,6 +19,7 @@ export default function ExerciseControls({
   onNext,
 }: {
   isPrevDisabled: boolean;
+  isLastExercise: boolean;
 
   mode: ExerciseState;
   onPrev: () => void;
@@ -27,6 +31,7 @@ export default function ExerciseControls({
   const isPreviewMode = mode === 'preview';
   const isPendingMode = !isPreviewMode;
   const isPaused = mode === 'paused';
+  const nextStepLabel = isLastExercise ? 'Finish' : 'Next';
 
   const styles = getStyles({ isPending: isPendingMode });
 
@@ -34,41 +39,17 @@ export default function ExerciseControls({
     <View style={styles.controlsWrap}>
       <View style={styles.controlsBar}>
         {isPreviewMode && (
-          <Button
-            mode="outlined"
+          <ExerciseStepButton
+            label="Prev"
+            iconName="skip-previous"
             onPress={onPrev}
             accessibilityLabel="Previous"
-            disabled={isPrevDisabled}
-            style={[
-              styles.controlBtnSecondary,
-              isPrevDisabled && styles.controlBtnDisabled,
-            ]}
-            contentStyle={styles.controlBtnSecondaryContent}
-            labelStyle={styles.controlBtnSecondaryLabel}
-            icon={({ size, color }) => (
-              <Icon
-                name="chevron-left"
-                size={size}
-                color={color}
-                style={styles.controlBtnSecondaryIconLeft}
-              />
-            )}
-          >
-            Prev
-          </Button>
+            isDisabled={isPrevDisabled}
+          />
         )}
 
         {isPreviewMode || isPaused ? (
-          <IconButton
-            mode="contained"
-            onPress={onPlay}
-            accessibilityLabel="Play"
-            
-            size={26}
-            icon={({ size, color }) => (
-              <Icon name="play-arrow" size={size} color={color} />
-            )}
-          />
+          <ExercisePlayButton onPress={onPlay} accessibilityLabel="Play" />
         ) : (
           <IconButton
             mode="contained"
@@ -93,27 +74,13 @@ export default function ExerciseControls({
           />
         )}
         {isPreviewMode && (
-          <Button
-            mode="outlined"
+          <ExerciseStepButton
+            label={nextStepLabel}
+            iconName={isLastExercise ? 'check' : 'skip-next'}
             onPress={onNext}
-            accessibilityLabel="Next"
-            style={[styles.controlBtnSecondary]}
-            contentStyle={[
-              styles.controlBtnSecondaryContent,
-              styles.controlBtnSecondaryContentReverse,
-            ]}
-            labelStyle={styles.controlBtnSecondaryLabel}
-            icon={({ size, color }) => (
-              <Icon
-                name="chevron-right"
-                size={size}
-                color={color}
-                style={styles.controlBtnSecondaryIconRight}
-              />
-            )}
-          >
-            Next
-          </Button>
+            accessibilityLabel={nextStepLabel}
+            isIconTrailing={true}
+          />
         )}
       </View>
     </View>
