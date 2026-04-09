@@ -6,9 +6,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingTop: theme.spacing.sm,
     paddingBottom: theme.spacing.sm,
-    fontSize: theme.typography.body,
-    fontWeight: '700',
-    color: theme.colors.text,
+    
   },
   listContent: {
     marginTop: theme.spacing.xxs,

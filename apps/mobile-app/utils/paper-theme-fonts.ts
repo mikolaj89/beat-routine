@@ -16,6 +16,11 @@ export const paperThemeFonts: MD3Theme['fonts'] = {
     fontSize: 18,
     fontWeight: '700',
   },
+  titleMedium: {
+    ...MD3LightTheme.fonts.titleMedium,
+    fontSize: 17,
+    fontWeight: '700',
+  },
   titleLarge: {
     ...MD3LightTheme.fonts.titleLarge,
     fontWeight: '700',

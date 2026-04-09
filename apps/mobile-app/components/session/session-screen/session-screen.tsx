@@ -90,7 +90,7 @@ export default function SessionScreen({
         ) : null}
 
         
-          <Text variant="labelLarge" style={styles.sessionName}>{sessionResult.data?.name}</Text>
+          <Text variant="titleLarge" style={styles.sessionName}>{sessionResult.data?.name}</Text>
         
         {sessionResult.data && (visibleExercises.length > 0 || isEditMode) && (
           <SessionPracticePlanSection
