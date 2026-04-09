@@ -7,12 +7,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: theme.spacing.horizontalMargin,
     paddingBottom: theme.spacing.xl,
-    gap: theme.spacing.sm,
+    gap: theme.spacing.xs,
   },
   title: {
-    fontSize: theme.typography.cardTitle,
-    color: theme.colors.text,
-    fontWeight: '700',
     marginBottom: theme.spacing.xs,
   },
   errorText: {

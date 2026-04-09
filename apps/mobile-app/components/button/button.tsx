@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button as PaperButton } from 'react-native-paper';
+import { Icon, Button as PaperButton } from 'react-native-paper';
 import { getButtonConfig } from './button.helper';
 import { styles } from './button.style';
 import type { ButtonComponentProps } from './button.types';
+import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 
 export function Button({
   type,
@@ -35,7 +36,9 @@ export function Button({
       testID={testID}
       disabled={disabled || loading}
       mode={paperMode}
-      icon={icon}
+      icon={({ color }) => (
+        <Icon source={icon as IconSource} size={24} color={color} />
+      )}
       loading={loading}
       theme={buttonTheme}
       buttonColor={buttonColor}

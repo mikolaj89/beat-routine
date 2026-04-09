@@ -53,6 +53,7 @@ export function SessionScreenActions({
             contentStyle={styles.ctaButtonContent}
             labelStyle={styles.ctaButtonLabel}
             onPress={onPressStartSession}
+            icon="play-outline"
           />
         </StickyFooterBar>
       ) : (

@@ -66,8 +66,9 @@ export default function AddSessionExercisesScreen({
 
         <StickyFooterBar>
           <Button
+            icon="check"
             type="Primary"
-            label="Add selected to session"
+            label={`Add selected (${selectedIds.length})`}
             style={styles.addButton}
             contentStyle={styles.addButtonContent}
             labelStyle={styles.addButtonLabel}
