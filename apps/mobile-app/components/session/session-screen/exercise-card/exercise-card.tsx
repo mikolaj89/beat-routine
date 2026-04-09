@@ -31,9 +31,12 @@ export function ExerciseCard({
               <Icon source="drag" size={22} />
             </Pressable>
           )}
-          <View style={styles.textContainer}>
+          <View style={styles.textBlock}>
             <Text style={styles.name}>{exercise.name}</Text>
-            <Text style={styles.meta}>{duration} min</Text>
+            <Text style={styles.meta}>
+              {duration} min
+              {exercise.bpm != null ? ` · ${exercise.bpm} BPM` : ''}
+            </Text>
           </View>
           {onDeletePress && (
             <Pressable

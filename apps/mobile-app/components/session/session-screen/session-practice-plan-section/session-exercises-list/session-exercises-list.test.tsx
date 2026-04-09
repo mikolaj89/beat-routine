@@ -117,6 +117,8 @@ describe('SessionExercisesList', () => {
 
     expect(getByText('First Exercise')).toBeTruthy();
     expect(getByText('Second Exercise')).toBeTruthy();
+    expect(getByText('5 min · 120 BPM')).toBeTruthy();
+    expect(getByText('10 min · 100 BPM')).toBeTruthy();
     expect(queryByTestId('exercise-card-drag-handle')).toBeNull();
     expect(queryByTestId('draggable-list-trigger-reorder')).toBeNull();
   });

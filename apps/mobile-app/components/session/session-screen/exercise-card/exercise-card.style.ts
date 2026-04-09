@@ -20,8 +20,9 @@ export const styles = StyleSheet.create({
   dragHandle: {
     marginRight: theme.spacing.sm,
   },
-  textContainer: {
+  textBlock: {
     flex: 1,
+    minWidth: 0,
   },
   deleteButton: {
     marginLeft: theme.spacing.sm,
@@ -35,5 +36,6 @@ export const styles = StyleSheet.create({
     fontSize: theme.typography.small,
     fontWeight: '600',
     color: theme.colors.textMuted,
+    marginTop: theme.spacing.xxs,
   },
 });
