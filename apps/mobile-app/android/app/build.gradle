@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.facebook.react")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 /**

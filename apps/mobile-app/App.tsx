@@ -15,6 +15,7 @@ import LoginScreen from './components/login/login-screen';
 import { AppBottomTabs } from './components/navigation/app-bottom-tabs';
 import { theme as appTheme } from './utils/theme';
 import { paperThemeFonts } from './utils/paper-theme-fonts';
+import { installCrashlyticsNetworkFailureLogging } from './utils/crashlytics-network-logging';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,8 @@ const paperTheme: MD3Theme = {
     error: appTheme.colors.error,
   },
 };
+
+installCrashlyticsNetworkFailureLogging();
 
 function App() {
   const isDarkMode = false;
