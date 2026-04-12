@@ -35,6 +35,7 @@ android/build/
 android/app/build/
 android/.gradle/
 android/app/.cxx/
+android/app/google-services.json
 local.properties
 
 # iOS build files
