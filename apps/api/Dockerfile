@@ -1,5 +1,8 @@
 FROM node:22-alpine
 
+# bcrypt native module needs a compiler on Alpine
+RUN apk add --no-cache python3 make g++
+
 # Use a consistent working directory inside the container
 WORKDIR /app
 
