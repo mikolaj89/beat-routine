@@ -28,11 +28,13 @@ jobs:
         run: |
           DEPLOYED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
           ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" 'bash -se' <<EOF
+          mkdir -p /root/beat-routine-api-deploy/test
+
           cat > /root/beat-routine-api-deploy/test/test.env <<EOT
           NODE_ENV=test
           HOST=0.0.0.0
           PORT=8000
-          API_BASE_URL=http://167.71.34.89:8000
+          API_BASE_URL=http://46.101.174.67:8000
           ACCESS_TOKEN_TTL_SECONDS=900
           REFRESH_TOKEN_TTL_DAYS=30
           COOKIE_SAMESITE=lax
@@ -52,5 +54,7 @@ jobs:
 
           docker build -f apps/api/Dockerfile -t drum-scheduler-api .
 
+          cp deploy/api-test/run-test-api-2.sh /root/beat-routine-api-deploy/test/
+          chmod +x /root/beat-routine-api-deploy/test/run-test-api-2.sh
           bash /root/beat-routine-api-deploy/test/run-test-api-2.sh
           EOF

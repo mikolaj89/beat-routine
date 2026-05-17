@@ -95,7 +95,7 @@ Create a local `env.json` if you want to override the example values on your mac
       "API_BASE_URL": "http://192.168.0.249:8000"
     },
     "test": {
-      "API_BASE_URL": "http://167.71.34.89:8000"
+      "API_BASE_URL": "http://46.101.174.67:8000"
     }
   }
 }

@@ -1,0 +1,36 @@
+name: Init Droplet (one-time)
+
+# Run manually when setting up a new Droplet. Not tied to pushes.
+on:
+  workflow_dispatch:
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s' '${{ secrets.DROPLET_SSH_KEY_B64 }}' | base64 -d > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.DROPLET_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Bootstrap Droplet
+        shell: bash
+        env:
+          REPO_URL: ${{ secrets.REPO_CLONE_URL }}
+          DEPLOY_SSH_PUBLIC_KEY: ${{ secrets.DEPLOY_SSH_PUBLIC_KEY }}
+        run: |
+          if [[ -z "${REPO_URL}" ]]; then
+            echo "Missing secret REPO_CLONE_URL (e.g. https://github.com/you/repo.git)" >&2
+            exit 1
+          fi
+
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" \
+            env REPO_URL="${REPO_URL}" DEPLOY_SSH_PUBLIC_KEY="${DEPLOY_SSH_PUBLIC_KEY}" bash -se \
+            < deploy/api-test/init-droplet.sh
