@@ -65,7 +65,8 @@ export class ApiClient {
         }
       }
 
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      const requestUrl = `${this.baseUrl}${endpoint}`;
+      const response = await fetch(requestUrl, {
         method,
         headers: mergedHeaders,
         body: hasBody ? JSON.stringify(body) : undefined,
@@ -75,6 +76,11 @@ export class ApiClient {
       const responseData = await this.parseJsonSafe<unknown>(response);
 
       if (!responseData && !response.ok) {
+        console.error("[ApiClient] non-JSON error response", {
+          method,
+          url: requestUrl,
+          status: response.status,
+        });
         return {
           error: {
             message:
@@ -98,12 +104,22 @@ export class ApiClient {
         ) {
           return responseData as ApiResponse<T | null>;
         }
-
+        console.error("[ApiClient] unexpected success response shape", {
+          method,
+          url: requestUrl,
+          responseData,
+        });
         return { data: responseData as T };
       }
 
       return responseData as ApiResponse<T | null>;
     } catch (error) {
+      const requestUrl = `${this.baseUrl}${endpoint}`;
+      console.error("[ApiClient] fetch threw (network / TLS / etc.)", {
+        method,
+        url: requestUrl,
+        error: error instanceof Error ? error.message : error,
+      });
       return {
         error: {
           message: error instanceof Error ? error.message : "Network error",

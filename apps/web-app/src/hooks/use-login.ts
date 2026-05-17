@@ -7,6 +7,18 @@ import { login } from "@drum-scheduler/sdk";
 import type { UserInput } from "@drum-scheduler/contracts";
 import { setSessionStorageAccessToken } from "@/utils/auth-utils";
 
+function getLoginErrorCode(error: unknown): string | null {
+  if (
+    error &&
+    typeof error === "object" &&
+    "errorCode" in error &&
+    typeof (error as { errorCode: unknown }).errorCode === "string"
+  ) {
+    return (error as { errorCode: string }).errorCode;
+  }
+  return null;
+}
+
 export function useLogin(baseUrl: string) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,9 +47,15 @@ export function useLogin(baseUrl: string) {
     return err instanceof Error ? err.message : "Login failed";
   }, [mutation.error]);
 
+  const errorCode = useMemo(
+    () => getLoginErrorCode(mutation.error),
+    [mutation.error],
+  );
+
   return {
     mutate: mutation.mutate,
     isPending: mutation.isPending,
     error: errorMessage,
+    errorCode,
   };
 }

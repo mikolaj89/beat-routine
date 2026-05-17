@@ -17,10 +17,12 @@ export async function mobileLogin(
   );
 
   if ("error" in result) {
+    console.error("[mobile-auth] POST /auth/login API error", result.error);
     throw new Error(result.error.message);
   }
 
   if (!result.data) {
+    console.error("[mobile-auth] POST /auth/login empty data");
     throw new Error("Empty login response");
   }
 
@@ -39,10 +41,12 @@ export async function mobileRefresh(
   );
 
   if ("error" in result) {
+    console.error("[mobile-auth] POST /auth/refresh API error", result.error);
     throw new Error(result.error.errorCode);
   }
 
   if (!result.data) {
+    console.error("[mobile-auth] POST /auth/refresh empty data");
     throw new Error("Empty refresh response");
   }
 

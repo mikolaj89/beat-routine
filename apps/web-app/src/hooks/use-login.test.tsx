@@ -111,6 +111,31 @@ describe("useLogin", () => {
 
     await waitFor(() => {
       expect(result.current.error).toBe("Invalid credentials");
+      expect(result.current.errorCode).toBeNull();
+
+    });
+  });
+
+  it("exposes API errorCode when login throws with it", async () => {
+    const rejectedError = new Error("Invalid credentials");
+    Object.assign(rejectedError, { errorCode: "UNAUTHORIZED" });
+    vi.mocked(login).mockRejectedValue(rejectedError);
+
+    const { result } = renderHook(
+      () => useLogin(API_BASE_URL),
+      { wrapper: createWrapper() },
+    );
+
+    act(() => {
+      result.current.mutate({
+        email: "user@example.com",
+        password: "wrong-password",
+      });
+    });
+
+    await waitFor(() => {
+      expect(result.current.error).toBe("Invalid credentials");
+      expect(result.current.errorCode).toBe("UNAUTHORIZED");
     });
   });
 });
