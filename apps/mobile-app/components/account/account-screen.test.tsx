@@ -26,7 +26,7 @@ describe('AccountScreen', () => {
       logout,
     });
 
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <PaperProvider>
         <AccountScreen />
       </PaperProvider>,
@@ -38,6 +38,7 @@ describe('AccountScreen', () => {
     fireEvent.press(getByText('Log out'));
 
     expect(logout).toHaveBeenCalledTimes(1);
+    expect(getByTestId('android-build-stamp')).toBeTruthy();
   });
 
   it('renders loading state while current user is being fetched', () => {

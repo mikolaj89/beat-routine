@@ -35,4 +35,8 @@ export const styles = StyleSheet.create({
   logoutButton: {
     alignSelf: 'flex-start',
   },
+  buildStamp: {
+    marginTop: theme.spacing.lg,
+    color: theme.colors.textMuted,
+  },
 });

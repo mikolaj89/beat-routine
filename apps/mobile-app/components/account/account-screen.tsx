@@ -7,6 +7,7 @@ import { TopBar } from '../top-bar/top-bar';
 import { theme } from '../../utils/theme';
 import { styles } from './account-screen.style';
 import { useAccountScreen } from './use-account-screen';
+import { getAndroidBuildTimeLabel } from '@/config/build-info';
 
 export default function AccountScreen() {
   const { currentUserEmail, currentUserRole, isCurrentUserLoading, logout } =
@@ -46,6 +47,13 @@ export default function AccountScreen() {
             onPress={() => void logout()}
             style={styles.logoutButton}
           />
+          <Text
+            variant="bodySmall"
+            style={styles.buildStamp}
+            testID="android-build-stamp"
+          >
+            Build (Android): {getAndroidBuildTimeLabel()}
+          </Text>
         </Surface>
       </View>
     </ScreenContainer>
