@@ -1,6 +1,6 @@
 # Droplet API deploy checklist
 
-Use after **Init Droplet (one-time)** and **Deploy test API** workflows.
+Use after **Init Droplet**, **Deploy test API**, and **Setup Caddy** workflows (recommended order: Init → Deploy → Caddy).
 
 Replace `DROPLET_IP` with your Droplet IP (e.g. `46.101.174.67`).
 
@@ -27,7 +27,6 @@ SSH: `ssh root@DROPLET_IP`
 - [ ] Repo exists: `test -d /root/beat-routine/.git && echo OK`
 - [ ] Latest commit visible: `cd /root/beat-routine && git log -1 --oneline`
 - [ ] Deploy script present: `test -x /root/beat-routine-api-deploy/test/run-test-api-2.sh && echo OK`
-
 ---
 
 ## C. After Deploy test API workflow
@@ -41,25 +40,37 @@ On the Droplet:
 
 From your laptop:
 
-- [ ] Health (public): `curl -sf http://DROPLET_IP:8000/health`
+- [ ] Health (direct HTTP): `curl -sf http://DROPLET_IP:8000/health`
+
+---
+
+## D. After Setup Caddy workflow
+
+SSH: `ssh root@DROPLET_IP`
+
+- [ ] Caddy running: `systemctl is-active caddy`
+- [ ] Caddyfile host: `grep sslip.io /etc/caddy/Caddyfile`
+- [ ] Public URL file: `cat /root/beat-routine-api-deploy/test/public-api-url.txt`
+- [ ] Health (HTTPS): `curl -sf https://DROPLET_IP.sslip.io/health`
 
 Expected health response shape: JSON with `"ok": true` (may be wrapped in `{ "data": ... }`).
 
 ---
 
-## D. If something fails
+## E. If something fails
 
 | Symptom | Check |
 |--------|--------|
 | CI `Permission denied (publickey)` | `DROPLET_SSH_KEY` matches `github_actions_deploy`; `.pub` on Droplet |
 | CI passphrase / invalid key | Do not use `id_ed25519`; use deploy key without passphrase |
 | `curl` connection refused | Container down: `docker logs drum-api` |
-| `curl` timeout from laptop | DO firewall: allow TCP `8000` (or use reverse proxy later) |
+| `curl` timeout from laptop | DO firewall: allow TCP `8000`, `80`, `443` |
+| HTTPS fails, HTTP works | Run Setup Caddy; API must be up on 8000 first |
 | API exits on start | `docker logs drum-api` — often `DB_URL` or `JWT_ACCESS_SECRET` |
 
 ---
 
-## E. Optional: manual deploy (without waiting for push)
+## F. Optional: manual deploy (without waiting for push)
 
 On Droplet:
 

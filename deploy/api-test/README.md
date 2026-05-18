@@ -6,8 +6,15 @@ See **[CHECKLIST.md](./CHECKLIST.md)** for step-by-step verification after init 
 
 | Script | When to run |
 |--------|-------------|
-| `init-droplet.sh` | **Once** on a new Droplet (install Docker, clone repo, deploy dirs) |
+| `init-droplet.sh` | **Once** on a new Droplet (Docker, clone repo, deploy dirs) |
+| `setup-caddy.sh` | **Once** (or when changing host) — Caddy HTTPS → `localhost:8000` |
 | `run-test-api-2.sh` | **Every deploy** (restart `drum-api` container; `test.env` written by CI) |
+
+| GitHub workflow | Runs |
+|-----------------|------|
+| Init Droplet (one-time) | `init-droplet.sh` |
+| Setup Caddy (HTTPS) | `setup-caddy.sh` |
+| Deploy test API | build + `run-test-api-2.sh` |
 
 ## One-time setup
 
@@ -34,7 +41,9 @@ See **[CHECKLIST.md](./CHECKLIST.md)** for step-by-step verification after init 
 
 3. Run workflow **Init Droplet (one-time)** in GitHub Actions.
 
-4. On every push to `main`, **Deploy test API** runs automatically.
+4. Run **Deploy test API**, then **Setup Caddy (HTTPS)** (order matters: API must listen on 8000 first).
+
+5. On every push to `main`, **Deploy test API** runs automatically (re-run Setup Caddy only if you change the host).
 
 ### Option B: Manual on the Droplet
 

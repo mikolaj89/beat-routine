@@ -1,0 +1,39 @@
+name: Setup Caddy (HTTPS)
+
+# Run after Init Droplet + Deploy test API, or anytime to (re)configure Caddy.
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-caddy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        env:
+          DROPLET_SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          if [[ -z "${DROPLET_SSH_KEY}" ]]; then
+            echo "Missing secret DROPLET_SSH_KEY" >&2
+            exit 1
+          fi
+          printf '%s\n' "${DROPLET_SSH_KEY}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          if ! ssh-keygen -y -f ~/.ssh/id_ed25519 >/dev/null 2>&1; then
+            echo "DROPLET_SSH_KEY is not a valid private key" >&2
+            exit 1
+          fi
+          ssh-keyscan -H "${{ secrets.DROPLET_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Install and configure Caddy on Droplet
+        shell: bash
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}" \
+            env DROPLET_IP="${{ secrets.DROPLET_HOST }}" \
+            bash -se \
+            < deploy/api-test/setup-caddy.sh

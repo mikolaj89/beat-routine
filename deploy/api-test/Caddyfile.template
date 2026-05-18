@@ -1,0 +1,6 @@
+# Rendered on the Droplet by init-droplet.sh as /etc/caddy/Caddyfile
+# Default host: <DROPLET_IP>.sslip.io (e.g. 46.101.174.67.sslip.io)
+
+{CADDY_DOMAIN} {
+	reverse_proxy localhost:8000
+}
